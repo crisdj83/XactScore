@@ -8,16 +8,19 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { AppTopBar } from '@/components/app-top-bar';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
+import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 
 export function LoginScreen() {
   const theme = useTheme();
+  const t = useTranslations();
+  const onAccentText = theme.isDark ? '#0f0f10' : '#ffffff';
   const { signIn, signUp } = useAuth();
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
@@ -52,20 +55,27 @@ export function LoginScreen() {
 
   return (
     <ThemedView style={styles.root}>
-      <SafeAreaView style={styles.safe}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          style={styles.formWrap}>
-          <View style={styles.brand}>
-            <ThemedText type="title" style={styles.logo}>
-              XactScore
-            </ThemedText>
-            <ThemedText themeColor="textSecondary" style={styles.tagline}>
-              Exact scores with friends — no ads, always free.
-            </ThemedText>
-          </View>
+      <AppTopBar includeSafeArea />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={styles.formWrap}>
+        <View style={styles.brand}>
+          <ThemedText type="title" style={styles.logo}>
+            XactScore
+          </ThemedText>
+          <ThemedText themeColor="textSecondary" style={styles.tagline}>
+            {t('Exact scores with friends — no ads, always free.')}
+          </ThemedText>
+        </View>
 
-          <View style={[styles.modeSwitch, { backgroundColor: theme.backgroundElement }]}>
+          <View
+            style={[
+              styles.modeSwitch,
+              {
+                backgroundColor: theme.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
+                borderColor: theme.border,
+              },
+            ]}>
             <Pressable
               onPress={() => setMode('signin')}
               style={[
@@ -74,8 +84,8 @@ export function LoginScreen() {
               ]}>
               <ThemedText
                 type="smallBold"
-                style={{ color: mode === 'signin' ? '#fff' : theme.textSecondary }}>
-                Sign In
+                style={{ color: mode === 'signin' ? onAccentText : theme.textSecondary }}>
+                {t('Sign In')}
               </ThemedText>
             </Pressable>
             <Pressable
@@ -86,15 +96,22 @@ export function LoginScreen() {
               ]}>
               <ThemedText
                 type="smallBold"
-                style={{ color: mode === 'signup' ? '#fff' : theme.textSecondary }}>
-                Sign Up
+                style={{ color: mode === 'signup' ? onAccentText : theme.textSecondary }}>
+                {t('Sign Up')}
               </ThemedText>
             </Pressable>
           </View>
 
-          <View style={[styles.card, { backgroundColor: theme.backgroundElement }]}>
+          <View
+            style={[
+              styles.card,
+              {
+                backgroundColor: theme.backgroundElement,
+                borderColor: theme.border,
+              },
+            ]}>
             <ThemedText type="smallBold" style={styles.label}>
-              Email
+              {t('Email')}
             </ThemedText>
             <TextInput
               autoCapitalize="none"
@@ -104,11 +121,11 @@ export function LoginScreen() {
               placeholderTextColor={theme.textSecondary}
               value={email}
               onChangeText={setEmail}
-              style={[styles.input, { color: theme.text, borderColor: theme.backgroundSelected }]}
+              style={[styles.input, { color: theme.text, borderColor: theme.borderStrong }]}
             />
 
             <ThemedText type="smallBold" style={styles.label}>
-              Password
+              {t('Password')}
             </ThemedText>
             <TextInput
               secureTextEntry
@@ -117,10 +134,10 @@ export function LoginScreen() {
               placeholderTextColor={theme.textSecondary}
               value={password}
               onChangeText={setPassword}
-              style={[styles.input, { color: theme.text, borderColor: theme.backgroundSelected }]}
+              style={[styles.input, { color: theme.text, borderColor: theme.borderStrong }]}
             />
             <ThemedText type="small" themeColor="textSecondary">
-              Password must be at least 6 characters.
+              {t('Password must be at least 6 characters.')}
             </ThemedText>
 
             {message ? (
@@ -149,30 +166,34 @@ export function LoginScreen() {
                 },
               ]}>
               {busy ? (
-                <ActivityIndicator color="#fff" />
+                <ActivityIndicator color={onAccentText} />
               ) : (
-                <ThemedText type="smallBold" style={styles.submitText}>
-                  {mode === 'signin' ? 'Sign In' : 'Sign Up'}
+                <ThemedText type="smallBold" style={[styles.submitText, { color: onAccentText }]}>
+                  {mode === 'signin' ? t('Sign In') : t('Sign Up')}
                 </ThemedText>
               )}
             </Pressable>
           </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  safe: { flex: 1, paddingHorizontal: Spacing.four },
-  formWrap: { flex: 1, justifyContent: 'center', gap: Spacing.four },
+  formWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    gap: Spacing.four,
+    paddingHorizontal: Spacing.four,
+  },
   brand: { alignItems: 'center', gap: Spacing.two },
   logo: { fontSize: 40, lineHeight: 44, fontWeight: '800' },
   tagline: { textAlign: 'center', maxWidth: 280 },
   modeSwitch: {
     flexDirection: 'row',
     borderRadius: 999,
+    borderWidth: 1,
     padding: 4,
     gap: 4,
   },
@@ -185,6 +206,7 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 16,
+    borderWidth: 1,
     padding: Spacing.four,
     gap: Spacing.two,
   },
@@ -209,5 +231,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  submitText: { color: '#fff', textTransform: 'uppercase', letterSpacing: 1 },
+  submitText: { textTransform: 'uppercase', letterSpacing: 1 },
 });

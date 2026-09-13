@@ -1,18 +1,20 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 
-import AppTabs from '@/components/app-tabs';
 import { LoginScreen } from '@/components/login-screen';
 import { ThemedView } from '@/components/themed-view';
 import { AuthProvider, useAuth } from '@/contexts/auth';
+import { LocaleProvider } from '@/contexts/locale';
+import { ThemePreferenceProvider } from '@/contexts/theme';
+import { useTheme } from '@/hooks/use-theme';
 
 SplashScreen.preventAutoHideAsync();
 
 function RootNavigator() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme();
   const { session, loading } = useAuth();
 
   useEffect(() => {
@@ -24,27 +26,40 @@ function RootNavigator() {
   if (loading) {
     return (
       <ThemedView style={styles.loading}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={theme.accent} />
       </ThemedView>
     );
   }
 
   if (!session) {
-    return <LoginScreen />;
+    return (
+      <>
+        <StatusBar style={theme.isDark ? 'light' : 'dark'} />
+        <LoginScreen />
+      </>
+    );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AppTabs />
-    </ThemeProvider>
+    <>
+      <StatusBar style={theme.isDark ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="contest/[id]" />
+      </Stack>
+    </>
   );
 }
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <RootNavigator />
-    </AuthProvider>
+    <ThemePreferenceProvider>
+      <LocaleProvider>
+        <AuthProvider>
+          <RootNavigator />
+        </AuthProvider>
+      </LocaleProvider>
+    </ThemePreferenceProvider>
   );
 }
 

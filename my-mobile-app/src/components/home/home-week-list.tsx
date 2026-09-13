@@ -1,8 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 
 import type { HomeLeague } from '@/lib/home-api';
+import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
+
+const emptyLeagueArt = require('@/assets/images/brand/xactscore-empty-league.png');
 
 type Props = {
   leagues: HomeLeague[];
@@ -12,7 +16,8 @@ type Props = {
 
 export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
   const theme = useTheme();
-  const isDark = theme.background !== '#e2e8f0';
+  const t = useTranslations();
+  const { isDark } = theme;
   const totalOpen = leagues.reduce((sum, league) => sum + league.openPicks, 0);
 
   if (leagues.length === 0) {
@@ -22,15 +27,16 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
         style={({ pressed }) => [
           styles.emptyCard,
           {
-            backgroundColor: isDark ? 'rgba(255,138,43,0.10)' : '#ffffff',
-            borderColor: isDark ? 'rgba(255,138,43,0.40)' : '#e2e8f0',
+            backgroundColor: isDark ? theme.accentMuted : theme.backgroundElement,
+            borderColor: isDark ? 'rgba(255,138,43,0.40)' : theme.border,
             opacity: pressed ? 0.88 : 1,
           },
         ]}>
+        <Image source={emptyLeagueArt} style={styles.emptyArt} contentFit="contain" />
         <View style={{ flex: 1 }}>
-          <Text style={[styles.emptyTitle, { color: theme.text }]}>Join a league</Text>
+          <Text style={[styles.emptyTitle, { color: theme.text }]}>{t('Join a league')}</Text>
           <Text style={[styles.emptyBody, { color: theme.textSecondary }]}>
-            Create or join a league to start calling scores.
+            {t('Create or join a league to start calling scores.')}
           </Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color={theme.accent} />
@@ -43,18 +49,18 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
       <View style={styles.sectionHeader}>
         <View style={{ flex: 1 }}>
           <Text style={[styles.sectionTitle, { color: isDark ? '#fed7aa' : theme.text }]}>
-            Your week
+            {t('Your week')}
           </Text>
           <Text style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
             {totalOpen > 0
-              ? 'Put your scores in before they lock.'
-              : 'You are up to date. Check the table or wait for the next matchday.'}
+              ? t('Put your scores in before they lock.')
+              : t('You are up to date. Check the table or wait for the next matchday.')}
           </Text>
         </View>
         {totalOpen > 0 ? (
           <View style={[styles.picksPill, { backgroundColor: theme.accent }]}>
             <Text style={[styles.picksPillText, { color: isDark ? '#050506' : '#ffffff' }]}>
-              {totalOpen} {totalOpen === 1 ? 'pick left' : 'picks left'}
+              {totalOpen} {totalOpen === 1 ? t('pick left') : t('picks left')}
             </Text>
           </View>
         ) : null}
@@ -64,8 +70,8 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
         style={[
           styles.listCard,
           {
-            backgroundColor: isDark ? '#18181b' : '#ffffff',
-            borderColor: isDark ? 'rgba(255,255,255,0.10)' : '#e2e8f0',
+            backgroundColor: theme.backgroundElement,
+            borderColor: theme.border,
           },
         ]}>
         {leagues.map((league, index) => (
@@ -76,9 +82,11 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
               styles.row,
               index > 0 && {
                 borderTopWidth: StyleSheet.hairlineWidth,
-                borderTopColor: isDark ? 'rgba(255,255,255,0.10)' : '#f1f5f9',
+                borderTopColor: theme.border,
               },
-              pressed && { backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : '#f8fafc' },
+              pressed && {
+                backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : '#f8fafc',
+              },
             ]}>
             <View
               style={[
@@ -96,13 +104,13 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
               </Text>
               <Text style={[styles.leagueMeta, { color: theme.textSecondary }]}>
                 {league.openPicks > 0
-                  ? `${league.openPicks} ${league.openPicks === 1 ? 'pick left' : 'picks left'}`
-                  : 'All picks in'}
+                  ? `${league.openPicks} ${league.openPicks === 1 ? t('pick left') : t('picks left')}`
+                  : t('All picks in')}
                 {league.rank ? ` · #${league.rank}` : ''}
               </Text>
             </View>
             <Text style={[styles.cta, { color: theme.accent }]}>
-              {league.openPicks > 0 ? 'Put scores' : 'View table'}
+              {league.openPicks > 0 ? t('Put scores') : t('View table')}
             </Text>
           </Pressable>
         ))}
@@ -174,6 +182,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+  },
+  emptyArt: {
+    width: 56,
+    height: 56,
+    borderRadius: 14,
   },
   emptyTitle: {
     fontSize: 14,

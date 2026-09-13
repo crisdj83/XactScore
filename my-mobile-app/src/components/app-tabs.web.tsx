@@ -1,19 +1,17 @@
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
-import { useColorScheme } from 'react-native';
 
-import { Colors } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
 
 /** Web fallback for native tabs (mirrors app-tabs.tsx). */
 export default function AppTabs() {
-  const scheme = useColorScheme();
-  const colors = Colors[scheme === 'unspecified' || scheme == null ? 'light' : scheme];
+  const theme = useTheme();
 
   return (
     <NativeTabs
-      backgroundColor={colors.backgroundElement}
-      indicatorColor={colors.backgroundSelected}
-      labelStyle={{ selected: { color: colors.accent } }}
-      tintColor={colors.accent}>
+      backgroundColor={theme.isDark ? '#09090b' : theme.backgroundElement}
+      indicatorColor={theme.backgroundSelected}
+      labelStyle={{ selected: { color: theme.accent } }}
+      tintColor={theme.accent}>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="house.fill" md="home" />

@@ -3,8 +3,10 @@ import { Image } from 'expo-image';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { ScoreHeroArt } from '@/components/home/score-hero-art';
 import type { HomeNextMatch, HomeScore } from '@/lib/home-api';
 import { webPath } from '@/lib/home-api';
+import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 
 type Props = {
@@ -61,7 +63,8 @@ function CountdownUnit({
 
 export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) {
   const theme = useTheme();
-  const isDark = theme.background !== '#e2e8f0';
+  const t = useTranslations();
+  const { isDark } = theme;
   const [timeLeft, setTimeLeft] = useState({
     days: '00',
     hours: '00',
@@ -102,22 +105,24 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
       style={[
         styles.card,
         {
-          backgroundColor: isDark ? '#18181b' : '#ffffff',
-          borderColor: isDark ? 'rgba(255,255,255,0.10)' : '#e2e8f0',
+          backgroundColor: theme.backgroundElement,
+          borderColor: theme.border,
         },
       ]}>
       {isDark ? <View pointerEvents="none" style={styles.darkGlow} /> : null}
 
       <Text style={[styles.headline, { color: theme.text }]}>
-        Call the scores.{'\n'}
-        <Text style={{ color: isDark ? theme.accent : theme.text }}>Own the table.</Text>
+        {t('Call the scores.')}{'\n'}
+        <Text style={{ color: isDark ? theme.accent : theme.text }}>{t('Own the table.')}</Text>
       </Text>
       <Text style={[styles.subcopy, { color: isDark ? '#ffedd5' : '#475569' }]}>
-        Call every Premier League score. Compete in your league. Climb the table.
+        {t('Call every Premier League score. Compete in your league. Climb the table.')}
       </Text>
 
+      {!nextMatch ? <ScoreHeroArt /> : null}
+
       <Text style={[styles.upcomingLabel, { color: isDark ? '#fed7aa' : '#71717a' }]}>
-        Upcoming Match
+        {t('Upcoming Match')}
       </Text>
 
       {nextMatch ? (
@@ -149,17 +154,19 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
           ) : null}
         </View>
       ) : (
-        <Text style={[styles.noFixtures, { color: theme.text }]}>Season Ended / No Fixtures</Text>
+        <Text style={[styles.noFixtures, { color: theme.text }]}>
+          {t('Season Ended / No Fixtures')}
+        </Text>
       )}
 
       <View style={styles.countdownRow}>
-        <CountdownUnit label="Days" value={timeLeft.days} isDark={isDark} />
+        <CountdownUnit label={t('Days')} value={timeLeft.days} isDark={isDark} />
         <Text style={[styles.colon, { color: theme.text }]}>:</Text>
-        <CountdownUnit label="Hours" value={timeLeft.hours} isDark={isDark} />
+        <CountdownUnit label={t('Hours')} value={timeLeft.hours} isDark={isDark} />
         <Text style={[styles.colon, { color: theme.text }]}>:</Text>
-        <CountdownUnit label="Mins" value={timeLeft.minutes} isDark={isDark} />
+        <CountdownUnit label={t('Mins')} value={timeLeft.minutes} isDark={isDark} />
         <Text style={[styles.colon, { color: theme.text }]}>:</Text>
-        <CountdownUnit label="Secs" value={timeLeft.seconds} accent isDark={isDark} />
+        <CountdownUnit label={t('Secs')} value={timeLeft.seconds} accent isDark={isDark} />
       </View>
 
       <Pressable
@@ -167,11 +174,13 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
         style={({ pressed }) => [
           styles.predictBtn,
           {
-            backgroundColor: isDark ? '#f59e0b' : '#4f46e5',
+            backgroundColor: theme.accent,
             transform: [{ scale: pressed ? 0.97 : 1 }],
           },
         ]}>
-        <Text style={styles.predictBtnText}>Make Predictions</Text>
+        <Text style={[styles.predictBtnText, { color: isDark ? '#0f0f10' : '#ffffff' }]}>
+          {t('Make Predictions')}
+        </Text>
       </Pressable>
 
       <View style={styles.scoresWrap}>
@@ -214,7 +223,7 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
           ))
         ) : (
           <Text style={{ color: theme.textSecondary, fontSize: 14 }}>
-            No recent matches to display.
+            {t('No recent matches to display.')}
           </Text>
         )}
       </View>
@@ -320,7 +329,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   predictBtnText: {
-    color: '#ffffff',
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 0.6,

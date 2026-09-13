@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 
 type Props = {
@@ -26,7 +27,8 @@ export function HomeProfileStrip({
   onEditPress,
 }: Props) {
   const theme = useTheme();
-  const isDark = theme.background !== '#e2e8f0';
+  const t = useTranslations();
+  const { isDark } = theme;
   const initial = (username || email || '?').charAt(0).toUpperCase();
 
   return (
@@ -34,8 +36,8 @@ export function HomeProfileStrip({
       style={[
         styles.card,
         {
-          backgroundColor: isDark ? '#18181b' : '#ffffff',
-          borderColor: isDark ? '#27272a' : '#e2e8f0',
+          backgroundColor: theme.backgroundElement,
+          borderColor: isDark ? '#27272a' : theme.border,
         },
       ]}>
       {isDark ? <View pointerEvents="none" style={styles.darkGlow} /> : null}
@@ -53,7 +55,7 @@ export function HomeProfileStrip({
       <View style={styles.meta}>
         <View style={styles.nameRow}>
           <Text numberOfLines={1} style={[styles.username, { color: theme.text }]}>
-            {username || 'No username set'}
+            {username || t('No username set')}
           </Text>
           {isGlobalAdmin ? (
             <Ionicons name="shield-checkmark" size={14} color={theme.accent} />
@@ -65,10 +67,12 @@ export function HomeProfileStrip({
             <Image source={{ uri: favoriteCrest }} style={styles.teamCrest} contentFit="contain" />
           ) : null}
           <Text numberOfLines={1} style={[styles.detailText, { color: isDark ? '#e4e4e7' : '#64748b' }]}>
-            {favoriteTeam || 'Not selected'}
+            {favoriteTeam || t('Not selected')}
           </Text>
           <View style={[styles.divider, { backgroundColor: isDark ? 'rgba(255,255,255,0.2)' : '#cbd5e1' }]} />
-          <Text style={[styles.detailMuted, { color: isDark ? '#a1a1aa' : '#64748b' }]}>Best rank</Text>
+          <Text style={[styles.detailMuted, { color: isDark ? '#a1a1aa' : '#64748b' }]}>
+            {t('Best rank')}
+          </Text>
           <Text style={[styles.rank, { color: theme.text }]}>
             {bestRank ? `#${bestRank}` : '—'}
           </Text>
@@ -85,7 +89,9 @@ export function HomeProfileStrip({
             opacity: pressed ? 0.85 : 1,
           },
         ]}>
-        <Text style={[styles.editText, { color: isDark ? '#ffedd5' : '#334155' }]}>Edit</Text>
+        <Text style={[styles.editText, { color: isDark ? '#ffedd5' : '#334155' }]}>
+          {t('Edit')}
+        </Text>
       </Pressable>
     </View>
   );
