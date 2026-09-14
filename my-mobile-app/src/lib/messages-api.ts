@@ -1,43 +1,8 @@
-import { siteUrl, supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
-function apiBaseUrl() {
-  return siteUrl.replace('://xactscore.app', '://www.xactscore.app');
-}
-
-function looksLikeHtml(body: string) {
-  const trimmed = body.trim().toLowerCase();
-  return trimmed.startsWith('<!doctype') || trimmed.startsWith('<html');
-}
-
-async function authHeaders() {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session?.access_token) throw new Error('Not signed in');
-  return {
-    Authorization: `Bearer ${session.access_token}`,
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
-}
-
-async function parseJson(response: Response) {
-  const body = await response.text();
-  const contentType = response.headers.get('content-type') || '';
-  if (!response.ok || !contentType.includes('application/json') || looksLikeHtml(body)) {
-    if (looksLikeHtml(body) || response.status === 404) {
-      throw new Error(
-        'Messages API is not on the website yet. Deploy the latest web app, then pull to refresh.',
-      );
-    }
-    try {
-      throw new Error((JSON.parse(body) as { error?: string }).error || 'Request failed');
-    } catch (error) {
-      if (error instanceof Error && error.message !== 'Request failed') throw error;
-      throw new Error('Request failed');
-    }
-  }
-  return JSON.parse(body) as Record<string, unknown>;
+function firstRelation<T>(value: T | T[] | null | undefined): T | null {
+  if (Array.isArray(value)) return value[0] ?? null;
+  return value ?? null;
 }
 
 export type MessageContest = {
@@ -73,43 +38,237 @@ export type MessagesPayload = {
   isGlobalAdmin: boolean;
 };
 
+async function requireUser() {
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  if (error || !user) throw new Error('Not signed in');
+  return user;
+}
+
+/** Load messages via Supabase RLS — works without the web mobile API. */
 export async function fetchMessages(): Promise<MessagesPayload> {
-  const headers = await authHeaders();
-  const response = await fetch(`${apiBaseUrl()}/api/mobile/messages`, { headers });
-  const data = await parseJson(response);
+  const user = await requireUser();
+
+  const [{ data: memberships, error: memberError }, { data: profile }] = await Promise.all([
+    supabase
+      .from('contest_members')
+      .select('contest_id, role, contests(name)')
+      .eq('user_id', user.id),
+    supabase.from('users').select('is_global_admin').eq('id', user.id).maybeSingle(),
+  ]);
+
+  if (memberError) throw new Error(memberError.message);
+
+  const contests: MessageContest[] = (memberships || []).map((row) => {
+    const contest = firstRelation(
+      row.contests as { name?: string | null } | { name?: string | null }[] | null,
+    );
+    return {
+      id: row.contest_id as string,
+      name: contest?.name || 'Contest',
+      role: row.role as string,
+    };
+  });
+
+  const contestIds = contests.map((c) => c.id);
+  const isGlobalAdmin = profile?.is_global_admin === true;
+
+  if (contestIds.length === 0) {
+    return { contests, messages: [], isGlobalAdmin };
+  }
+
+  const { data: messageData, error: messageError } = await supabase
+    .from('messages')
+    .select(
+      'id, contest_id, author_id, title, body, created_at, users(username, email), contests(name)',
+    )
+    .in('contest_id', contestIds)
+    .order('created_at', { ascending: false })
+    .limit(60);
+
+  if (messageError) throw new Error(messageError.message);
+
+  const threads: Omit<MessageThread, 'replies'>[] = (messageData || []).map((row) => {
+    const author = firstRelation(
+      row.users as
+        | { username?: string | null; email?: string | null }
+        | { username?: string | null; email?: string | null }[]
+        | null,
+    );
+    const contest = firstRelation(
+      row.contests as { name?: string | null } | { name?: string | null }[] | null,
+    );
+    return {
+      id: row.id as string,
+      contestId: row.contest_id as string,
+      authorId: row.author_id as string,
+      title: row.title as string,
+      body: row.body as string,
+      createdAt: row.created_at as string,
+      authorName: author?.username || author?.email || 'Member',
+      contestName: contest?.name || 'League',
+    };
+  });
+
+  const messageIds = threads.map((m) => m.id);
+  const { data: replyData, error: replyError } = messageIds.length
+    ? await supabase
+        .from('message_replies')
+        .select('id, message_id, author_id, body, created_at, users(username, email)')
+        .in('message_id', messageIds)
+        .order('created_at', { ascending: true })
+    : { data: [] as never[], error: null };
+
+  if (replyError) throw new Error(replyError.message);
+
+  const repliesByMessage = new Map<string, MessageReply[]>();
+  for (const row of replyData || []) {
+    const author = firstRelation(
+      row.users as
+        | { username?: string | null; email?: string | null }
+        | { username?: string | null; email?: string | null }[]
+        | null,
+    );
+    const reply: MessageReply = {
+      id: row.id as string,
+      messageId: row.message_id as string,
+      authorId: row.author_id as string,
+      body: row.body as string,
+      createdAt: row.created_at as string,
+      authorName: author?.username || author?.email || 'Member',
+    };
+    const list = repliesByMessage.get(reply.messageId) || [];
+    list.push(reply);
+    repliesByMessage.set(reply.messageId, list);
+  }
+
+  void supabase
+    .from('message_reads')
+    .upsert({ user_id: user.id, last_read_at: new Date().toISOString() })
+    .then(() => undefined);
+
   return {
-    contests: (data.contests as MessageContest[]) || [],
-    messages: (data.messages as MessageThread[]) || [],
-    isGlobalAdmin: Boolean(data.isGlobalAdmin),
+    contests,
+    isGlobalAdmin,
+    messages: threads.map((message) => ({
+      ...message,
+      replies: repliesByMessage.get(message.id) || [],
+    })),
   };
 }
 
 export async function createMessage(contestId: string, title: string, body: string) {
-  const headers = await authHeaders();
-  const response = await fetch(`${apiBaseUrl()}/api/mobile/messages`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ kind: 'message', contestId, title, body }),
+  const user = await requireUser();
+  const nextTitle = title.trim();
+  const nextBody = body.trim();
+  if (!contestId || !nextTitle || !nextBody) {
+    throw new Error('Message title and text are required.');
+  }
+
+  const { data: membership } = await supabase
+    .from('contest_members')
+    .select('role')
+    .eq('contest_id', contestId)
+    .eq('user_id', user.id)
+    .maybeSingle();
+  if (!membership) throw new Error('You can only post in contests you belong to.');
+
+  const { error } = await supabase.from('messages').insert({
+    contest_id: contestId,
+    author_id: user.id,
+    title: nextTitle,
+    body: nextBody,
   });
-  await parseJson(response);
+  if (error) throw new Error(error.message);
 }
 
 export async function createReply(messageId: string, body: string) {
-  const headers = await authHeaders();
-  const response = await fetch(`${apiBaseUrl()}/api/mobile/messages`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ kind: 'reply', messageId, body }),
+  const user = await requireUser();
+  const nextBody = body.trim();
+  if (!messageId || !nextBody) throw new Error('Reply text is required.');
+
+  const { data: message } = await supabase
+    .from('messages')
+    .select('contest_id')
+    .eq('id', messageId)
+    .maybeSingle();
+  if (!message) throw new Error('Message not found.');
+
+  const { data: membership } = await supabase
+    .from('contest_members')
+    .select('role')
+    .eq('contest_id', message.contest_id)
+    .eq('user_id', user.id)
+    .maybeSingle();
+  if (!membership) throw new Error('You can only reply in contests you belong to.');
+
+  const { error } = await supabase.from('message_replies').insert({
+    message_id: messageId,
+    author_id: user.id,
+    body: nextBody,
   });
-  await parseJson(response);
+  if (error) throw new Error(error.message);
 }
 
 export async function deleteMessageOrReply(kind: 'message' | 'reply', id: string) {
-  const headers = await authHeaders();
-  const response = await fetch(`${apiBaseUrl()}/api/mobile/messages`, {
-    method: 'DELETE',
-    headers,
-    body: JSON.stringify({ kind, id }),
-  });
-  await parseJson(response);
+  const user = await requireUser();
+  const { data: profile } = await supabase
+    .from('users')
+    .select('is_global_admin')
+    .eq('id', user.id)
+    .maybeSingle();
+  const isGlobalAdmin = profile?.is_global_admin === true;
+
+  if (kind === 'message') {
+    const { data: message } = await supabase
+      .from('messages')
+      .select('contest_id, author_id')
+      .eq('id', id)
+      .maybeSingle();
+    if (!message) throw new Error('Message not found.');
+
+    const { data: membership } = await supabase
+      .from('contest_members')
+      .select('role')
+      .eq('contest_id', message.contest_id)
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    const canDelete =
+      isGlobalAdmin || membership?.role === 'admin' || message.author_id === user.id;
+    if (!membership || !canDelete) throw new Error('Not allowed to delete this message.');
+
+    const { error } = await supabase.from('messages').delete().eq('id', id);
+    if (error) throw new Error(error.message);
+    return;
+  }
+
+  const { data: reply } = await supabase
+    .from('message_replies')
+    .select('message_id, author_id')
+    .eq('id', id)
+    .maybeSingle();
+  if (!reply) throw new Error('Reply not found.');
+
+  const { data: message } = await supabase
+    .from('messages')
+    .select('contest_id')
+    .eq('id', reply.message_id)
+    .maybeSingle();
+  if (!message) throw new Error('Message not found.');
+
+  const { data: membership } = await supabase
+    .from('contest_members')
+    .select('role')
+    .eq('contest_id', message.contest_id)
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  const canDelete = isGlobalAdmin || membership?.role === 'admin' || reply.author_id === user.id;
+  if (!membership || !canDelete) throw new Error('Not allowed to delete this reply.');
+
+  const { error } = await supabase.from('message_replies').delete().eq('id', id);
+  if (error) throw new Error(error.message);
 }

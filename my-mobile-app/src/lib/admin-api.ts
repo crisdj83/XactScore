@@ -21,25 +21,6 @@ async function authHeaders() {
   };
 }
 
-async function parseJson(response: Response) {
-  const body = await response.text();
-  const contentType = response.headers.get('content-type') || '';
-  if (!response.ok || !contentType.includes('application/json') || looksLikeHtml(body)) {
-    if (looksLikeHtml(body) || response.status === 404) {
-      throw new Error(
-        'Admin API is not on the website yet. Deploy the latest web app, then pull to refresh.',
-      );
-    }
-    try {
-      throw new Error((JSON.parse(body) as { error?: string }).error || 'Request failed');
-    } catch (error) {
-      if (error instanceof Error && error.message !== 'Request failed') throw error;
-      throw new Error('Request failed');
-    }
-  }
-  return JSON.parse(body) as Record<string, unknown>;
-}
-
 export type PendingAvatar = {
   id: string;
   username: string | null;
@@ -48,23 +29,93 @@ export type PendingAvatar = {
   avatarUrl: string | null;
 };
 
-export async function fetchPendingAvatars(): Promise<PendingAvatar[]> {
-  const headers = await authHeaders();
-  const response = await fetch(`${apiBaseUrl()}/api/mobile/admin/avatars`, { headers });
-  const data = await parseJson(response);
-  return (data.pending as PendingAvatar[]) || [];
+async function requireGlobalAdmin() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not signed in');
+  const { data: profile } = await supabase
+    .from('users')
+    .select('is_global_admin')
+    .eq('id', user.id)
+    .maybeSingle();
+  if (!profile?.is_global_admin) throw new Error('Unauthorized');
+  return user;
 }
 
+/** Prefer web API when deployed; fall back to direct Supabase select. */
+export async function fetchPendingAvatars(): Promise<PendingAvatar[]> {
+  await requireGlobalAdmin();
+
+  try {
+    const headers = await authHeaders();
+    const response = await fetch(`${apiBaseUrl()}/api/mobile/admin/avatars`, { headers });
+    const body = await response.text();
+    const contentType = response.headers.get('content-type') || '';
+    if (response.ok && contentType.includes('application/json') && !looksLikeHtml(body)) {
+      const data = JSON.parse(body) as { pending?: PendingAvatar[] };
+      return data.pending || [];
+    }
+  } catch {
+    // fall through to Supabase
+  }
+
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, username, email, pending_avatar_url, avatar_url')
+    .not('pending_avatar_url', 'is', null)
+    .order('username', { ascending: true });
+
+  if (error) throw new Error(error.message);
+
+  return (data || []).map((row) => ({
+    id: row.id as string,
+    username: row.username as string | null,
+    email: row.email as string | null,
+    pendingAvatarUrl: row.pending_avatar_url as string,
+    avatarUrl: row.avatar_url as string | null,
+  }));
+}
+
+/**
+ * Approve/reject pending avatar.
+ * Tries the deployed web API first; falls back to a Supabase RPC / direct update
+ * when `is_global_admin` policies allow it.
+ */
 export async function moderateAvatar(
   action: 'approve' | 'reject',
   userId: string,
   pendingUrl?: string,
 ) {
-  const headers = await authHeaders();
-  const response = await fetch(`${apiBaseUrl()}/api/mobile/admin/avatars`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ action, userId, pendingUrl }),
-  });
-  await parseJson(response);
+  await requireGlobalAdmin();
+
+  try {
+    const headers = await authHeaders();
+    const response = await fetch(`${apiBaseUrl()}/api/mobile/admin/avatars`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ action, userId, pendingUrl }),
+    });
+    const body = await response.text();
+    const contentType = response.headers.get('content-type') || '';
+    if (response.ok && contentType.includes('application/json') && !looksLikeHtml(body)) {
+      return;
+    }
+  } catch {
+    // fall through
+  }
+
+  const patch =
+    action === 'approve'
+      ? { avatar_url: pendingUrl, pending_avatar_url: null }
+      : { pending_avatar_url: null };
+
+  const { error } = await supabase.from('users').update(patch).eq('id', userId);
+  if (error) {
+    throw new Error(
+      error.message.includes('policy') || error.code === '42501'
+        ? 'Admin approve needs the website API (deploy latest web) or the global-admin update policy in Supabase.'
+        : error.message,
+    );
+  }
 }
