@@ -10,10 +10,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.xactscore.mobile",
-      "icon": "./assets/expo.icon"
+      "buildNumber": "1",
+      "icon": "./assets/expo.icon",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "app.xactscore.mobile",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#0d0d0d",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

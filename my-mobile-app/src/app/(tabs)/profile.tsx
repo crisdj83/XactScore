@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
+  Linking,
   Modal,
   Pressable,
   ScrollView,
@@ -28,12 +30,17 @@ import {
   findFavoriteTeam,
   type FavoriteTeam,
 } from '@/lib/favorite-teams';
+import { confirmDeleteAccount, deleteAccount } from '@/lib/account-api';
 import { soccerAvatarPath } from '@/lib/soccer-avatar';
-import { supabase } from '@/lib/supabase';
+import { siteUrl, supabase } from '@/lib/supabase';
 
 const MOTTOS = ['Play to win', 'Trust the process', 'Never stop scoring', 'Own the table'];
 const QUOTE_MAX = 18;
 const AVATAR_SIZE = 108;
+
+function legalBase() {
+  return siteUrl.replace(/\/$/, '').replace('://xactscore.app', '://www.xactscore.app');
+}
 
 export default function ProfileScreen() {
   const theme = useTheme();
@@ -56,6 +63,7 @@ export default function ProfileScreen() {
 
   const [busy, setBusy] = useState(false);
   const [passwordBusy, setPasswordBusy] = useState(false);
+  const [deleteBusy, setDeleteBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -483,10 +491,76 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: theme.backgroundElement, borderColor: theme.border },
+          ]}>
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('Support & legal')}</Text>
+          <Pressable
+            onPress={() => router.push('/help')}
+            style={[styles.linkRow, { borderColor: theme.border }]}>
+            <Ionicons name="help-circle-outline" size={18} color={theme.accent} />
+            <Text style={{ color: theme.text, fontWeight: '700', flex: 1 }}>{t('Help')}</Text>
+            <Ionicons name="chevron-forward" size={16} color={theme.textSecondary} />
+          </Pressable>
+          <Pressable
+            onPress={() => void Linking.openURL(`${legalBase()}/privacy`)}
+            style={[styles.linkRow, { borderColor: theme.border }]}>
+            <Ionicons name="document-text-outline" size={18} color={theme.accent} />
+            <Text style={{ color: theme.text, fontWeight: '700', flex: 1 }}>{t('Privacy Policy')}</Text>
+            <Ionicons name="open-outline" size={16} color={theme.textSecondary} />
+          </Pressable>
+          <Pressable
+            onPress={() => void Linking.openURL(`${legalBase()}/terms`)}
+            style={[styles.linkRow, { borderColor: theme.border }]}>
+            <Ionicons name="reader-outline" size={18} color={theme.accent} />
+            <Text style={{ color: theme.text, fontWeight: '700', flex: 1 }}>{t('Terms of Use')}</Text>
+            <Ionicons name="open-outline" size={16} color={theme.textSecondary} />
+          </Pressable>
+          <Pressable
+            onPress={() => void Linking.openURL('mailto:support@xactscore.app')}
+            style={[styles.linkRow, { borderColor: theme.border }]}>
+            <Ionicons name="mail-outline" size={18} color={theme.accent} />
+            <Text style={{ color: theme.text, fontWeight: '700', flex: 1 }}>{t('Contact support')}</Text>
+            <Ionicons name="open-outline" size={16} color={theme.textSecondary} />
+          </Pressable>
+        </View>
+
         <Pressable
           onPress={() => void signOut()}
           style={[styles.signOut, { backgroundColor: theme.danger }]}>
           <Text style={styles.signOutText}>{t('Sign out')}</Text>
+        </Pressable>
+
+        <Pressable
+          disabled={deleteBusy}
+          onPress={() =>
+            confirmDeleteAccount(() => {
+              setDeleteBusy(true);
+              setError(null);
+              void deleteAccount()
+                .catch((err) => {
+                  setError(err instanceof Error ? err.message : t('Request failed'));
+                  Alert.alert(t('Delete account'), err instanceof Error ? err.message : t('Request failed'));
+                })
+                .finally(() => setDeleteBusy(false));
+            })
+          }
+          style={[
+            styles.deleteAccount,
+            {
+              borderColor: theme.danger,
+              opacity: deleteBusy ? 0.6 : 1,
+            },
+          ]}>
+          {deleteBusy ? (
+            <ActivityIndicator color={theme.danger} />
+          ) : (
+            <Text style={[styles.deleteAccountText, { color: theme.danger }]}>
+              {t('Delete account')}
+            </Text>
+          )}
         </Pressable>
       </ScrollView>
 
@@ -728,6 +802,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signOutText: { color: '#ffffff', fontWeight: '800', fontSize: 15 },
+  deleteAccount: {
+    minHeight: 48,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  deleteAccountText: { fontWeight: '800', fontSize: 15 },
+  linkRow: {
+    minHeight: 48,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 10,
+  },
   modalBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.45)',

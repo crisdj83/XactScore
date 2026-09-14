@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   Pressable,
   StyleSheet,
@@ -16,6 +17,11 @@ import { Spacing } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
+import { siteUrl } from '@/lib/supabase';
+
+function legalBase() {
+  return siteUrl.replace(/\/$/, '').replace('://xactscore.app', '://www.xactscore.app');
+}
 
 export function LoginScreen() {
   const theme = useTheme();
@@ -173,6 +179,25 @@ export function LoginScreen() {
                 </ThemedText>
               )}
             </Pressable>
+
+            <ThemedText type="small" themeColor="textSecondary" style={styles.legal}>
+              {mode === 'signup'
+                ? t('By signing up you agree to our')
+                : t('See our')}{' '}
+              <ThemedText
+                type="smallBold"
+                style={{ color: theme.accent }}
+                onPress={() => void Linking.openURL(`${legalBase()}/privacy`)}>
+                {t('Privacy Policy')}
+              </ThemedText>
+              {' · '}
+              <ThemedText
+                type="smallBold"
+                style={{ color: theme.accent }}
+                onPress={() => void Linking.openURL(`${legalBase()}/terms`)}>
+                {t('Terms of Use')}
+              </ThemedText>
+            </ThemedText>
           </View>
         </KeyboardAvoidingView>
     </ThemedView>
@@ -232,4 +257,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submitText: { textTransform: 'uppercase', letterSpacing: 1 },
+  legal: { marginTop: Spacing.three, textAlign: 'center', lineHeight: 18 },
 });

@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Modal,
   Pressable,
   RefreshControl,
@@ -18,6 +19,7 @@ import { useAuth } from '@/contexts/auth';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
+import { reportContent } from '@/lib/account-api';
 import {
   createMessage,
   createReply,
@@ -142,6 +144,41 @@ export default function MessagesScreen() {
     } catch (err) {
       setError(err instanceof Error ? err.message : t('Request failed'));
     }
+  };
+
+  const onReport = (kind: 'message' | 'reply', targetId: string, targetUserId: string) => {
+    const submit = (reason: string) => {
+      const text = reason.trim();
+      if (text.length < 3) {
+        setError(t('Report details are required.'));
+        return;
+      }
+      void reportContent({ kind, targetId, targetUserId, reason: text })
+        .then(() => Alert.alert(t('Report'), t('Thanks. We will review this report.')))
+        .catch((err) => setError(err instanceof Error ? err.message : t('Request failed')));
+    };
+
+    if (typeof Alert.prompt === 'function') {
+      Alert.prompt(
+        t('Report'),
+        t('Tell us what is wrong with this content.'),
+        [
+          { text: t('Cancel'), style: 'cancel' },
+          { text: t('Submit report'), onPress: (reason?: string) => submit(reason || '') },
+        ],
+        'plain-text',
+      );
+      return;
+    }
+
+    Alert.alert(t('Report'), t('Report this content as inappropriate?'), [
+      { text: t('Cancel'), style: 'cancel' },
+      {
+        text: t('Submit report'),
+        style: 'destructive',
+        onPress: () => submit('Inappropriate or abusive content'),
+      },
+    ]);
   };
 
   return (
@@ -293,11 +330,20 @@ export default function MessagesScreen() {
                 <Text style={[styles.meta, { color: theme.textSecondary }]}>
                   {message.contestName} · {message.authorName}
                 </Text>
-                {canDelete(message.authorId, message.contestId) ? (
-                  <Pressable onPress={() => void onDelete('message', message.id)} hitSlop={8}>
-                    <Ionicons name="trash-outline" size={16} color={theme.danger} />
-                  </Pressable>
-                ) : null}
+                <View style={styles.threadActions}>
+                  {message.authorId !== user?.id ? (
+                    <Pressable
+                      onPress={() => onReport('message', message.id, message.authorId)}
+                      hitSlop={8}>
+                      <Ionicons name="flag-outline" size={16} color={theme.textSecondary} />
+                    </Pressable>
+                  ) : null}
+                  {canDelete(message.authorId, message.contestId) ? (
+                    <Pressable onPress={() => void onDelete('message', message.id)} hitSlop={8}>
+                      <Ionicons name="trash-outline" size={16} color={theme.danger} />
+                    </Pressable>
+                  ) : null}
+                </View>
               </View>
               <Text style={[styles.threadTitle, { color: theme.text }]}>{message.title}</Text>
               <Text style={[styles.threadBody, { color: theme.textSecondary }]}>{message.body}</Text>
@@ -321,11 +367,20 @@ export default function MessagesScreen() {
                         <Text style={[styles.meta, { color: theme.textSecondary }]}>
                           {reply.authorName}
                         </Text>
-                        {canDelete(reply.authorId, message.contestId) ? (
-                          <Pressable onPress={() => void onDelete('reply', reply.id)} hitSlop={8}>
-                            <Ionicons name="trash-outline" size={14} color={theme.danger} />
-                          </Pressable>
-                        ) : null}
+                        <View style={styles.threadActions}>
+                          {reply.authorId !== user?.id ? (
+                            <Pressable
+                              onPress={() => onReport('reply', reply.id, reply.authorId)}
+                              hitSlop={8}>
+                              <Ionicons name="flag-outline" size={14} color={theme.textSecondary} />
+                            </Pressable>
+                          ) : null}
+                          {canDelete(reply.authorId, message.contestId) ? (
+                            <Pressable onPress={() => void onDelete('reply', reply.id)} hitSlop={8}>
+                              <Ionicons name="trash-outline" size={14} color={theme.danger} />
+                            </Pressable>
+                          ) : null}
+                        </View>
                       </View>
                       <Text style={[styles.replyBody, { color: theme.text }]}>{reply.body}</Text>
                       <Text style={[styles.meta, { color: theme.textSecondary }]}>
@@ -489,6 +544,7 @@ const styles = StyleSheet.create({
   emptyTitle: { fontSize: 16, fontWeight: '800' },
   emptyBody: { fontSize: 13, lineHeight: 19 },
   threadHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  threadActions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   meta: { fontSize: 12, fontWeight: '600' },
   threadTitle: { fontSize: 17, fontWeight: '800' },
   threadBody: { fontSize: 14, lineHeight: 20 },

@@ -37,9 +37,7 @@ export default function HomeScreen() {
       const dashboard = await fetchHomeDashboard();
       setData(dashboard);
       if (dashboard.source === 'supabase') {
-        setNotice(
-          'Live fixtures API is not on the website yet. Showing your leagues from your account.'
-        );
+        setNotice('Showing your leagues from your account. Fixture highlights may be limited right now.');
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to load home';
