@@ -11,10 +11,12 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeModeControl } from '@/components/theme-mode-control';
+import { UserAvatar } from '@/components/user-avatar';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { useTranslations } from '@/contexts/locale';
@@ -27,21 +29,16 @@ import {
   type FavoriteTeam,
 } from '@/lib/favorite-teams';
 import { soccerAvatarPath } from '@/lib/soccer-avatar';
-import { siteUrl, supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 const MOTTOS = ['Play to win', 'Trust the process', 'Never stop scoring', 'Own the table'];
 const QUOTE_MAX = 18;
-
-function resolveMediaUrl(path: string | null | undefined) {
-  if (!path) return null;
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  const base = siteUrl.replace('://xactscore.app', '://www.xactscore.app');
-  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
-}
+const AVATAR_SIZE = 108;
 
 export default function ProfileScreen() {
   const theme = useTheme();
   const t = useTranslations();
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const bottomPad = useBottomTabPadding();
   const { user, profile, refreshProfile, signOut } = useAuth();
@@ -77,7 +74,6 @@ export default function ProfileScreen() {
   }, [profile]);
 
   const selectedTeam = useMemo(() => findFavoriteTeam(favoriteTeam), [favoriteTeam]);
-  const previewUri = resolveMediaUrl(avatarUrl);
   const onAccent = theme.isDark ? '#0f0f10' : '#ffffff';
   const email = profile?.email || user?.email || '—';
 
@@ -202,6 +198,23 @@ export default function ProfileScreen() {
               </Text>
             </View>
           ) : null}
+          {profile?.is_global_admin ? (
+            <Pressable
+              onPress={() => router.push('/admin')}
+              style={[
+                styles.adminEntry,
+                {
+                  backgroundColor: theme.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
+                  borderColor: theme.border,
+                },
+              ]}>
+              <Ionicons name="shield-checkmark" size={16} color={theme.accent} />
+              <Text style={{ color: theme.text, fontWeight: '700', fontSize: 13 }}>
+                {t('Admin panel')}
+              </Text>
+              <Ionicons name="chevron-forward" size={16} color={theme.textSecondary} />
+            </Pressable>
+          ) : null}
         </View>
 
         {message ? (
@@ -254,8 +267,8 @@ export default function ProfileScreen() {
                     opacity: isPending ? 0.8 : 1,
                   },
                 ]}>
-                {previewUri ? (
-                  <Image source={{ uri: previewUri }} style={styles.avatarImg} />
+                {avatarUrl ? (
+                  <UserAvatar uri={avatarUrl} size={AVATAR_SIZE} />
                 ) : (
                   <Text style={{ color: theme.textSecondary, fontSize: 12 }}>{t('No Image')}</Text>
                 )}
@@ -595,6 +608,17 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 4,
+  },
+  adminEntry: {
+    marginTop: 10,
+    alignSelf: 'stretch',
+    borderRadius: 12,
+    borderWidth: 1,
+    minHeight: 42,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   banner: { borderWidth: 1, borderRadius: 12, padding: 12 },
   card: {

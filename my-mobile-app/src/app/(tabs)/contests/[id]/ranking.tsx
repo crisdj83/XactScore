@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import { GlassChipStrip } from '@/components/glass-segmented';
+import { UserAvatar } from '@/components/user-avatar';
 import { useContest } from '@/contexts/contest';
 import { Spacing } from '@/constants/theme';
 import { useTranslations } from '@/contexts/locale';
@@ -268,6 +269,9 @@ export default function ContestRankingScreen() {
   return (
     <ScrollView
       contentContainerStyle={[styles.content, { paddingBottom: bottomPad }]}
+      nestedScrollEnabled
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
           refreshing={loading}
@@ -475,7 +479,7 @@ function PickListRow({
       ]}>
       <Text style={[styles.pickRank, { color: theme.accent }]}>{rank}</Text>
       {player.avatarUrl ? (
-        <Image source={{ uri: player.avatarUrl }} style={styles.avatar} />
+        <UserAvatar uri={player.avatarUrl} size={24} />
       ) : (
         <View style={[styles.avatarFallback, { backgroundColor: `${theme.accent}22` }]}>
           <Ionicons name="person" size={12} color={theme.accent} />
@@ -571,7 +575,7 @@ function LeaderboardRow({
       ]}>
       <Text style={[styles.lbRank, { color: theme.textSecondary }]}>{row.rank}.</Text>
       {row.avatarUrl ? (
-        <Image source={{ uri: row.avatarUrl }} style={styles.lbAvatar} />
+        <UserAvatar uri={row.avatarUrl} size={20} />
       ) : (
         <View style={[styles.lbAvatarFallback, { borderColor: theme.border }]}>
           <Text style={{ color: theme.textSecondary, fontSize: 9, fontWeight: '800' }}>

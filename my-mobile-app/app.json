@@ -15,7 +15,7 @@
     "android": {
       "package": "app.xactscore.mobile",
       "adaptiveIcon": {
-        "backgroundColor": "#E2E8F0",
+        "backgroundColor": "#0d0d0d",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -31,9 +31,14 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#E2E8F0",
+          "backgroundColor": "#0d0d0d",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "dark": {
+            "backgroundColor": "#0d0d0d",
+            "image": "./assets/images/splash-icon.png"
+          }
         }
       ]
     ],

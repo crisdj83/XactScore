@@ -260,6 +260,35 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     No: 'Nu',
     "You're handing the whole gameweek to fate. Unlocked matches get a fresh roll and your current picks for those games get benched. No refunds, only glory.":
       'Lași toată etapa la soartă. Meciurile deblocate primesc scoruri noi. Fără retur — doar glorie.',
+    'Admin panel': 'Panou admin',
+    'Global Admin Portal': 'Portal admin global',
+    'Review and moderate pending user profile images.':
+      'Revizuiește și moderează imaginile de profil în așteptare.',
+    'Pending Image Approvals': 'Aprobări imagini în așteptare',
+    'Queue is empty': 'Coada este goală',
+    'All user images have been reviewed successfully.':
+      'Toate imaginile utilizatorilor au fost verificate.',
+    Approve: 'Aprobă',
+    Reject: 'Respinge',
+    'Avatar approved': 'Avatar aprobat',
+    'Avatar rejected': 'Avatar respins',
+    Back: 'Înapoi',
+    'Request failed': 'Cererea a eșuat',
+    'Discuss matches and contests with your fellow members.':
+      'Discută meciuri și contesturi cu ceilalți membri.',
+    'Start a discussion': 'Începe o discuție',
+    'Choose a contest': 'Alege un contest',
+    Title: 'Titlu',
+    'Write your message…': 'Scrie mesajul…',
+    Post: 'Publică',
+    'Write a reply…': 'Scrie un răspuns…',
+    'Message title and text are required.': 'Titlul și textul mesajului sunt obligatorii.',
+    'Reply text is required.': 'Textul răspunsului este obligatoriu.',
+    'Join a league to start discussions with other members.':
+      'Intră într-o ligă ca să începi discuții cu alți membri.',
+    'Be the first to start a discussion in one of your contests.':
+      'Fii primul care începe o discuție într-unul din contesturile tale.',
+    'No messages yet': 'Niciun mesaj încă',
   },
   es: {
     Language: 'Idioma',
@@ -508,6 +537,35 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     No: 'No',
     "You're handing the whole gameweek to fate. Unlocked matches get a fresh roll and your current picks for those games get benched. No refunds, only glory.":
       'Dejas toda la jornada al azar. Los partidos abiertos reciben un nuevo sorteo. Sin reembolsos: solo gloria.',
+    'Admin panel': 'Panel de admin',
+    'Global Admin Portal': 'Portal de admin global',
+    'Review and moderate pending user profile images.':
+      'Revisa y modera las imágenes de perfil pendientes.',
+    'Pending Image Approvals': 'Aprobaciones de imagen pendientes',
+    'Queue is empty': 'La cola está vacía',
+    'All user images have been reviewed successfully.':
+      'Todas las imágenes de usuario han sido revisadas.',
+    Approve: 'Aprobar',
+    Reject: 'Rechazar',
+    'Avatar approved': 'Avatar aprobado',
+    'Avatar rejected': 'Avatar rechazado',
+    Back: 'Atrás',
+    'Request failed': 'La solicitud falló',
+    'Discuss matches and contests with your fellow members.':
+      'Habla de partidos y ligas con el resto de miembros.',
+    'Start a discussion': 'Empezar una discusión',
+    'Choose a contest': 'Elige una liga',
+    Title: 'Título',
+    'Write your message…': 'Escribe tu mensaje…',
+    Post: 'Publicar',
+    'Write a reply…': 'Escribe una respuesta…',
+    'Message title and text are required.': 'El título y el texto del mensaje son obligatorios.',
+    'Reply text is required.': 'El texto de la respuesta es obligatorio.',
+    'Join a league to start discussions with other members.':
+      'Únete a una liga para empezar a hablar con otros miembros.',
+    'Be the first to start a discussion in one of your contests.':
+      'Sé el primero en empezar una discusión en una de tus ligas.',
+    'No messages yet': 'Aún no hay mensajes',
   },
 };
 

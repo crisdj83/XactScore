@@ -2,12 +2,12 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppChrome } from '@/components/app-chrome';
+import { BrandSplash } from '@/components/brand-splash';
 import { LoginScreen } from '@/components/login-screen';
-import { ThemedView } from '@/components/themed-view';
 import { AuthProvider, useAuth } from '@/contexts/auth';
 import { LocaleProvider } from '@/contexts/locale';
 import { ThemePreferenceProvider } from '@/contexts/theme';
@@ -21,15 +21,16 @@ function RootNavigator() {
 
   useEffect(() => {
     if (!loading) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch(() => undefined);
     }
   }, [loading]);
 
   if (loading) {
     return (
-      <ThemedView style={styles.loading}>
-        <ActivityIndicator size="large" color={theme.accent} />
-      </ThemedView>
+      <>
+        <StatusBar style="light" />
+        <BrandSplash />
+      </>
     );
   }
 
@@ -73,5 +74,4 @@ export default function RootLayout() {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 });

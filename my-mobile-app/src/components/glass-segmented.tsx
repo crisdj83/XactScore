@@ -3,7 +3,6 @@ import {
   LayoutChangeEvent,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -14,7 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Gesture, GestureDetector, RectButton, ScrollView } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -51,10 +50,13 @@ export function GlassTrack({
   children,
   style,
   radius = 28,
+  interactive = true,
 }: {
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
   radius?: number;
+  /** When false, glass doesn't steal pan gestures (needed for nested scroll strips). */
+  interactive?: boolean;
 }) {
   const theme = useTheme();
   const palette = glassTabPalette(theme.isDark);
@@ -75,7 +77,7 @@ export function GlassTrack({
         glassEffectStyle="regular"
         colorScheme={theme.isDark ? 'dark' : 'light'}
         tintColor={palette.trackWash}
-        isInteractive
+        isInteractive={interactive}
         style={shellStyle}>
         {children}
       </GlassView>
@@ -296,7 +298,7 @@ export function GlassSegmented({
 }
 
 /**
- * Horizontal glass chip strip — scrolls freely, snaps selected chip to center.
+ * Horizontal glass chip strip — nested-scroll safe, snaps selection to center.
  * Optional crests for fixture chips (Table / GW strip).
  */
 export type GlassChipItem = {
@@ -324,13 +326,16 @@ export function GlassChipStrip({
   const [layouts, setLayouts] = useState<Record<string, Layout>>({});
   const layoutsRef = useRef(layouts);
   layoutsRef.current = layouts;
-  const scrollingRef = useRef(false);
+  const draggingRef = useRef(false);
+  const scrollXRef = useRef(0);
+  const ignoreSettleUntilRef = useRef(0);
 
   const left = useSharedValue(0);
   const width = useSharedValue(0);
 
   /** Side padding so first/last chips can sit in the true center. */
   const sidePad = Math.max(0, trackWidth / 2);
+  const hasValueLayout = Boolean(layouts[value]);
 
   const centerChip = (key: string, animated = true) => {
     const layout = layoutsRef.current[key];
@@ -338,6 +343,7 @@ export function GlassChipStrip({
     const chipCenterInContent = sidePad + layout.x + layout.width / 2;
     const target = Math.max(0, chipCenterInContent - trackWidth / 2);
     scrollRef.current?.scrollTo({ x: target, animated });
+    scrollXRef.current = target;
   };
 
   const snapPill = (key: string, animated = true) => {
@@ -352,15 +358,18 @@ export function GlassChipStrip({
     }
   };
 
+  // Move the glass pill whenever the selected chip's layout is known.
   useEffect(() => {
-    const layout = layouts[value];
-    if (!layout || trackWidth <= 0) return;
+    if (!hasValueLayout) return;
     snapPill(value, true);
-    if (scrollingRef.current) return;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => centerChip(value, true));
-    });
-  }, [value, layouts, trackWidth, sidePad]);
+  }, [value, hasValueLayout, layouts[value]?.x, layouts[value]?.width]);
+
+  // Center selected chip when value/track size changes — not while the user is dragging.
+  useEffect(() => {
+    if (!hasValueLayout || trackWidth <= 0 || draggingRef.current) return;
+    const frame = requestAnimationFrame(() => centerChip(value, true));
+    return () => cancelAnimationFrame(frame);
+  }, [value, hasValueLayout, trackWidth, sidePad]);
 
   const nearestKeyAtOffset = (scrollX: number) => {
     const viewportCenter = scrollX + trackWidth / 2;
@@ -379,18 +388,24 @@ export function GlassChipStrip({
     return best;
   };
 
-  const selectKey = (key: string, fromScroll = false) => {
+  const selectKey = (key: string) => {
+    if (!key) return;
+    draggingRef.current = false;
+    // Don't let a following scroll-end settle overwrite the tapped chip.
+    ignoreSettleUntilRef.current = Date.now() + 400;
+    snapPill(key, true);
+    centerChip(key, true);
+    if (key !== value) onChange(key);
+  };
+
+  const settleScroll = (scrollX: number) => {
+    draggingRef.current = false;
+    if (Date.now() < ignoreSettleUntilRef.current) return;
+    const key = nearestKeyAtOffset(scrollX);
     if (!key) return;
     snapPill(key, true);
     centerChip(key, true);
     if (key !== value) onChange(key);
-    else if (!fromScroll) centerChip(key, true);
-  };
-
-  const settleScroll = (scrollX: number) => {
-    scrollingRef.current = false;
-    const key = nearestKeyAtOffset(scrollX);
-    if (key) selectKey(key, true);
   };
 
   const indicatorStyle = useAnimatedStyle(() => ({
@@ -400,25 +415,32 @@ export function GlassChipStrip({
   }));
 
   return (
-    <GlassTrack radius={18} style={[styles.chipTrack, style]}>
+    <GlassTrack interactive={false} radius={18} style={[styles.chipTrack, style]}>
       <View
         style={styles.chipViewport}
         onLayout={(e) => setTrackWidth(e.nativeEvent.layout.width)}>
         <ScrollView
           ref={scrollRef}
           horizontal
+          nestedScrollEnabled
+          directionalLockEnabled
           showsHorizontalScrollIndicator={false}
           decelerationRate="fast"
+          keyboardShouldPersistTaps="always"
           scrollEventThrottle={16}
-          onScrollBeginDrag={() => {
-            scrollingRef.current = true;
+          onScroll={(e) => {
+            scrollXRef.current = e.nativeEvent.contentOffset.x;
           }}
-          onMomentumScrollEnd={(e) => settleScroll(e.nativeEvent.contentOffset.x)}
+          onScrollBeginDrag={() => {
+            draggingRef.current = true;
+          }}
+          onMomentumScrollEnd={(e) => {
+            settleScroll(e.nativeEvent.contentOffset.x);
+          }}
           onScrollEndDrag={(e) => {
-            // If no momentum, settle immediately.
-            if (e.nativeEvent.velocity && Math.abs(e.nativeEvent.velocity.x) > 0.05) {
-              return;
-            }
+            const vx = e.nativeEvent.velocity?.x ?? 0;
+            // Momentum will fire settle; only settle now if the drag stopped cold.
+            if (Math.abs(vx) > 0.08) return;
             settleScroll(e.nativeEvent.contentOffset.x);
           }}
           contentContainerStyle={[styles.chipContent, { paddingHorizontal: sidePad }]}>
@@ -439,8 +461,10 @@ export function GlassChipStrip({
               const active = item.key === value;
               const color = active ? GlassTabColors.active : palette.inactive;
               return (
-                <Pressable
+                <RectButton
                   key={item.key}
+                  rippleColor="transparent"
+                  underlayColor="transparent"
                   onLayout={(e) => {
                     const { x, width: w, height: h } = e.nativeEvent.layout;
                     setLayouts((prev) => {
@@ -460,11 +484,8 @@ export function GlassChipStrip({
                     });
                   }}
                   onPress={() => selectKey(item.key)}
-                  style={({ pressed }) => [
-                    styles.chip,
-                    pressed && { opacity: 0.88 },
-                  ]}>
-                  <View style={styles.chipInner}>
+                  style={styles.chip}>
+                  <View style={styles.chipInner} pointerEvents="none">
                     {item.leadingUri ? (
                       <Image source={{ uri: item.leadingUri }} style={styles.chipCrest} />
                     ) : null}
@@ -479,7 +500,7 @@ export function GlassChipStrip({
                       <Image source={{ uri: item.trailingUri }} style={styles.chipCrest} />
                     ) : null}
                   </View>
-                </Pressable>
+                </RectButton>
               );
             })}
           </View>

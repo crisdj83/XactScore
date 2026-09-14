@@ -195,6 +195,8 @@ export default function ContestPredictionsScreen() {
             paddingBottom: openLeft > 0 ? luckyBottom + 64 : bottomPad,
           },
         ]}
+        nestedScrollEnabled
+        keyboardShouldPersistTaps="handled"
         refreshControl={
           <RefreshControl
             refreshing={loading}

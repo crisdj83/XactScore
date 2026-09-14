@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { UserAvatar } from '@/components/user-avatar';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -43,7 +44,7 @@ export function HomeProfileStrip({
       {isDark ? <View pointerEvents="none" style={styles.darkGlow} /> : null}
 
       {avatarUrl ? (
-        <Image source={{ uri: avatarUrl }} style={styles.avatar} contentFit="cover" />
+        <UserAvatar uri={avatarUrl} size={40} preferExpoImage style={styles.avatar} />
       ) : (
         <View style={[styles.avatarFallback, { backgroundColor: theme.accent }]}>
           <Text style={[styles.avatarLetter, { color: isDark ? '#050506' : '#ffffff' }]}>
