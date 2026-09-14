@@ -190,6 +190,39 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     Tiebreakers: 'Departajare',
     'Total points, then exact scores, then close scores, then alphabetical name.':
       'Total puncte, apoi scoruri exacte, apoi aproape, apoi nume alfabetic.',
+    'Contest Rules & Scoring': 'Reguli și punctaj',
+    'Everything you need to know to dominate the leaderboard.':
+      'Tot ce trebuie să știi ca să domini clasamentul.',
+    'Open Predictions to see upcoming Premier League fixtures.':
+      'Deschide Predicții ca să vezi meciurile Premier League.',
+    'Use + and − to set the home and away score.':
+      'Folosește + și − ca să setezi scorul gazdelor și oaspeților.',
+    'Your picks save as you change them.': 'Ponturile se salvează pe măsură ce le schimbi.',
+    'Picks lock 60 minutes before kickoff. After lock, the pick is final.':
+      'Ponturile se blochează cu 60 de minute înainte de start. După blocare, alegerea e finală.',
+    'Other players’ picks reveal 30 minutes before kickoff.':
+      'Ponturile celorlalți se văd cu 30 de minute înainte de start.',
+    'Tiered Scoring System': 'Sistem de punctaj pe niveluri',
+    'Points are awarded after the final whistle based on how accurate your prediction was compared to the real-world result.':
+      'Punctele se acordă după fluierul final, după cât de precisă a fost predicția față de rezultat.',
+    'You correctly predict the exact final score of the match.':
+      'Ai ghicit scorul final exact al meciului.',
+    'You predict the right outcome (Win/Draw/Loss), AND total goals scored is off by no more than 1.':
+      'Ai ghicit rezultatul (victorie/egal/înfrângere) și totalul de goluri greșește cu cel mult 1.',
+    'You predict the right outcome (Win/Draw/Loss), but total goals are not close.':
+      'Ai ghicit rezultatul (victorie/egal/înfrângere), dar totalul de goluri nu e aproape.',
+    'Wrong outcome — no points for that match.': 'Rezultat greșit — zero puncte la acel meci.',
+    Example: 'Exemplu',
+    Predicted: 'Predicție',
+    Actual: 'Real',
+    Total: 'Total',
+    'Leaderboard Tiebreakers': 'Departajare în clasament',
+    'If two or more players have the exact same Total Points, the leaderboard will rank them based on:':
+      'Dacă doi sau mai mulți jucători au aceleași puncte totale, clasamentul îi ordonează după:',
+    'Highest number of Exact Scores': 'Cele mai multe scoruri exacte',
+    'Highest number of Close Predictions': 'Cele mai multe predicții aproape',
+    'Highest overall prediction accuracy percentage': 'Cel mai mare procent general de precizie',
+    'Alphabetical name if still tied': 'Nume alfabetic dacă e încă egalitate',
     'Only admins can edit this contest.': 'Doar adminii pot edita acest contest.',
     Saved: 'Salvat',
     'Regenerate key?': 'Regenerezi cheia?',
@@ -534,6 +567,39 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     Tiebreakers: 'Desempates',
     'Total points, then exact scores, then close scores, then alphabetical name.':
       'Puntos totales, luego exactos, luego cercanos, luego nombre.',
+    'Contest Rules & Scoring': 'Reglas y puntuación',
+    'Everything you need to know to dominate the leaderboard.':
+      'Todo lo que necesitas saber para dominar la clasificación.',
+    'Open Predictions to see upcoming Premier League fixtures.':
+      'Abre Predicciones para ver los partidos de Premier League.',
+    'Use + and − to set the home and away score.':
+      'Usa + y − para fijar el marcador local y visitante.',
+    'Your picks save as you change them.': 'Tus pronósticos se guardan al cambiarlos.',
+    'Picks lock 60 minutes before kickoff. After lock, the pick is final.':
+      'Se cierran 60 minutos antes del saque. Después, la elección es definitiva.',
+    'Other players’ picks reveal 30 minutes before kickoff.':
+      'Los pronósticos de los demás se revelan 30 minutos antes del saque.',
+    'Tiered Scoring System': 'Sistema de puntuación por niveles',
+    'Points are awarded after the final whistle based on how accurate your prediction was compared to the real-world result.':
+      'Los puntos se otorgan tras el pitido final según lo acertado de tu predicción frente al resultado real.',
+    'You correctly predict the exact final score of the match.':
+      'Aciertas el marcador final exacto del partido.',
+    'You predict the right outcome (Win/Draw/Loss), AND total goals scored is off by no more than 1.':
+      'Aciertas el resultado (victoria/empate/derrota) y el total de goles falla como máximo en 1.',
+    'You predict the right outcome (Win/Draw/Loss), but total goals are not close.':
+      'Aciertas el resultado (victoria/empate/derrota), pero el total de goles no está cerca.',
+    'Wrong outcome — no points for that match.': 'Resultado incorrecto: cero puntos en ese partido.',
+    Example: 'Ejemplo',
+    Predicted: 'Predicción',
+    Actual: 'Real',
+    Total: 'Total',
+    'Leaderboard Tiebreakers': 'Desempates de la clasificación',
+    'If two or more players have the exact same Total Points, the leaderboard will rank them based on:':
+      'Si dos o más jugadores tienen los mismos puntos totales, la clasificación los ordena por:',
+    'Highest number of Exact Scores': 'Mayor número de marcadores exactos',
+    'Highest number of Close Predictions': 'Mayor número de predicciones cercanas',
+    'Highest overall prediction accuracy percentage': 'Mayor porcentaje general de precisión',
+    'Alphabetical name if still tied': 'Nombre alfabético si sigue el empate',
     'Only admins can edit this contest.': 'Solo los admins pueden editar esta liga.',
     Saved: 'Guardado',
     'Regenerate key?': '¿Regenerar clave?',
