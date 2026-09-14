@@ -334,6 +334,28 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
       'Mesajele utilizatorilor blocați rămân ascunse din feedul de Mesaje.',
     'To report or block someone, open a message thread, tap the flag, then choose Report or Block user. Blocked content disappears from your feed immediately. Manage blocks in Profile.':
       'Pentru a raporta sau bloca pe cineva, deschide un fir de mesaj, apasă steagul, apoi alege Raportează sau Blochează. Conținutul blocat dispare imediat din feed. Gestionează blocările din Profil.',
+    'Everything you need to get the most from XactScore.':
+      'Tot ce ai nevoie pentru a profita la maximum de XactScore.',
+    'Getting started': 'Primii pași',
+    'Create an account, choose a username, then open Leagues to join a league or create your own.':
+      'Creează un cont, alege un nume de utilizator, apoi deschide Ligi ca să intri într-o ligă sau să creezi una.',
+    'Making predictions': 'Cum faci predicții',
+    'Open a league and go to Predictions to see the fixture calendar. Choose a score for both teams; you can change it until picks lock, 60 minutes before kickoff. Other players’ picks reveal 30 minutes before kickoff.':
+      'Deschide o ligă și mergi la Predicții pentru calendarul meciurilor. Alege un scor pentru ambele echipe; poți schimba până se blochează, cu 60 de minute înainte de start. Predicțiile celorlalți se văd cu 30 de minute înainte.',
+    'Scoring and rankings': 'Punctaj și clasamente',
+    'You earn the most points for an exact score, with additional points for a close prediction or the correct result. Check Table to follow your progress against the rest of your league.':
+      'Primești cele mai multe puncte pentru un scor exact, cu puncte suplimentare pentru o predicție apropiată sau rezultatul corect. Verifică Clasamentul pentru progresul tău în ligă.',
+    'Contests and invites': 'Ligi și invitații',
+    'League admins can choose full season, first half, or second half, customize scoring, and share an invite link with friends. You can belong to multiple leagues at once.':
+      'Adminii pot alege sezonul complet, prima sau a doua jumătate, personaliza punctajul și partaja un link de invitație. Poți face parte din mai multe ligi în același timp.',
+    'Your profile': 'Profilul tău',
+    'Use Profile to update your username, favorite Premier League team, avatar, personal quote, and match reminder settings. Your profile helps your league recognize you.':
+      'Folosește Profilul pentru nume, echipa favorită, avatar, citat și setările de reminder. Profilul îi ajută pe ceilalți să te recunoască.',
+    'Messages are discussions between members of your leagues. Open a title to read the thread and reply. Use them to talk about fixtures, banter, and league news.':
+      'Mesajele sunt discuții între membrii ligilor tale. Deschide un titlu ca să citești firul și să răspunzi. Folosește-le pentru meciuri, banter și noutăți.',
+    'Match reminders': 'Reminder-uri meci',
+    'In Profile, turn on Match reminders and pick 1h, 2h, 3h, or 4h before kickoff. You only get a ping if you still have open picks. Picks still lock 60 minutes before kickoff.':
+      'În Profil, pornește Reminder-uri meci și alege 1h, 2h, 3h sau 4h înainte de start. Primești notificare doar dacă mai ai ponturi deschise. Ponturile se blochează tot cu 60 de minute înainte.',
   },
   es: {
     Language: 'Idioma',
@@ -656,6 +678,28 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
       'Los mensajes de usuarios bloqueados se mantienen ocultos en tu feed de Mensajes.',
     'To report or block someone, open a message thread, tap the flag, then choose Report or Block user. Blocked content disappears from your feed immediately. Manage blocks in Profile.':
       'Para reportar o bloquear a alguien, abre un hilo de mensaje, toca la bandera y elige Reportar o Bloquear. El contenido bloqueado desaparece de inmediato. Gestiona bloqueos en Perfil.',
+    'Everything you need to get the most from XactScore.':
+      'Todo lo que necesitas para aprovechar XactScore al máximo.',
+    'Getting started': 'Primeros pasos',
+    'Create an account, choose a username, then open Leagues to join a league or create your own.':
+      'Crea una cuenta, elige un nombre de usuario y abre Ligas para unirte o crear la tuya.',
+    'Making predictions': 'Hacer predicciones',
+    'Open a league and go to Predictions to see the fixture calendar. Choose a score for both teams; you can change it until picks lock, 60 minutes before kickoff. Other players’ picks reveal 30 minutes before kickoff.':
+      'Abre una liga y ve a Predicciones para el calendario. Elige un marcador para ambos equipos; puedes cambiarlo hasta el cierre, 60 minutos antes del saque. Los pronósticos de los demás se revelan 30 minutos antes.',
+    'Scoring and rankings': 'Puntuación y clasificaciones',
+    'You earn the most points for an exact score, with additional points for a close prediction or the correct result. Check Table to follow your progress against the rest of your league.':
+      'Obtienes más puntos por un marcador exacto, con puntos adicionales por una predicción cercana o el resultado correcto. Consulta Tabla para seguir tu progreso.',
+    'Contests and invites': 'Ligas e invitaciones',
+    'League admins can choose full season, first half, or second half, customize scoring, and share an invite link with friends. You can belong to multiple leagues at once.':
+      'Los admins pueden elegir temporada completa, primera o segunda mitad, personalizar la puntuación y compartir un enlace. Puedes estar en varias ligas a la vez.',
+    'Your profile': 'Tu perfil',
+    'Use Profile to update your username, favorite Premier League team, avatar, personal quote, and match reminder settings. Your profile helps your league recognize you.':
+      'Usa Perfil para nombre, equipo favorito, avatar, frase y recordatorios. Tu perfil ayuda a que tu liga te reconozca.',
+    'Messages are discussions between members of your leagues. Open a title to read the thread and reply. Use them to talk about fixtures, banter, and league news.':
+      'Los mensajes son conversaciones entre miembros de tus ligas. Abre un título para leer el hilo y responder. Úsalos para partidos, bromas y noticias.',
+    'Match reminders': 'Recordatorios de partido',
+    'In Profile, turn on Match reminders and pick 1h, 2h, 3h, or 4h before kickoff. You only get a ping if you still have open picks. Picks still lock 60 minutes before kickoff.':
+      'En Perfil, activa Recordatorios de partido y elige 1h, 2h, 3h o 4h antes del saque. Solo recibes aviso si aún te faltan pronósticos. Se cierran 60 minutos antes.',
   },
 };
 
