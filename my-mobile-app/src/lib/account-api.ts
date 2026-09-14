@@ -44,6 +44,23 @@ async function parseJson(response: Response) {
 
 /** Permanently delete the signed-in account (App Store 5.1.1(v)). */
 export async function deleteAccount() {
+  // Prefer DB RPC (works right after running fix_contests_admin_cascade.sql).
+  const { error: rpcError } = await supabase.rpc('delete_own_account');
+  if (!rpcError) {
+    await supabase.auth.signOut();
+    return;
+  }
+
+  const rpcMissing =
+    rpcError.message.includes('delete_own_account') ||
+    rpcError.code === 'PGRST202' ||
+    rpcError.code === '42883';
+
+  if (!rpcMissing) {
+    throw new Error(rpcError.message);
+  }
+
+  // Fallback: website API (needs latest deploy + service role).
   const headers = await authHeaders();
   const response = await fetch(`${apiBaseUrl()}/api/mobile/account/delete`, {
     method: 'POST',
