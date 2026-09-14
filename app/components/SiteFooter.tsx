@@ -11,6 +11,12 @@ export default function SiteFooter() {
         <Link href="/help" className="inline-flex min-h-11 items-center px-2 hover:text-zinc-200">
           {t('Help')}
         </Link>
+        <Link href="/privacy" className="inline-flex min-h-11 items-center px-2 hover:text-zinc-200">
+          Privacy
+        </Link>
+        <Link href="/terms" className="inline-flex min-h-11 items-center px-2 hover:text-zinc-200">
+          Terms
+        </Link>
         <Link href="/compare" className="inline-flex min-h-11 items-center px-2 hover:text-zinc-200">
           {t('Compare')}
         </Link>
