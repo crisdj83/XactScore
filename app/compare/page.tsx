@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 export async function generateMetadata(): Promise<Metadata> {
   const t = getTranslations(getServerLocale())
   const title = t('XactScore vs Superbru and PronoContest')
-  const description = t('A private Premier League predictor without ads or a player cap.')
+  const description = t('A private Premier League predictor for friends and offices.')
   return {
     title,
     description,
@@ -31,7 +31,7 @@ export default function ComparePage() {
           {t('XactScore vs Superbru and PronoContest')}
         </h1>
         <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-400">
-          {t('A private Premier League predictor without ads or a player cap.')}
+          {t('A private Premier League predictor for friends and offices.')}
         </p>
       </div>
       <CompareSection locale={locale} showCta />

@@ -35,9 +35,6 @@ export default async function LoginPage(props: {
                 ? t('Sign in to join your league.')
                 : t('Sign in to predict and compete')}
             </p>
-            <p className="mt-3 text-center text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-              {t('No ads')} · {t('No player limit')} · {t('Always free')}
-            </p>
           </div>
 
           <div className="mb-5 grid grid-cols-2 gap-1.5 rounded-full border border-slate-200 bg-slate-100 p-1 dark:border-white/10 dark:bg-white/5">

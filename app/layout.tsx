@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = getTranslations(locale);
   const base = siteUrl();
   const title = t("XactScore | Premier League Predictions");
-  const description = t("Private Premier League prediction leagues. Exact scores with friends — no ads, no player cap, always free.");
+  const description = t("Private Premier League prediction leagues. Exact scores with friends.");
   return {
     metadataBase: new URL(base),
     title,

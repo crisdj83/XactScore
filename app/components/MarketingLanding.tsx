@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Ban, Bell, Link2, Trophy, Users, Target, BarChart2 } from 'lucide-react'
+import { Bell, Link2, Trophy, Users, Target, BarChart2 } from 'lucide-react'
 import { getTranslations } from '../../lib/i18n'
 import type { Locale } from '../../lib/i18n'
 import { buttonVariants } from '@/components/ui/button'
@@ -13,14 +13,14 @@ import type { NextMatchData, ScoreData } from './HeroBanner'
 
 const reasons = [
   {
-    icon: Ban,
-    title: 'No ads. Ever.',
-    body: 'Superbru users complain about ads before every pick. XactScore never shows them.',
+    icon: Link2,
+    title: 'Private leagues, invite links.',
+    body: 'Share one link with your office, family, or friends group. Everyone joins the same table.',
   },
   {
     icon: Users,
-    title: 'No 20-player ceiling.',
-    body: 'PronoContest free contests cap at 20. Your office, family, or pub table can all play.',
+    title: 'Your group, your table.',
+    body: 'One league for your crew — shared ranking, custom points, and banter in Messages.',
   },
   {
     icon: Target,
@@ -30,7 +30,7 @@ const reasons = [
   {
     icon: Bell,
     title: 'Picks that actually get in.',
-    body: 'Invite link, 60-minute lock, and a reminder about two hours before kickoff if you still have scores to put in.',
+    body: 'Invite link, 60-minute lock, and a reminder before kickoff if you still have scores to put in.',
   },
 ] as const
 
@@ -54,8 +54,8 @@ const steps = [
 
 const faqs = [
   {
-    q: 'Is XactScore really free?',
-    a: 'Yes. No ads, no player cap, no premium tier. Create a private Premier League league and invite whoever you want.',
+    q: 'What do I need to play?',
+    a: 'An account, a league invite or your own league, and score picks before the 60-minute lock.',
   },
   {
     q: 'How do I invite friends?',
@@ -71,7 +71,7 @@ const faqs = [
   },
   {
     q: 'Is this like Superbru or PronoContest?',
-    a: 'Same idea — predict scores with friends — without ads, a 20-player ceiling, or twelve other sports competing for attention.',
+    a: 'Same idea — predict Premier League scores with friends — focused on one sport and a private table, not a sports megamenu.',
   },
 ] as const
 
@@ -150,11 +150,6 @@ export default function MarketingLanding({
                 {t('Have an invite?')}
               </Link>
             </p>
-            <ul className="mt-6 flex flex-wrap gap-2 text-[10px] font-black uppercase tracking-wider text-zinc-500 dark:text-orange-100/90">
-              <li className="rounded-full border border-slate-100/80 bg-[#F1F4F9] px-3 py-1 dark:border-white/15 dark:bg-black/20">{t('No ads')}</li>
-              <li className="rounded-full border border-slate-100/80 bg-[#F1F4F9] px-3 py-1 dark:border-white/15 dark:bg-black/20">{t('No player limit')}</li>
-              <li className="rounded-full border border-slate-100/80 bg-[#F1F4F9] px-3 py-1 dark:border-white/15 dark:bg-black/20">{t('Always free')}</li>
-            </ul>
           </div>
           <ProductPreview locale={locale} />
         </div>
@@ -256,7 +251,7 @@ export default function MarketingLanding({
       <div className="rounded-3xl border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-orange-400/20 dark:bg-gradient-to-br dark:from-orange-600/30 dark:to-zinc-950 dark:shadow-none sm:px-10">
         <p className="text-xl font-extrabold uppercase tracking-tight text-zinc-900 dark:font-black dark:text-white sm:text-2xl">{t('Switch from Superbru or PronoContest')}</p>
         <p className="mx-auto mt-2 max-w-lg text-sm font-medium text-zinc-500 dark:text-orange-50/80">
-          {t('Always free, no ads, unlimited players. Built for a private Premier League table — not a sports megamenu.')}
+          {t('Built for a private Premier League table — not a sports megamenu.')}
         </p>
         <Link href={loginPath({ mode: 'signup' })} className={cn(buttonVariants(), 'mt-5 uppercase tracking-wider')}>
           {t('Sign Up')}

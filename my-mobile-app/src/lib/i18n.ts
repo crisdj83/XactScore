@@ -86,8 +86,7 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     Email: 'Email',
     Password: 'Parolă',
     'Password must be at least 6 characters.': 'Parola trebuie să aibă cel puțin 6 caractere.',
-    'Exact scores with friends — no ads, always free.':
-      'Scoruri exacte cu prietenii — fără reclame, mereu gratuit.',
+    'Exact scores with friends.': 'Scoruri exacte cu prietenii.',
     'Welcome to XactScore': 'Bun venit la XactScore',
     'Contest Hub': 'Hub de contesturi',
     'My Contests': 'Contesturile mele',
@@ -409,8 +408,7 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     Email: 'Email',
     Password: 'Contraseña',
     'Password must be at least 6 characters.': 'La contraseña debe tener al menos 6 caracteres.',
-    'Exact scores with friends — no ads, always free.':
-      'Marcadores exactos con amigos — sin anuncios, siempre gratis.',
+    'Exact scores with friends.': 'Marcadores exactos con amigos.',
     'Welcome to XactScore': 'Bienvenido a XactScore',
     'Contest Hub': 'Centro de ligas',
     'My Contests': 'Mis ligas',

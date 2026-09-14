@@ -7,18 +7,6 @@ import { cn } from '@/lib/utils'
 
 const rows = [
   {
-    label: 'Ads',
-    xact: 'None',
-    superbru: 'Unless you pay Premium',
-    prono: 'None on the contest, paid extras',
-  },
-  {
-    label: 'Player limit',
-    xact: 'Unlimited',
-    superbru: 'Pools capped unless you upgrade',
-    prono: '20 per contest, then pay',
-  },
-  {
     label: 'Sports',
     xact: 'Premier League',
     superbru: '12+ sports and fantasy modes',
@@ -31,10 +19,10 @@ const rows = [
     prono: '1X2 or scores, custom rules',
   },
   {
-    label: 'Price',
-    xact: 'Always free',
-    superbru: 'Free with ads, or Premium',
-    prono: 'Free, paid to raise the cap',
+    label: 'Focus',
+    xact: 'Private leagues for friends',
+    superbru: 'Public pools and fantasy modes',
+    prono: 'Contests across several sports',
   },
 ] as const
 
@@ -54,7 +42,7 @@ export default function CompareSection({
           {t('How XactScore compares')}
         </h2>
         <p className="mt-2 text-sm leading-6 text-zinc-400">
-          {t('Always free, no ads, unlimited players. Built for a private Premier League table — not a sports megamenu.')}
+          {t('Built for a private Premier League table — not a sports megamenu.')}
         </p>
       </div>
 

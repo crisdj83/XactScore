@@ -45,43 +45,37 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Paste an invite key': 'Lipește cheia de invitație',
     'Join this league': 'Intră în ligă',
     'Why groups switch': 'De ce se mută grupurile',
-    'No ads. Ever.': 'Fără reclame. Niciodată.',
-    'Superbru users complain about ads before every pick. XactScore never shows them.':
-      'Utilizatorii Superbru se plâng de reclame înainte de fiecare predicție. XactScore nu afișează reclame.',
-    'No 20-player ceiling.': 'Fără plafon de 20 de jucători.',
-    'PronoContest free contests cap at 20. Your office, family, or pub table can all play.':
-      'Concursurile gratuite PronoContest se opresc la 20. Biroul, familia sau masa de la pub pot juca toți.',
+    'Private leagues, invite links.': 'Ligi private, linkuri de invitație.',
+    'Share one link with your office, family, or friends group. Everyone joins the same table.':
+      'Trimite un link biroului, familiei sau grupului de prieteni. Toți intră în același clasament.',
+    'Your group, your table.': 'Grupul tău, clasamentul tău.',
+    'One league for your crew — shared ranking, custom points, and banter in Messages.':
+      'O ligă pentru ai tăi — clasament comun, puncte personalizate și banter în Mesaje.',
     'One sport. Exact scores.': 'Un sport. Scoruri exacte.',
     'No 12-sport maze. Just Premier League scores, a private table, and custom points.':
       'Fără labirint de 12 sporturi. Doar scoruri Premier League, un clasament privat și puncte personalizate.',
     'Picks that actually get in.': 'Predicții care chiar ajung la timp.',
-    'Invite link, 60-minute lock, and a reminder about two hours before kickoff if you still have scores to put in.':
-      'Link de invitație, blocare cu 60 de minute înainte și un reminder cu circa două ore înainte de start dacă încă ai scoruri de pus.',
+    'Invite link, 60-minute lock, and a reminder before kickoff if you still have scores to put in.':
+      'Link de invitație, blocare cu 60 de minute înainte și un reminder înainte de start dacă încă ai scoruri de pus.',
     'How XactScore compares': 'Cum se compară XactScore',
-    'Always free, no ads, unlimited players. Built for a private Premier League table — not a sports megamenu.':
-      'Mereu gratuit, fără reclame, jucători nelimitați. Făcut pentru un clasament privat de Premier League — nu pentru un mega-meniu de sporturi.',
-    Ads: 'Reclame',
-    'Player limit': 'Limită de jucători',
+    'Built for a private Premier League table — not a sports megamenu.':
+      'Făcut pentru un clasament privat de Premier League — nu pentru un mega-meniu de sporturi.',
     Sports: 'Sporturi',
     Scoring: 'Punctaj',
-    Price: 'Preț',
-    Unlimited: 'Nelimitat',
+    Focus: 'Focus',
     'Exact score + custom points': 'Scor exact + puncte personalizate',
-    'Unless you pay Premium': 'Doar dacă plătești Premium',
-    'Pools capped unless you upgrade': 'Pool-uri plafonate până la upgrade',
     '12+ sports and fantasy modes': 'Peste 12 sporturi și moduri fantasy',
     'Predictor + fantasy': 'Predictor + fantasy',
-    'Free with ads, or Premium': 'Gratuit cu reclame, sau Premium',
-    '20 per contest, then pay': '20 pe concurs, apoi plătești',
     'Football, rugby, and more': 'Fotbal, rugby și altele',
     '1X2 or scores, custom rules': '1X2 sau scoruri, reguli personalizate',
-    'Free, paid to raise the cap': 'Gratuit, plătești ca să crești plafonul',
-    'None on the contest, paid extras': 'Concurs gratuit, extra-uri plătite',
+    'Private leagues for friends': 'Ligi private pentru prieteni',
+    'Public pools and fantasy modes': 'Pool-uri publice și moduri fantasy',
+    'Contests across several sports': 'Concursuri pe mai multe sporturi',
     'Switch from Superbru or PronoContest': 'Treci de la Superbru sau PronoContest',
     'Frequently asked questions': 'Întrebări frecvente',
-    'Is XactScore really free?': 'XactScore e chiar gratuit?',
-    'Yes. No ads, no player cap, no premium tier. Create a private Premier League league and invite whoever you want.':
-      'Da. Fără reclame, fără plafon de jucători, fără abonament. Creează o ligă privată de Premier League și invită pe cine vrei.',
+    'What do I need to play?': 'De ce am nevoie ca să joc?',
+    'An account, a league invite or your own league, and score picks before the 60-minute lock.':
+      'Un cont, o invitație la o ligă sau propria ligă, și predicții înainte de blocarea cu 60 de minute.',
     'How do I invite friends?': 'Cum invit prietenii?',
     'Create a league, copy the invite link, and send it. They join at xactscore.app/join/your-key.':
       'Creează o ligă, copiază linkul de invitație și trimite-l. Intră pe xactscore.app/join/cheia-ta.',
@@ -92,8 +86,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'No. Open xactscore.app in Safari or Chrome and add it to your Home Screen. It runs like an app.':
       'Nu. Deschide xactscore.app în Safari sau Chrome și adaugă-l pe ecranul principal. Rulează ca o aplicație.',
     'Is this like Superbru or PronoContest?': 'E ca Superbru sau PronoContest?',
-    'Same idea — predict scores with friends — without ads, a 20-player ceiling, or twelve other sports competing for attention.':
-      'Aceeași idee — prezici scoruri cu prietenii — fără reclame, fără plafon de 20 și fără alte 12 sporturi care îți fură atenția.',
+    'Same idea — predict Premier League scores with friends — focused on one sport and a private table, not a sports megamenu.':
+      'Aceeași idee — prezici scoruri Premier League cu prietenii — focus pe un sport și un clasament privat, nu pe un mega-meniu de sporturi.',
     'Next up': 'Urmează',
     'Recent results': 'Rezultate recente',
     'Your pick': 'Predicția ta',
@@ -102,14 +96,14 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     vs: 'vs',
     Compare: 'Compară',
     'XactScore vs Superbru and PronoContest': 'XactScore vs Superbru și PronoContest',
-    'A private Premier League predictor without ads or a player cap.':
-      'Un predictor privat de Premier League, fără reclame și fără plafon de jucători.',
+    'A private Premier League predictor for friends and offices.':
+      'Un predictor privat de Premier League pentru prieteni și birouri.',
     'Back to home': 'Înapoi acasă',
     'Locks 60 min before kickoff': 'Se blochează cu 60 min înainte de start',
     'Private Premier League leagues for friends, offices, and family.':
       'Ligi private de Premier League pentru prieteni, birou și familie.',
-    'Private Premier League prediction leagues. Exact scores with friends — no ads, no player cap, always free.':
-      'Ligi private de predicții Premier League. Scoruri exacte cu prietenii — fără reclame, fără plafon, mereu gratuit.',
+    'Private Premier League prediction leagues. Exact scores with friends.':
+      'Ligi private de predicții Premier League. Scoruri exacte cu prietenii.',
     'Your week': 'Săptămâna ta',
     'Put your scores in before they lock.': 'Pune scorurile înainte să se blocheze.',
     'You are up to date. Check the table or wait for the next matchday.':
@@ -445,11 +439,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'You earn the most points for an exact score, with additional points for a close prediction or the correct result. Check Table to follow your progress against the rest of your league.':
       'Primești cele mai multe puncte pentru un scor exact, cu puncte suplimentare pentru o predicție apropiată sau rezultatul corect. Verifică Clasamentul pentru a-ți urmări progresul în ligă.',
     'Contests and invites': 'Concursuri și invitații',
-    'Contest admins can choose full season, first half, or second half, customize scoring, and share an invite link with friends. You can belong to multiple contests at once. There is no player cap and no ads.':
-      'Administratorii pot alege sezon complet, prima jumătate sau a doua jumătate, pot personaliza punctajul și pot trimite un link de invitație prietenilor. Poți participa simultan la mai multe concursuri. Nu există limită de jucători și nici reclame.',
-    'No ads': 'Fără reclame',
-    'No player limit': 'Fără limită de jucători',
-    'Always free': 'Mereu gratuit',
+    'Contest admins can choose full season, first half, or second half, customize scoring, and share an invite link with friends. You can belong to multiple contests at once.':
+      'Administratorii pot alege sezon complet, prima jumătate sau a doua jumătate, pot personaliza punctajul și pot trimite un link de invitație prietenilor. Poți participa simultan la mai multe concursuri.',
     'Put scores': 'Pune scorurile',
     'View table': 'Vezi clasamentul',
     'Your profile': 'Profilul tău',
@@ -570,43 +561,37 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Paste an invite key': 'Pega la clave de invitación',
     'Join this league': 'Únete a esta liga',
     'Why groups switch': 'Por qué se cambian los grupos',
-    'No ads. Ever.': 'Sin anuncios. Nunca.',
-    'Superbru users complain about ads before every pick. XactScore never shows them.':
-      'Los usuarios de Superbru se quejan de anuncios antes de cada pronóstico. XactScore no muestra ninguno.',
-    'No 20-player ceiling.': 'Sin tope de 20 jugadores.',
-    'PronoContest free contests cap at 20. Your office, family, or pub table can all play.':
-      'Los concursos gratis de PronoContest se quedan en 20. Tu oficina, familia o mesa del pub pueden jugar todos.',
+    'Private leagues, invite links.': 'Ligas privadas, enlaces de invitación.',
+    'Share one link with your office, family, or friends group. Everyone joins the same table.':
+      'Comparte un enlace con tu oficina, familia o grupo de amigos. Todos entran en la misma tabla.',
+    'Your group, your table.': 'Tu grupo, tu tabla.',
+    'One league for your crew — shared ranking, custom points, and banter in Messages.':
+      'Una liga para los tuyos: clasificación compartida, puntos a medida y charla en Mensajes.',
     'One sport. Exact scores.': 'Un deporte. Marcadores exactos.',
     'No 12-sport maze. Just Premier League scores, a private table, and custom points.':
       'Sin un laberinto de 12 deportes. Solo marcadores de Premier League, una tabla privada y puntos a medida.',
     'Picks that actually get in.': 'Pronósticos que sí llegan a tiempo.',
-    'Invite link, 60-minute lock, and a reminder about two hours before kickoff if you still have scores to put in.':
-      'Enlace de invitación, cierre 60 minutos antes y un recordatorio unas dos horas antes del saque si aún te faltan marcadores.',
+    'Invite link, 60-minute lock, and a reminder before kickoff if you still have scores to put in.':
+      'Enlace de invitación, cierre 60 minutos antes y un recordatorio antes del saque si aún te faltan marcadores.',
     'How XactScore compares': 'Cómo se compara XactScore',
-    'Always free, no ads, unlimited players. Built for a private Premier League table — not a sports megamenu.':
-      'Siempre gratis, sin anuncios, jugadores ilimitados. Hecho para una tabla privada de Premier League, no para un megamenú de deportes.',
-    Ads: 'Anuncios',
-    'Player limit': 'Límite de jugadores',
+    'Built for a private Premier League table — not a sports megamenu.':
+      'Hecho para una tabla privada de Premier League, no para un megamenú de deportes.',
     Sports: 'Deportes',
     Scoring: 'Puntuación',
-    Price: 'Precio',
-    Unlimited: 'Ilimitado',
+    Focus: 'Enfoque',
     'Exact score + custom points': 'Marcador exacto + puntos a medida',
-    'Unless you pay Premium': 'Salvo que pagues Premium',
-    'Pools capped unless you upgrade': 'Pools limitados hasta que pagues',
     '12+ sports and fantasy modes': 'Más de 12 deportes y modos fantasy',
     'Predictor + fantasy': 'Predictor + fantasy',
-    'Free with ads, or Premium': 'Gratis con anuncios, o Premium',
-    '20 per contest, then pay': '20 por concurso, luego pagas',
     'Football, rugby, and more': 'Fútbol, rugby y más',
     '1X2 or scores, custom rules': '1X2 o marcadores, reglas propias',
-    'Free, paid to raise the cap': 'Gratis; pagas para subir el tope',
-    'None on the contest, paid extras': 'Concurso gratis, extras de pago',
+    'Private leagues for friends': 'Ligas privadas para amigos',
+    'Public pools and fantasy modes': 'Pools públicos y modos fantasy',
+    'Contests across several sports': 'Concursos en varios deportes',
     'Switch from Superbru or PronoContest': 'Cámbiate de Superbru o PronoContest',
     'Frequently asked questions': 'Preguntas frecuentes',
-    'Is XactScore really free?': '¿XactScore es de verdad gratis?',
-    'Yes. No ads, no player cap, no premium tier. Create a private Premier League league and invite whoever you want.':
-      'Sí. Sin anuncios, sin tope de jugadores, sin plan de pago. Crea una liga privada de Premier League e invita a quien quieras.',
+    'What do I need to play?': '¿Qué necesito para jugar?',
+    'An account, a league invite or your own league, and score picks before the 60-minute lock.':
+      'Una cuenta, una invitación a una liga o tu propia liga, y pronósticos antes del cierre de 60 minutos.',
     'How do I invite friends?': '¿Cómo invito a amigos?',
     'Create a league, copy the invite link, and send it. They join at xactscore.app/join/your-key.':
       'Crea una liga, copia el enlace de invitación y envíalo. Entran en xactscore.app/join/tu-clave.',
@@ -617,8 +602,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'No. Open xactscore.app in Safari or Chrome and add it to your Home Screen. It runs like an app.':
       'No. Abre xactscore.app en Safari o Chrome y añádelo a la pantalla de inicio. Funciona como una app.',
     'Is this like Superbru or PronoContest?': '¿Es como Superbru o PronoContest?',
-    'Same idea — predict scores with friends — without ads, a 20-player ceiling, or twelve other sports competing for attention.':
-      'La misma idea — predecir marcadores con amigos — sin anuncios, sin tope de 20 ni otros doce deportes pidiendo atención.',
+    'Same idea — predict Premier League scores with friends — focused on one sport and a private table, not a sports megamenu.':
+      'La misma idea: predecir marcadores de Premier League con amigos, centrado en un deporte y una tabla privada, no en un megamenú.',
     'Next up': 'Próximo',
     'Recent results': 'Resultados recientes',
     'Your pick': 'Tu pronóstico',
@@ -627,14 +612,14 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     vs: 'vs',
     Compare: 'Comparar',
     'XactScore vs Superbru and PronoContest': 'XactScore vs Superbru y PronoContest',
-    'A private Premier League predictor without ads or a player cap.':
-      'Un predictor privado de Premier League, sin anuncios ni tope de jugadores.',
+    'A private Premier League predictor for friends and offices.':
+      'Un predictor privado de Premier League para amigos y oficinas.',
     'Back to home': 'Volver al inicio',
     'Locks 60 min before kickoff': 'Cierra 60 min antes del saque',
     'Private Premier League leagues for friends, offices, and family.':
       'Ligas privadas de Premier League para amigos, oficinas y familia.',
-    'Private Premier League prediction leagues. Exact scores with friends — no ads, no player cap, always free.':
-      'Ligas privadas de predicción de Premier League. Marcadores exactos con amigos: sin anuncios, sin tope, siempre gratis.',
+    'Private Premier League prediction leagues. Exact scores with friends.':
+      'Ligas privadas de predicción de Premier League. Marcadores exactos con amigos.',
     'Your week': 'Tu semana',
     'Put your scores in before they lock.': 'Pon tus marcadores antes de que se cierren.',
     'You are up to date. Check the table or wait for the next matchday.':
@@ -970,11 +955,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'You earn the most points for an exact score, with additional points for a close prediction or the correct result. Check Table to follow your progress against the rest of your league.':
       'Obtienes más puntos por un marcador exacto, con puntos adicionales por una predicción cercana o el resultado correcto. Consulta Tabla para seguir tu progreso en la liga.',
     'Contests and invites': 'Concursos e invitaciones',
-    'Contest admins can choose full season, first half, or second half, customize scoring, and share an invite link with friends. You can belong to multiple contests at once. There is no player cap and no ads.':
-      'Los administradores pueden elegir temporada completa, primera mitad o segunda mitad, personalizar la puntuación y compartir un enlace de invitación. Puedes participar en varios concursos a la vez. No hay límite de jugadores ni anuncios.',
-    'No ads': 'Sin anuncios',
-    'No player limit': 'Sin límite de jugadores',
-    'Always free': 'Siempre gratis',
+    'Contest admins can choose full season, first half, or second half, customize scoring, and share an invite link with friends. You can belong to multiple contests at once.':
+      'Los administradores pueden elegir temporada completa, primera mitad o segunda mitad, personalizar la puntuación y compartir un enlace de invitación. Puedes participar en varios concursos a la vez.',
     'Put scores': 'Pon marcadores',
     'View table': 'Ver tabla',
     'Your profile': 'Tu perfil',
