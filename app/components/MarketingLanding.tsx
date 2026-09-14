@@ -117,7 +117,7 @@ export default function MarketingLanding({
         }}
       />
 
-      <section className="hero-score-card relative overflow-hidden rounded-3xl bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-gradient-to-br dark:from-orange-600 dark:via-zinc-900 dark:to-zinc-950 dark:p-0 dark:shadow-2xl sm:px-10 sm:py-12">
+      <section className="hero-score-card relative overflow-hidden rounded-3xl bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-gradient-to-br dark:from-orange-600 dark:via-zinc-900 dark:to-zinc-950 dark:shadow-2xl sm:px-10 sm:py-12">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-100/80 bg-[#F1F4F9] px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:border-white/15 dark:bg-white/10 dark:text-orange-100">
