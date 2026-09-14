@@ -110,3 +110,71 @@ export async function changePassword(formData: FormData) {
   revalidatePath('/profile')
   redirect(`/profile?success=${encodeURIComponent('Password updated successfully!')}`)
 }
+
+/** Permanent account deletion for App Store Guideline 5.1.1(v). */
+export async function deleteAccount() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  const { createAdminClient } = await import('../../lib/supabase/admin')
+  const db = createAdminClient()
+  const userId = user.id
+
+  const { data: owned, error: ownedError } = await db
+    .from('contests')
+    .select('id')
+    .eq('admin_id', userId)
+
+  if (ownedError) {
+    redirect(`/profile?error=${encodeURIComponent(ownedError.message)}`)
+  }
+
+  const ownedIds = (owned || []).map((row) => row.id as string)
+  if (ownedIds.length) {
+    const { error: deleteContestsError } = await db.from('contests').delete().in('id', ownedIds)
+    if (deleteContestsError) {
+      redirect(
+        `/profile?error=${encodeURIComponent(`Could not remove administered leagues: ${deleteContestsError.message}`)}`,
+      )
+    }
+  }
+
+  for (const table of [
+    'content_reports',
+    'push_subscriptions',
+    'match_reminders',
+    'message_reads',
+    'news_reads',
+    'suggestions',
+  ] as const) {
+    try {
+      if (table === 'content_reports') {
+        await db.from(table).delete().or(`reporter_id.eq.${userId},target_user_id.eq.${userId}`)
+      } else {
+        await db.from(table).delete().eq('user_id', userId)
+      }
+    } catch {
+      // optional
+    }
+  }
+
+  const { error: profileDeleteError } = await db.from('users').delete().eq('id', userId)
+  if (profileDeleteError) {
+    redirect(
+      `/profile?error=${encodeURIComponent(
+        `Could not remove profile data: ${profileDeleteError.message}. Run supabase/fix_contests_admin_cascade.sql.`,
+      )}`,
+    )
+  }
+
+  const { error: authDeleteError } = await db.auth.admin.deleteUser(userId)
+  if (authDeleteError) {
+    redirect(`/profile?error=${encodeURIComponent(authDeleteError.message)}`)
+  }
+
+  await supabase.auth.signOut()
+  redirect('/login?message=' + encodeURIComponent('Your account has been permanently deleted.'))
+}

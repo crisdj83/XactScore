@@ -49,10 +49,10 @@ export default function PrivacyPage() {
 
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Retention & deletion</h2>
         <p>
-          You can delete your account in the mobile app (Profile → Delete account) or by emailing
-          support. Deletion removes your auth account and associated profile, memberships, predictions,
-          and messages subject to cascading database rules. Contests you solely administer may be
-          removed with your account.
+          You can delete your account in the app or on the website (Profile → Delete account), or by
+          emailing support. Deletion removes your auth account and associated profile, memberships,
+          predictions, and messages subject to cascading database rules. Contests you solely
+          administer may be removed with your account.
         </p>
 
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Your choices</h2>

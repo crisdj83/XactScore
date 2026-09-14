@@ -26,7 +26,7 @@ create table if not exists public.users (
 
 create table if not exists public.contests (
   id uuid primary key default gen_random_uuid(),
-  admin_id uuid not null references public.users (id),
+  admin_id uuid not null references public.users (id) on delete cascade,
   name text not null,
   contest_key text unique not null,
   is_open boolean not null default true,

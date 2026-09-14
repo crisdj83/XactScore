@@ -2,8 +2,8 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { updateProfile, changePassword } from './actions'
-import { User, Shield, Image as ImageIcon, RefreshCw, Clock, ChevronDown, Lock } from 'lucide-react'
+import { updateProfile, changePassword, deleteAccount } from './actions'
+import { User, Shield, Image as ImageIcon, RefreshCw, Clock, ChevronDown, Lock, Trash2 } from 'lucide-react'
 import MatchReminderToggle from '../components/MatchReminderToggle'
 import { createClient } from '../../lib/supabase/client'
 import { useTranslations } from '../components/LocaleProvider'
@@ -437,6 +437,36 @@ function ProfilePageInner() {
                 {t('Update Password')}
               </Button>
             </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card className="border-red-500/30">
+        <CardContent className="space-y-4 p-6 md:p-8">
+          <div>
+            <h3 className="mb-1 flex items-center gap-2 text-base font-semibold text-red-300">
+              <Trash2 className="h-5 w-5" /> {t('Delete account')}
+            </h3>
+            <p className="text-sm text-slate-500 dark:text-zinc-400">
+              Permanently deletes your account, profile, predictions, messages, and leagues you
+              administer. This cannot be undone.
+            </p>
+          </div>
+          <form
+            action={deleteAccount}
+            onSubmit={(event) => {
+              if (
+                !window.confirm(
+                  'Delete your account permanently? This cannot be undone.',
+                )
+              ) {
+                event.preventDefault()
+              }
+            }}
+          >
+            <Button type="submit" variant="destructive" className="uppercase tracking-wider">
+              <Trash2 className="h-4 w-4" /> {t('Delete account')}
+            </Button>
           </form>
         </CardContent>
       </Card>

@@ -527,40 +527,58 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.backgroundElement,
+              borderColor: theme.danger,
+            },
+          ]}>
+          <Text style={[styles.sectionTitle, { color: theme.danger }]}>{t('Delete account')}</Text>
+          <Text style={{ color: theme.textSecondary, fontSize: 13, lineHeight: 18 }}>
+            Permanently removes your account and associated data. This cannot be undone.
+          </Text>
+          <Pressable
+            disabled={deleteBusy}
+            onPress={() =>
+              confirmDeleteAccount(() => {
+                setDeleteBusy(true);
+                setError(null);
+                void deleteAccount()
+                  .catch((err) => {
+                    setError(err instanceof Error ? err.message : t('Request failed'));
+                    Alert.alert(
+                      t('Delete account'),
+                      err instanceof Error ? err.message : t('Request failed'),
+                    );
+                  })
+                  .finally(() => setDeleteBusy(false));
+              })
+            }
+            style={[
+              styles.deleteAccount,
+              {
+                borderColor: theme.danger,
+                backgroundColor: theme.isDark ? 'rgba(255,90,95,0.12)' : '#fff1f2',
+                opacity: deleteBusy ? 0.6 : 1,
+                marginTop: 8,
+              },
+            ]}>
+            {deleteBusy ? (
+              <ActivityIndicator color={theme.danger} />
+            ) : (
+              <Text style={[styles.deleteAccountText, { color: theme.danger }]}>
+                {t('Delete account')}
+              </Text>
+            )}
+          </Pressable>
+        </View>
+
         <Pressable
           onPress={() => void signOut()}
           style={[styles.signOut, { backgroundColor: theme.danger }]}>
           <Text style={styles.signOutText}>{t('Sign out')}</Text>
-        </Pressable>
-
-        <Pressable
-          disabled={deleteBusy}
-          onPress={() =>
-            confirmDeleteAccount(() => {
-              setDeleteBusy(true);
-              setError(null);
-              void deleteAccount()
-                .catch((err) => {
-                  setError(err instanceof Error ? err.message : t('Request failed'));
-                  Alert.alert(t('Delete account'), err instanceof Error ? err.message : t('Request failed'));
-                })
-                .finally(() => setDeleteBusy(false));
-            })
-          }
-          style={[
-            styles.deleteAccount,
-            {
-              borderColor: theme.danger,
-              opacity: deleteBusy ? 0.6 : 1,
-            },
-          ]}>
-          {deleteBusy ? (
-            <ActivityIndicator color={theme.danger} />
-          ) : (
-            <Text style={[styles.deleteAccountText, { color: theme.danger }]}>
-              {t('Delete account')}
-            </Text>
-          )}
         </Pressable>
       </ScrollView>
 
