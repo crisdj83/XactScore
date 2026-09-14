@@ -37,6 +37,8 @@ export async function POST(request: Request) {
   // Best-effort optional tables (ignore if missing).
   for (const table of [
     'content_reports',
+    'user_blocks',
+    'expo_push_tokens',
     'push_subscriptions',
     'match_reminders',
     'message_reads',
@@ -46,6 +48,8 @@ export async function POST(request: Request) {
     try {
       if (table === 'content_reports') {
         await db.from(table).delete().or(`reporter_id.eq.${userId},target_user_id.eq.${userId}`)
+      } else if (table === 'user_blocks') {
+        await db.from(table).delete().or(`blocker_id.eq.${userId},blocked_id.eq.${userId}`)
       } else {
         await db.from(table).delete().eq('user_id', userId)
       }

@@ -114,6 +114,78 @@ export async function reportContent(input: {
   }
 }
 
+/** App Store 1.2 — ids the signed-in user has blocked. */
+export async function fetchBlockedUserIds(): Promise<string[]> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from('user_blocks')
+    .select('blocked_id')
+    .eq('blocker_id', user.id);
+
+  if (error) {
+    if (error.code === '42P01' || error.message.includes('user_blocks')) return [];
+    throw new Error(error.message);
+  }
+  return (data || []).map((row) => row.blocked_id as string);
+}
+
+export async function blockUser(blockedId: string) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not signed in');
+  if (!blockedId || blockedId === user.id) throw new Error('Invalid user');
+
+  const { error } = await supabase.from('user_blocks').upsert(
+    { blocker_id: user.id, blocked_id: blockedId },
+    { onConflict: 'blocker_id,blocked_id', ignoreDuplicates: true },
+  );
+  if (error) {
+    throw new Error(
+      error.message.includes('user_blocks') || error.code === '42P01'
+        ? 'Blocking is not enabled yet. Run supabase/user_blocks.sql, or email support@xactscore.app.'
+        : error.message,
+    );
+  }
+}
+
+export async function unblockUser(blockedId: string) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not signed in');
+
+  const { error } = await supabase
+    .from('user_blocks')
+    .delete()
+    .eq('blocker_id', user.id)
+    .eq('blocked_id', blockedId);
+  if (error) throw new Error(error.message);
+}
+
+export async function fetchBlockedUsers(): Promise<Array<{ id: string; name: string }>> {
+  const ids = await fetchBlockedUserIds();
+  if (!ids.length) return [];
+
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, username, email')
+    .in('id', ids);
+  if (error) throw new Error(error.message);
+
+  const byId = new Map(
+    (data || []).map((row) => [
+      row.id as string,
+      (row.username as string | null) || (row.email as string | null) || 'User',
+    ]),
+  );
+  return ids.map((id) => ({ id, name: byId.get(id) || 'User' }));
+}
+
 export function confirmDeleteAccount(onConfirm: () => void) {
   Alert.alert(
     'Delete account?',

@@ -18,6 +18,19 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 async function fetchProfile(userId: string): Promise<UserProfile | null> {
+  const full = await supabase
+    .from('users')
+    .select(
+      'id, email, username, avatar_url, pending_avatar_url, favorite_team, quote, is_global_admin, reminders_enabled, reminder_lead_minutes',
+    )
+    .eq('id', userId)
+    .maybeSingle();
+
+  if (!full.error) {
+    return full.data as UserProfile | null;
+  }
+
+  // Prefs columns may be missing until reminder_prefs.sql is applied.
   const { data, error } = await supabase
     .from('users')
     .select('id, email, username, avatar_url, pending_avatar_url, favorite_team, quote, is_global_admin')

@@ -11,9 +11,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "app.xactscore.mobile",
       "buildNumber": "1",
-      "icon": "./assets/expo.icon",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": ["remote-notification"]
       }
     },
     "android": {
@@ -45,11 +45,27 @@
             "image": "./assets/images/splash-icon.png"
           }
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#ff8a2b",
+          "defaultChannel": "match-reminders",
+          "sounds": []
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0bdeb5ff-985f-4066-be33-b2e9cb73e573"
+      }
+    },
+    "owner": "crisdj83"
   }
 }

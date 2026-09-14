@@ -1,12 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Bell } from 'lucide-react'
 import { useTranslations } from './LocaleProvider'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { createClient } from '../../lib/supabase/client'
 import { normalizeVapidPublicKey, vapidApplicationServerKey, vapidApplicationServerKeyBuffer } from '../../lib/vapid'
+import { leadHoursLabel } from '../../lib/expo-push'
+
+const LEAD_OPTIONS = [60, 120, 180, 240] as const
+type LeadMinutes = (typeof LEAD_OPTIONS)[number]
 
 function isStandaloneDisplay() {
   if (typeof window === 'undefined') return false
@@ -20,15 +25,24 @@ function isIosDevice() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 }
 
+function normalizeLead(value: unknown): LeadMinutes {
+  const n = Number(value)
+  if (n === 60 || n === 120 || n === 180 || n === 240) return n
+  return 120
+}
+
 export default function MatchReminderToggle() {
   const t = useTranslations()
   const bundledKey = normalizeVapidPublicKey(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '')
   const [vapidKey, setVapidKey] = useState(bundledKey)
   const [enabled, setEnabled] = useState(false)
+  const [leadMinutes, setLeadMinutes] = useState<LeadMinutes>(120)
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
   const [iosNeedsInstall, setIosNeedsInstall] = useState(false)
   const [supported, setSupported] = useState(true)
+  // Bump whenever the user toggles so a slow initial GET cannot overwrite the new state.
+  const statusEpoch = useRef(0)
 
   useEffect(() => {
     const pushOk = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window
@@ -38,18 +52,54 @@ export default function MatchReminderToggle() {
       return
     }
 
+    const epoch = statusEpoch.current
     void fetch('/api/push/subscribe')
       .then((response) => response.json())
       .then((data: { enabled?: boolean; configured?: boolean; publicKey?: string }) => {
         const liveKey = normalizeVapidPublicKey(data.publicKey)
         if (liveKey) setVapidKey(liveKey)
-        setEnabled(Boolean(data.enabled))
         setSupported(data.configured !== false && Boolean(liveKey || bundledKey))
+        if (epoch !== statusEpoch.current) return
+        setEnabled(Boolean(data.enabled))
       })
       .catch(() => {
         setSupported(Boolean(bundledKey))
       })
+
+    void createClient()
+      .auth.getUser()
+      .then(async ({ data: { user } }) => {
+        if (!user) return
+        const { data } = await createClient()
+          .from('users')
+          .select('reminder_lead_minutes, reminders_enabled')
+          .eq('id', user.id)
+          .maybeSingle()
+        if (!data || epoch !== statusEpoch.current) return
+        setLeadMinutes(normalizeLead(data.reminder_lead_minutes))
+      })
+      .catch(() => undefined)
   }, [bundledKey])
+
+  async function saveLead(next: LeadMinutes, remindersOn: boolean) {
+    const supabase = createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) return
+    const { error } = await supabase
+      .from('users')
+      .update({
+        reminder_lead_minutes: next,
+        reminders_enabled: remindersOn,
+      })
+      .eq('id', user.id)
+    if (error && (error.code === '42703' || error.message.includes('reminder_'))) {
+      // Prefs migration not applied yet — push sub alone still works.
+      return
+    }
+    if (error) throw new Error(error.message)
+  }
 
   async function enable() {
     setMessage('')
@@ -99,6 +149,8 @@ export default function MatchReminderToggle() {
       if (!response.ok) {
         throw new Error(t('Could not save reminder subscription'))
       }
+      await saveLead(leadMinutes, true)
+      statusEpoch.current += 1
       setEnabled(true)
     } catch (error) {
       if (isVapidSubscribeError(error)) {
@@ -119,6 +171,8 @@ export default function MatchReminderToggle() {
       const subscription = await registration.pushManager.getSubscription()
       await subscription?.unsubscribe()
       await fetch('/api/push/subscribe', { method: 'DELETE' })
+      await saveLead(leadMinutes, false)
+      statusEpoch.current += 1
       setEnabled(false)
     } catch (error) {
       setMessage(error instanceof Error ? error.message : t('Could not disable match reminders'))
@@ -136,8 +190,37 @@ export default function MatchReminderToggle() {
               <Bell className="h-5 w-5 text-xactscore-accent" /> {t('Notifications')}
             </h3>
             <p className="text-sm text-slate-500 dark:text-zinc-400">
-              {t('Get a phone notification about 2 hours before kickoff if you still need to put scores in, and when someone posts in your league.')}
+              {t('Get a phone notification before kickoff if you still need to put scores in, and when someone posts in your league. Picks lock 60 minutes before kickoff.')}
             </p>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-zinc-400">
+              {t('Remind me')}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {LEAD_OPTIONS.map((minutes) => {
+                const selected = leadMinutes === minutes
+                return (
+                  <button
+                    key={minutes}
+                    type="button"
+                    disabled={pending}
+                    onClick={() => {
+                      setLeadMinutes(minutes)
+                      void saveLead(minutes, enabled).catch(() => undefined)
+                    }}
+                    className={`min-h-10 rounded-xl border px-3 text-sm font-extrabold transition ${
+                      selected
+                        ? 'border-xactscore-accent bg-xactscore-accent/15 text-xactscore-accent'
+                        : 'border-slate-200 bg-slate-50 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-zinc-300'
+                    }`}
+                  >
+                    {leadHoursLabel(minutes).replace(' hours', 'h').replace(' hour', 'h')}
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
           {!supported ? (

@@ -289,6 +289,13 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Be the first to start a discussion in one of your contests.':
       'Fii primul care începe o discuție într-unul din contesturile tale.',
     'No messages yet': 'Niciun mesaj încă',
+    'Tap a discussion to open the thread and reply.':
+      'Atinge o discuție pentru a deschide firul și a răspunde.',
+    'No replies yet': 'Niciun răspuns încă',
+    '1 reply': '1 răspuns',
+    '{n} replies': '{n} răspunsuri',
+    Replies: 'Răspunsuri',
+    'Message not found.': 'Mesajul nu a fost găsit.',
     'Support & legal': 'Suport și legal',
     'Privacy Policy': 'Politica de confidențialitate',
     'Terms of Use': 'Termeni de utilizare',
@@ -302,6 +309,32 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Report this content as inappropriate?': 'Raportezi acest conținut ca inadecvat?',
     'Thanks. We will review this report.': 'Mulțumim. Vom analiza raportul.',
     'Report details are required.': 'Detaliile raportului sunt obligatorii.',
+    Notifications: 'Notificări',
+    'Get a reminder before kickoff if you still need to put scores in. Picks lock 60 minutes before kickoff.':
+      'Primești un reminder înainte de fluier dacă mai ai scoruri de pus. Ponturile se închid cu 60 de minute înainte.',
+    'Turn reminders on': 'Activează reminder-ele',
+    'Turn reminders off': 'Dezactivează reminder-ele',
+    'Remind me': 'Amintește-mi',
+    'Match reminders are on.': 'Reminder-ele pentru meciuri sunt active.',
+    'Match reminders are off.': 'Reminder-ele pentru meciuri sunt oprite.',
+    'Reminder timing saved.': 'Intervalul reminder-ului a fost salvat.',
+    Safety: 'Siguranță',
+    'Report or block this user.': 'Raportează sau blochează acest utilizator.',
+    Block: 'Blochează',
+    'Block user': 'Blochează utilizatorul',
+    Blocked: 'Blocat',
+    'Blocked user': 'Utilizator blocat',
+    'Blocked users': 'Utilizatori blocați',
+    Unblock: 'Deblochează',
+    'User unblocked.': 'Utilizator deblocat.',
+    'Their messages and replies will be hidden from your feed immediately.':
+      'Mesajele și răspunsurile lor vor fi ascunse din feed imediat.',
+    'This user is blocked. You can unblock them from Profile.':
+      'Acest utilizator este blocat. Îl poți debloca din Profil.',
+    'Blocked users’ messages stay hidden from your Messages feed.':
+      'Mesajele utilizatorilor blocați rămân ascunse din feedul de Mesaje.',
+    'To report or block someone, open a message thread, tap the flag, then choose Report or Block user. Blocked content disappears from your feed immediately. Manage blocks in Profile.':
+      'Pentru a raporta sau bloca pe cineva, deschide un fir de mesaj, apasă steagul, apoi alege Raportează sau Blochează. Conținutul blocat dispare imediat din feed. Gestionează blocările din Profil.',
   },
   es: {
     Language: 'Idioma',
@@ -579,6 +612,13 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Be the first to start a discussion in one of your contests.':
       'Sé el primero en empezar una discusión en una de tus ligas.',
     'No messages yet': 'Aún no hay mensajes',
+    'Tap a discussion to open the thread and reply.':
+      'Toca una discusión para abrir el hilo y responder.',
+    'No replies yet': 'Aún no hay respuestas',
+    '1 reply': '1 respuesta',
+    '{n} replies': '{n} respuestas',
+    Replies: 'Respuestas',
+    'Message not found.': 'Mensaje no encontrado.',
     'Support & legal': 'Soporte y legal',
     'Privacy Policy': 'Política de privacidad',
     'Terms of Use': 'Términos de uso',
@@ -592,6 +632,32 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Report this content as inappropriate?': '¿Reportar este contenido como inapropiado?',
     'Thanks. We will review this report.': 'Gracias. Revisaremos este reporte.',
     'Report details are required.': 'Los detalles del reporte son obligatorios.',
+    Notifications: 'Notificaciones',
+    'Get a reminder before kickoff if you still need to put scores in. Picks lock 60 minutes before kickoff.':
+      'Recibe un recordatorio antes del pitido si aún te faltan marcadores. Los pronósticos se cierran 60 minutos antes.',
+    'Turn reminders on': 'Activar recordatorios',
+    'Turn reminders off': 'Desactivar recordatorios',
+    'Remind me': 'Recuérdame',
+    'Match reminders are on.': 'Los recordatorios de partidos están activos.',
+    'Match reminders are off.': 'Los recordatorios de partidos están desactivados.',
+    'Reminder timing saved.': 'Horario del recordatorio guardado.',
+    Safety: 'Seguridad',
+    'Report or block this user.': 'Reporta o bloquea a este usuario.',
+    Block: 'Bloquear',
+    'Block user': 'Bloquear usuario',
+    Blocked: 'Bloqueado',
+    'Blocked user': 'Usuario bloqueado',
+    'Blocked users': 'Usuarios bloqueados',
+    Unblock: 'Desbloquear',
+    'User unblocked.': 'Usuario desbloqueado.',
+    'Their messages and replies will be hidden from your feed immediately.':
+      'Sus mensajes y respuestas se ocultarán de tu feed de inmediato.',
+    'This user is blocked. You can unblock them from Profile.':
+      'Este usuario está bloqueado. Puedes desbloquearlo en Perfil.',
+    'Blocked users’ messages stay hidden from your Messages feed.':
+      'Los mensajes de usuarios bloqueados se mantienen ocultos en tu feed de Mensajes.',
+    'To report or block someone, open a message thread, tap the flag, then choose Report or Block user. Blocked content disappears from your feed immediately. Manage blocks in Profile.':
+      'Para reportar o bloquear a alguien, abre un hilo de mensaje, toca la bandera y elige Reportar o Bloquear. El contenido bloqueado desaparece de inmediato. Gestiona bloqueos en Perfil.',
   },
 };
 

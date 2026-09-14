@@ -149,6 +149,9 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
       'Primești o notificare pe telefon cu circa 2 ore înainte de start dacă încă nu ți-ai pus scorurile.',
     'Get a phone notification about 2 hours before kickoff if you still need to put scores in, and when someone posts in your league.':
       'Primești o notificare pe telefon cu circa 2 ore înainte de start dacă încă nu ți-ai pus scorurile, și când cineva scrie în ligă.',
+    'Get a phone notification before kickoff if you still need to put scores in, and when someone posts in your league. Picks lock 60 minutes before kickoff.':
+      'Primești o notificare pe telefon înainte de start dacă încă nu ți-ai pus scorurile, și când cineva scrie în ligă. Ponturile se închid cu 60 de minute înainte.',
+    'Remind me': 'Amintește-mi',
     'Turn reminders on': 'Pornește reminder-urile',
     'Turn reminders off': 'Oprește reminder-urile',
     'Turn notifications on': 'Pornește notificările',
@@ -671,6 +674,9 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
       'Recibe una notificación en el teléfono unas 2 horas antes del inicio si aún te faltan marcadores.',
     'Get a phone notification about 2 hours before kickoff if you still need to put scores in, and when someone posts in your league.':
       'Recibe una notificación en el teléfono unas 2 horas antes del saque si aún te faltan marcadores, y cuando alguien escribe en tu liga.',
+    'Get a phone notification before kickoff if you still need to put scores in, and when someone posts in your league. Picks lock 60 minutes before kickoff.':
+      'Recibe una notificación antes del saque si aún te faltan marcadores, y cuando alguien escribe en tu liga. Los pronósticos se cierran 60 minutos antes.',
+    'Remind me': 'Recuérdame',
     'Turn reminders on': 'Activar recordatorios',
     'Turn reminders off': 'Desactivar recordatorios',
     'Turn notifications on': 'Activar notificaciones',

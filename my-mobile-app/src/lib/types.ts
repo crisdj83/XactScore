@@ -7,6 +7,8 @@ export type UserProfile = {
   favorite_team: string | null;
   quote: string | null;
   is_global_admin: boolean;
+  reminders_enabled?: boolean;
+  reminder_lead_minutes?: number;
 };
 
 export type ContestMembership = {

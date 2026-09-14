@@ -30,7 +30,22 @@ import {
   findFavoriteTeam,
   type FavoriteTeam,
 } from '@/lib/favorite-teams';
-import { confirmDeleteAccount, deleteAccount } from '@/lib/account-api';
+import {
+  confirmDeleteAccount,
+  deleteAccount,
+  fetchBlockedUsers,
+  unblockUser,
+} from '@/lib/account-api';
+import {
+  REMINDER_LEAD_OPTIONS,
+  disableMatchReminders,
+  enableMatchReminders,
+  getReminderPrefs,
+  leadLabel,
+  saveReminderPrefs,
+  unregisterExpoPushToken,
+  type ReminderLeadMinutes,
+} from '@/lib/notifications';
 import { soccerAvatarPath } from '@/lib/soccer-avatar';
 import { siteUrl, supabase } from '@/lib/supabase';
 
@@ -66,6 +81,44 @@ export default function ProfileScreen() {
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [blockedUsers, setBlockedUsers] = useState<Array<{ id: string; name: string }>>([]);
+  const [remindersEnabled, setRemindersEnabled] = useState(false);
+  const [reminderLead, setReminderLead] = useState<ReminderLeadMinutes>(120);
+  const [remindersBusy, setRemindersBusy] = useState(false);
+
+  const reloadBlocked = () => {
+    void fetchBlockedUsers()
+      .then(setBlockedUsers)
+      .catch(() => setBlockedUsers([]));
+  };
+
+  const reloadReminders = () => {
+    void getReminderPrefs()
+      .then((prefs) => {
+        setRemindersEnabled(prefs.enabled);
+        setReminderLead(prefs.leadMinutes);
+      })
+      .catch(() => {
+        setRemindersEnabled(false);
+        setReminderLead(120);
+      });
+  };
+
+  useEffect(() => {
+    reloadBlocked();
+    reloadReminders();
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!profile) return;
+    if (typeof profile.reminders_enabled === 'boolean') {
+      setRemindersEnabled(profile.reminders_enabled);
+    }
+    const lead = Number(profile.reminder_lead_minutes);
+    if (REMINDER_LEAD_OPTIONS.includes(lead as ReminderLeadMinutes)) {
+      setReminderLead(lead as ReminderLeadMinutes);
+    }
+  }, [profile?.reminders_enabled, profile?.reminder_lead_minutes]);
 
   useEffect(() => {
     if (!profile) return;
@@ -496,6 +549,107 @@ export default function ProfileScreen() {
             styles.card,
             { backgroundColor: theme.backgroundElement, borderColor: theme.border },
           ]}>
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('Notifications')}</Text>
+          <Text style={{ color: theme.textSecondary, fontSize: 13, lineHeight: 18 }}>
+            {t(
+              'Get a reminder before kickoff if you still need to put scores in. Picks lock 60 minutes before kickoff.',
+            )}
+          </Text>
+
+          <Pressable
+            disabled={remindersBusy}
+            onPress={() => {
+              setRemindersBusy(true);
+              setError(null);
+              const next = !remindersEnabled;
+              // Optimistic UI so the button flips even if a later token step fails.
+              setRemindersEnabled(next);
+              void (next
+                ? enableMatchReminders(reminderLead)
+                : disableMatchReminders(reminderLead)
+              )
+                .then(async () => {
+                  setMessage(
+                    next ? t('Match reminders are on.') : t('Match reminders are off.'),
+                  );
+                  await refreshProfile();
+                })
+                .catch((err) => {
+                  // Prefs may already be saved (enable saves first) — reload truth from DB.
+                  reloadReminders();
+                  setError(err instanceof Error ? err.message : t('Request failed'));
+                })
+                .finally(() => setRemindersBusy(false));
+            }}
+            style={[
+              styles.primaryBtn,
+              {
+                backgroundColor: remindersEnabled ? theme.background : theme.accent,
+                borderWidth: remindersEnabled ? 1 : 0,
+                borderColor: theme.borderStrong,
+                opacity: remindersBusy ? 0.65 : 1,
+              },
+            ]}>
+            {remindersBusy ? (
+              <ActivityIndicator color={remindersEnabled ? theme.accent : onAccent} />
+            ) : (
+              <Text
+                style={[
+                  styles.primaryBtnText,
+                  { color: remindersEnabled ? theme.text : onAccent },
+                ]}>
+                {remindersEnabled ? t('Turn reminders off') : t('Turn reminders on')}
+              </Text>
+            )}
+          </Pressable>
+
+          <Text style={[styles.label, { color: theme.text }]}>{t('Remind me')}</Text>
+          <View style={styles.leadRow}>
+            {REMINDER_LEAD_OPTIONS.map((minutes) => {
+              const selected = reminderLead === minutes;
+              return (
+                <Pressable
+                  key={minutes}
+                  disabled={remindersBusy}
+                  onPress={() => {
+                    setReminderLead(minutes);
+                    setRemindersBusy(true);
+                    void (remindersEnabled
+                      ? enableMatchReminders(minutes)
+                      : saveReminderPrefs({ enabled: false, leadMinutes: minutes })
+                    )
+                      .then(() => setMessage(t('Reminder timing saved.')))
+                      .catch((err) =>
+                        setError(err instanceof Error ? err.message : t('Request failed')),
+                      )
+                      .finally(() => setRemindersBusy(false));
+                  }}
+                  style={[
+                    styles.leadChip,
+                    {
+                      backgroundColor: selected ? theme.accentMuted : theme.background,
+                      borderColor: selected ? theme.accent : theme.borderStrong,
+                    },
+                  ]}>
+                  <Text
+                    style={{
+                      color: selected ? theme.accent : theme.textSecondary,
+                      fontWeight: '800',
+                      fontSize: 13,
+                    }}>
+                    {leadLabel(minutes)}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: theme.backgroundElement, borderColor: theme.border },
+          ]}>
           <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('Support & legal')}</Text>
           <Pressable
             onPress={() => router.push('/help')}
@@ -526,6 +680,46 @@ export default function ProfileScreen() {
             <Ionicons name="open-outline" size={16} color={theme.textSecondary} />
           </Pressable>
         </View>
+
+        {blockedUsers.length > 0 ? (
+          <View
+            style={[
+              styles.card,
+              { backgroundColor: theme.backgroundElement, borderColor: theme.border },
+            ]}>
+            <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('Blocked users')}</Text>
+            <Text style={{ color: theme.textSecondary, fontSize: 13, lineHeight: 18 }}>
+              {t('Blocked users’ messages stay hidden from your Messages feed.')}
+            </Text>
+            {blockedUsers.map((blocked) => (
+              <View
+                key={blocked.id}
+                style={[styles.linkRow, { borderColor: theme.border }]}>
+                <Ionicons name="hand-left-outline" size={18} color={theme.accent} />
+                <Text style={{ color: theme.text, fontWeight: '700', flex: 1 }} numberOfLines={1}>
+                  {blocked.name}
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    void unblockUser(blocked.id)
+                      .then(() => {
+                        setBlockedUsers((prev) => prev.filter((row) => row.id !== blocked.id));
+                        setMessage(t('User unblocked.'));
+                      })
+                      .catch((err) =>
+                        setError(err instanceof Error ? err.message : t('Request failed')),
+                      );
+                  }}
+                  hitSlop={8}
+                  style={{ minHeight: 44, justifyContent: 'center' }}>
+                  <Text style={{ color: theme.accent, fontWeight: '800', fontSize: 13 }}>
+                    {t('Unblock')}
+                  </Text>
+                </Pressable>
+              </View>
+            ))}
+          </View>
+        ) : null}
 
         <View
           style={[
@@ -576,7 +770,11 @@ export default function ProfileScreen() {
         </View>
 
         <Pressable
-          onPress={() => void signOut()}
+          onPress={() => {
+            void unregisterExpoPushToken()
+              .catch(() => undefined)
+              .finally(() => void signOut());
+          }}
           style={[styles.signOut, { backgroundColor: theme.danger }]}>
           <Text style={styles.signOutText}>{t('Sign out')}</Text>
         </Pressable>
@@ -723,6 +921,16 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 15, fontWeight: '800' },
   hint: { fontSize: 13 },
   label: { fontSize: 13, fontWeight: '700', marginTop: 4 },
+  leadRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  leadChip: {
+    minWidth: 56,
+    minHeight: 40,
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   input: {
     borderWidth: 1,
     borderRadius: 12,
