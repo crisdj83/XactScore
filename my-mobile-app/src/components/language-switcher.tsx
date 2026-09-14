@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { localeNames, locales, type Locale } from '@/lib/i18n';
+import { GlassTrack } from '@/components/glass-segmented';
 import { useLocale, useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -27,14 +28,7 @@ export function LanguageSwitcher() {
 
   return (
     <>
-      <View
-        style={[
-          styles.group,
-          {
-            backgroundColor: theme.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
-            borderColor: theme.border,
-          },
-        ]}>
+      <GlassTrack radius={999} style={styles.group}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t('Language')}
@@ -43,8 +37,7 @@ export function LanguageSwitcher() {
           style={({ pressed }) => [
             styles.option,
             {
-              backgroundColor: theme.isDark ? 'rgba(255,138,43,0.22)' : '#ffffff',
-              borderColor: theme.isDark ? 'rgba(255,138,43,0.45)' : theme.borderStrong,
+              backgroundColor: theme.isDark ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.55)',
             },
             pressed && { opacity: 0.85 },
           ]}>
@@ -56,7 +49,7 @@ export function LanguageSwitcher() {
             {locale.toUpperCase()}
           </Text>
         </Pressable>
-      </View>
+      </GlassTrack>
 
       <Modal
         visible={open}
@@ -124,23 +117,16 @@ export function LanguageSwitcher() {
 }
 
 const styles = StyleSheet.create({
-  // Match ThemeModeControl group + option exactly
   group: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 999,
     padding: 3,
-    gap: 2,
   },
   option: {
     minHeight: 36,
     minWidth: 36,
     borderRadius: 999,
-    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
   optionLabel: {
     fontSize: 11,

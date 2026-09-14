@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Image } from 'expo-image';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { type Href, router } from 'expo-router';
 
 import { ScoreHeroArt } from '@/components/home/score-hero-art';
 import type { HomeNextMatch, HomeScore } from '@/lib/home-api';
-import { webPath } from '@/lib/home-api';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -170,7 +170,7 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
       </View>
 
       <Pressable
-        onPress={() => void Linking.openURL(webPath(predictPath))}
+        onPress={() => router.push(predictPath as Href)}
         style={({ pressed }) => [
           styles.predictBtn,
           {

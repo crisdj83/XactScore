@@ -92,5 +92,6 @@ export const Spacing = {
   six: 64,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
+/** Floating NativeTabs glass dock height (above home indicator). */
+export const BottomTabInset = Platform.select({ ios: 88, android: 84 }) ?? 84;
 export const MaxContentWidth = 800;

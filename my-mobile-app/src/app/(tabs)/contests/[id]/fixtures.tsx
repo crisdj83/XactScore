@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
-  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -10,14 +9,17 @@ import {
   View,
 } from 'react-native';
 
+import { GlassChipStrip } from '@/components/glass-segmented';
 import { useContest } from '@/contexts/contest';
-import { BottomTabInset, Spacing } from '@/constants/theme';
+import { Spacing } from '@/constants/theme';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
+import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
 
 export default function ContestFixturesScreen() {
   const theme = useTheme();
   const t = useTranslations();
+  const bottomPad = useBottomTabPadding();
   const { data, refresh, loading } = useContest();
   const [selectedMd, setSelectedMd] = useState<number | null>(null);
 
@@ -41,7 +43,7 @@ export default function ContestFixturesScreen() {
 
   return (
     <ScrollView
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, { paddingBottom: bottomPad }]}
       refreshControl={
         <RefreshControl
           refreshing={loading}
@@ -51,39 +53,14 @@ export default function ContestFixturesScreen() {
       }>
       <Text style={[styles.heading, { color: theme.text }]}>{t('Fixtures')}</Text>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.mdStrip}>
-        {matchdays.map((md) => {
-          const active = md === activeMd;
-          return (
-            <Pressable
-              key={md}
-              onPress={() => setSelectedMd(md)}
-              style={[
-                styles.mdChip,
-                {
-                  backgroundColor: active
-                    ? theme.accent
-                    : theme.isDark
-                      ? 'rgba(255,255,255,0.06)'
-                      : '#f1f5f9',
-                  borderColor: theme.border,
-                },
-              ]}>
-              <Text
-                style={{
-                  color: active ? (theme.isDark ? '#0f0f10' : '#ffffff') : theme.textSecondary,
-                  fontWeight: '800',
-                  fontSize: 12,
-                }}>
-                MD {md}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
+      <GlassChipStrip
+        items={matchdays.map((md) => ({
+          key: String(md),
+          label: `${t('Matchday')} ${md}`,
+        }))}
+        value={String(activeMd)}
+        onChange={(key) => setSelectedMd(Number(key))}
+      />
 
       <View style={styles.list}>
         {mdMatches.map((match) => (
@@ -171,7 +148,6 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: {
     padding: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.four,
     gap: 12,
   },
   heading: { fontSize: 16, fontWeight: '800', textTransform: 'uppercase' },

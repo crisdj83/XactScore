@@ -1,9 +1,11 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { ActivityIndicator, StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { AppChrome } from '@/components/app-chrome';
 import { LoginScreen } from '@/components/login-screen';
 import { ThemedView } from '@/components/themed-view';
 import { AuthProvider, useAuth } from '@/contexts/auth';
@@ -43,26 +45,33 @@ function RootNavigator() {
   return (
     <>
       <StatusBar style={theme.isDark ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="contest/[id]" />
-      </Stack>
+      <AppChrome>
+        <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="contest/[id]" />
+          <Stack.Screen name="help" />
+          <Stack.Screen name="admin" />
+        </Stack>
+      </AppChrome>
     </>
   );
 }
 
 export default function RootLayout() {
   return (
-    <ThemePreferenceProvider>
-      <LocaleProvider>
-        <AuthProvider>
-          <RootNavigator />
-        </AuthProvider>
-      </LocaleProvider>
-    </ThemePreferenceProvider>
+    <GestureHandlerRootView style={styles.root}>
+      <ThemePreferenceProvider>
+        <LocaleProvider>
+          <AuthProvider>
+            <RootNavigator />
+          </AuthProvider>
+        </LocaleProvider>
+      </ThemePreferenceProvider>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
+  root: { flex: 1 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 });

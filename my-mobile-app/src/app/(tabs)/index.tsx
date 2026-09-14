@@ -8,14 +8,13 @@ import {
   View,
 } from 'react-native';
 import { type Href, router, useFocusEffect } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { APP_TOP_BAR_CONTENT_HEIGHT, AppTopBar } from '@/components/app-top-bar';
 import { HomeHeroBanner } from '@/components/home/hero-banner';
 import { HomeProfileStrip } from '@/components/home/profile-strip';
 import { HomeWeekList } from '@/components/home/home-week-list';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
 import {
   fetchHomeDashboard,
   type HomeDashboard,
@@ -24,7 +23,7 @@ import {
 
 export default function HomeScreen() {
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
+  const bottomPad = useBottomTabPadding();
   const [data, setData] = useState<HomeDashboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -66,17 +65,15 @@ export default function HomeScreen() {
   const onLeaguePress = (league: HomeLeague) => {
     const path =
       league.openPicks > 0
-        ? `/contest/${league.contestId}/predictions`
-        : `/contest/${league.contestId}/ranking`;
+        ? `/contests/${league.contestId}/predictions`
+        : `/contests/${league.contestId}/ranking`;
     router.push(path as Href);
   };
-
-  const topSpacer = insets.top + APP_TOP_BAR_CONTENT_HEIGHT;
 
   return (
     <View style={[styles.root, { backgroundColor: theme.background }]}>
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingTop: topSpacer }]}
+        contentContainerStyle={[styles.content, { paddingBottom: bottomPad }]}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -86,7 +83,6 @@ export default function HomeScreen() {
               void load();
             }}
             tintColor={theme.accent}
-            progressViewOffset={topSpacer}
           />
         }>
         {loading && !data ? (
@@ -148,29 +144,18 @@ export default function HomeScreen() {
           </>
         ) : null}
       </ScrollView>
-
-      <View style={styles.topOverlay} pointerEvents="box-none">
-        <AppTopBar includeSafeArea />
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  topOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 20,
-  },
   content: {
     width: '100%',
     maxWidth: MaxContentWidth,
     alignSelf: 'center',
     paddingHorizontal: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.four,
+    paddingTop: Spacing.three,
     gap: 12,
   },
   loadingWrap: {

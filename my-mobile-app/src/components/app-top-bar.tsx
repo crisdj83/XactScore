@@ -1,5 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter, type Href } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LanguageSwitcher } from '@/components/language-switcher';
@@ -9,7 +10,6 @@ import { useTheme } from '@/hooks/use-theme';
 
 type Props = {
   showBrand?: boolean;
-  /** When true, pads for the status bar and draws a soft fade into the page. */
   includeSafeArea?: boolean;
 };
 
@@ -23,12 +23,13 @@ function withAlpha(hex: string, alpha: number) {
 }
 
 /**
- * Website-style top bar: brand + theme (light / dark / auto) + language,
- * with a gradient that blends into the page.
+ * Homepage-style top bar: logo + sun/moon/auto pill + EN pill,
+ * with a soft gradient that fades into the page.
  */
 export function AppTopBar({ showBrand = true, includeSafeArea = false }: Props) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const bg = theme.background;
   const topPad = includeSafeArea ? insets.top : 0;
 
@@ -48,9 +49,14 @@ export function AppTopBar({ showBrand = true, includeSafeArea = false }: Props) 
       />
       <View style={styles.inner}>
         {showBrand ? (
-          <View style={styles.brand}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="XactScore home"
+            onPress={() => router.replace('/' as Href)}
+            style={styles.brand}
+            hitSlop={6}>
             <XactScoreLogo compact />
-          </View>
+          </Pressable>
         ) : (
           <View style={{ flex: 1 }} />
         )}

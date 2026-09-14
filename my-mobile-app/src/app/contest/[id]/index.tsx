@@ -1,6 +1,8 @@
-import { Redirect, useLocalSearchParams, type Href } from 'expo-router';
+import { Redirect, type Href } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 
-export default function ContestIndex() {
+/** Legacy `/contest/:id` → nested Leagues stack (keeps glass tab bar). */
+export default function LegacyContestRedirect() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  return <Redirect href={`/contest/${id}/predictions` as Href} />;
+  return <Redirect href={`/contests/${id}/predictions` as Href} />;
 }

@@ -1,13 +1,15 @@
 import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { useContest } from '@/contexts/contest';
-import { BottomTabInset, Spacing } from '@/constants/theme';
+import { Spacing } from '@/constants/theme';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
+import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
 
 export default function ContestRulesScreen() {
   const theme = useTheme();
   const t = useTranslations();
+  const bottomPad = useBottomTabPadding();
   const { data, refresh, loading } = useContest();
 
   if (!data) {
@@ -22,7 +24,7 @@ export default function ContestRulesScreen() {
 
   return (
     <ScrollView
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, { paddingBottom: bottomPad }]}
       refreshControl={
         <RefreshControl
           refreshing={loading}
@@ -80,7 +82,6 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: {
     padding: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.four,
     gap: 12,
   },
   heading: { fontSize: 16, fontWeight: '800', textTransform: 'uppercase', marginTop: 4 },

@@ -3,7 +3,9 @@ export type UserProfile = {
   email: string;
   username: string | null;
   avatar_url: string | null;
+  pending_avatar_url: string | null;
   favorite_team: string | null;
+  quote: string | null;
   is_global_admin: boolean;
 };
 

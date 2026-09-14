@@ -1,16 +1,29 @@
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 
+import { GlassTabColors, glassTabPalette } from '@/constants/glass-tabs';
 import { useTheme } from '@/hooks/use-theme';
 
+/**
+ * System glass tab bar using App Store light/dark tab colors.
+ */
 export default function AppTabs() {
   const theme = useTheme();
+  const palette = glassTabPalette(theme.isDark);
 
   return (
     <NativeTabs
-      backgroundColor={theme.isDark ? '#09090b' : theme.backgroundElement}
-      indicatorColor={theme.backgroundSelected}
-      labelStyle={{ selected: { color: theme.accent } }}
-      tintColor={theme.accent}>
+      backgroundColor="transparent"
+      indicatorColor={palette.indicator}
+      labelStyle={{
+        default: { color: palette.inactive },
+        selected: { color: GlassTabColors.active },
+      }}
+      iconColor={{
+        default: palette.inactive,
+        selected: GlassTabColors.active,
+      }}
+      tintColor={GlassTabColors.active}
+      shadowColor="transparent">
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="house.fill" md="home" />

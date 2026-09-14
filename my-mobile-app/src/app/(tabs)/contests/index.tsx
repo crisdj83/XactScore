@@ -12,12 +12,13 @@ import {
 import { useFocusEffect, useRouter, type Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-import { APP_TOP_BAR_CONTENT_HEIGHT, AppTopBar } from '@/components/app-top-bar';
 import { ContestIcon } from '@/components/contest-icon';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { GlassSegmented } from '@/components/glass-segmented';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
+import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
 import { getSeasonLengthLabelKey, type ContestSeasonLength } from '@/lib/contest-season';
 import {
   createContest,
@@ -28,7 +29,6 @@ import {
   type PublicContest,
 } from '@/lib/contests-api';
 import type { ContestMembership } from '@/lib/types';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Tab = 'my_contests' | 'join' | 'create';
 
@@ -36,8 +36,8 @@ export default function ContestsScreen() {
   const theme = useTheme();
   const t = useTranslations();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { user } = useAuth();
+  const bottomPad = useBottomTabPadding();
   const onAccentText = theme.isDark ? '#0f0f10' : '#ffffff';
 
   const [tab, setTab] = useState<Tab>('my_contests');
@@ -86,7 +86,7 @@ export default function ContestsScreen() {
   );
 
   const openContest = (contestId: string) => {
-    router.push(`/contest/${contestId}/predictions` as Href);
+    router.push(`/contests/${contestId}/predictions` as Href);
   };
 
   const onJoinPrivate = async () => {
@@ -146,7 +146,7 @@ export default function ContestsScreen() {
     }
   };
 
-  const topSpacer = insets.top + APP_TOP_BAR_CONTENT_HEIGHT;
+  const topSpacer = Spacing.three;
   const panelBg = theme.backgroundElement;
   const selectedBg = theme.isDark ? 'rgba(255,138,43,0.15)' : '#e0e7ff';
   const selectedBorder = theme.isDark ? 'rgba(251,146,60,0.5)' : 'transparent';
@@ -161,7 +161,7 @@ export default function ContestsScreen() {
   return (
     <View style={[styles.root, { backgroundColor: theme.background }]}>
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingTop: topSpacer }]}
+        contentContainerStyle={[styles.content, { paddingTop: topSpacer, paddingBottom: bottomPad }]}
         keyboardShouldPersistTaps="handled"
         refreshControl={
           <RefreshControl
@@ -202,47 +202,19 @@ export default function ContestsScreen() {
           </View>
         ) : null}
 
-        <View
-          style={[
-            styles.segment,
-            {
-              backgroundColor: theme.isDark ? 'rgba(9,9,11,0.7)' : panelBg,
-              borderColor: theme.border,
-            },
-          ]}>
-          {tabs.map((item) => {
-            const active = tab === item.id;
-            return (
-              <Pressable
-                key={item.id}
-                onPress={() => {
-                  setError(null);
-                  setTab(item.id);
-                }}
-                style={[
-                  styles.segmentBtn,
-                  active && {
-                    backgroundColor: theme.isDark ? 'rgba(255,138,43,0.22)' : '#ffffff',
-                    borderColor: theme.isDark ? 'rgba(255,138,43,0.45)' : theme.borderStrong,
-                  },
-                ]}>
-                <Ionicons
-                  name={item.icon}
-                  size={16}
-                  color={active ? theme.accent : theme.textSecondary}
-                />
-                <Text
-                  style={[
-                    styles.segmentLabel,
-                    { color: active ? theme.text : theme.textSecondary },
-                  ]}
-                  numberOfLines={1}>
-                  {item.short}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        <GlassSegmented
+          items={tabs.map((item) => ({
+            key: item.id,
+            label: item.short,
+            icon: item.icon,
+          }))}
+          value={tab}
+          itemHeight={52}
+          onChange={(key) => {
+            setError(null);
+            setTab(key as Tab);
+          }}
+        />
 
         <View
           style={[
@@ -619,29 +591,17 @@ export default function ContestsScreen() {
           ) : null}
         </View>
       </ScrollView>
-
-      <View style={styles.topOverlay} pointerEvents="box-none">
-        <AppTopBar includeSafeArea />
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  topOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 20,
-  },
   content: {
     width: '100%',
     maxWidth: MaxContentWidth,
     alignSelf: 'center',
     paddingHorizontal: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.four,
     gap: 14,
   },
   header: {
