@@ -1,0 +1,44 @@
+---
+description: iOS App Store readiness for the Expo/React Native mobile app
+alwaysApply: true
+---
+
+# iOS App Store Readiness (Expo / React Native)
+
+Treat `my-mobile-app/` as the App Store product. Optimize for approval, privacy, stability, and HIG — not SwiftUI patterns that don’t apply here.
+
+## App Store compliance
+
+- Flag missing iOS permission strings before adding Camera, Photos, Location, Contacts, Tracking, Bluetooth, or Mic (`infoPlist` / Expo plugins). Never add sensitive APIs without a usage description.
+- No private Apple APIs, no sideloading payment for digital goods — use StoreKit / `expo-iap` (or equivalent) if IAP is added.
+- Keep Privacy Manifest / privacy nutrition labels accurate when adding SDKs that collect data (Supabase auth, analytics, push).
+- Set `ITSAppUsesNonExemptEncryption` / export compliance correctly in `app.json` / EAS when shipping.
+- Don’t deep-link around App Review (hidden admin-only features are fine if gated by account role, not by secret URLs meant to hide functionality from reviewers).
+
+## Performance & stability
+
+- Prefer pure functions and small presentational components; avoid unnecessary re-renders and heavy work on the JS thread during navigation.
+- Use `async`/`await` with try/catch; never leave unhandled promise rejections in UI paths.
+- Clean up subscriptions, intervals, and Supabase channels in `useEffect` returns.
+- Keep lists virtualized for long data (`FlatList` / FlashList); don’t nest VirtualizedLists in ScrollViews.
+- Crash-free bar: null-check session/profile/API payloads before render; show empty/error states instead of throwing.
+
+## UI / HIG
+
+- Support Dark Mode and system appearance (`userInterfaceStyle: automatic`).
+- Tap targets ≥ 44×44 pt; don’t rely on tiny icons without hitSlop.
+- Respect safe areas and the floating NativeTabs inset (`useBottomTabPadding`).
+- Prefer system-readable Dynamic Type where text is content; don’t clip critical labels.
+- Loading / empty / error states required for every network screen.
+
+## Privacy
+
+- Request permissions only when the feature is used, with clear purpose strings.
+- Don’t log tokens, passwords, or PII to console in production builds.
+- Avatar / media uploads must stay within documented moderation and storage flows.
+
+## When changing code
+
+- Explain *why* a change helps App Store approval, privacy, or stability.
+- Prefer complete, shippable diffs for touched files — no half-wired permission plugins.
+- Scope App Store work to `my-mobile-app/` and related Expo/EAS config unless a web API is required for the feature.
