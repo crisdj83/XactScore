@@ -11,6 +11,8 @@ function isPublicPath(pathname: string) {
     pathname.startsWith('/help') ||
     pathname.startsWith('/compare') ||
     pathname.startsWith('/join') ||
+    pathname.startsWith('/privacy') ||
+    pathname.startsWith('/terms') ||
     pathname.startsWith('/api/')
   )
 }
