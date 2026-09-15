@@ -8,17 +8,20 @@ import {
   View,
 } from 'react-native';
 import { useFocusEffect } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HomeHeroBanner } from '@/components/home/hero-banner';
 import { HomeProfileStrip } from '@/components/home/profile-strip';
-import { MaxContentWidth, Spacing } from '@/constants/theme';
+import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
 import { fetchHomeDashboard, type HomeDashboard } from '@/lib/home-api';
+
+/** Match the gap under the header so the hero sits symmetrically above the tabs. */
+const EDGE_GAP = Spacing.three;
 
 export default function HomeScreen() {
   const theme = useTheme();
-  const bottomPad = useBottomTabPadding();
+  const insets = useSafeAreaInsets();
   const [data, setData] = useState<HomeDashboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -57,10 +60,18 @@ export default function HomeScreen() {
     }, [load]),
   );
 
+  const bottomPad = EDGE_GAP + BottomTabInset + Math.max(insets.bottom, 8);
+
   return (
     <View style={[styles.root, { backgroundColor: theme.background }]}>
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingBottom: bottomPad }]}
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingTop: EDGE_GAP,
+            paddingBottom: bottomPad,
+          },
+        ]}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -117,6 +128,7 @@ export default function HomeScreen() {
             />
 
             <HomeHeroBanner
+              fill
               nextMatch={data.nextMatch}
               recentScores={data.recentScores}
               predictPath={data.predictPath}
@@ -131,11 +143,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   content: {
+    flexGrow: 1,
     width: '100%',
     maxWidth: MaxContentWidth,
     alignSelf: 'center',
     paddingHorizontal: Spacing.three,
-    paddingTop: Spacing.three,
     gap: 12,
   },
   loadingWrap: {

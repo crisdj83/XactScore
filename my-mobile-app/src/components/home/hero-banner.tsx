@@ -25,6 +25,8 @@ type Props = {
   nextMatch: HomeNextMatch | null;
   recentScores: HomeScore[];
   predictPath: string;
+  /** Stretch the card to fill leftover home viewport height. */
+  fill?: boolean;
 };
 
 function compactClubName(name: string) {
@@ -126,12 +128,14 @@ function ScoresMarquee({
   textColor,
   surfaceColor,
   emptyLabel,
+  expand,
 }: {
   scores: HomeScore[];
   isDark: boolean;
   textColor: string;
   surfaceColor: string;
   emptyLabel: string;
+  expand?: boolean;
 }) {
   const translateY = useSharedValue(0);
   const [halfHeight, setHalfHeight] = useState(0);
@@ -153,9 +157,14 @@ function ScoresMarquee({
     transform: [{ translateY: translateY.value }],
   }));
 
+  const viewportStyle = [
+    styles.scoresViewport,
+    expand ? styles.scoresViewportExpand : null,
+  ];
+
   if (!scores.length) {
     return (
-      <View style={styles.scoresViewport}>
+      <View style={viewportStyle}>
         <Text style={{ color: isDark ? '#a1a1aa' : '#64748b', fontSize: 14 }}>{emptyLabel}</Text>
       </View>
     );
@@ -167,7 +176,7 @@ function ScoresMarquee({
   const fadeBottom = [`${surfaceColor}00`, `${surfaceColor}99`, surfaceColor] as const;
 
   return (
-    <View style={styles.scoresViewport} pointerEvents="none">
+    <View style={viewportStyle} pointerEvents="none">
       <Animated.View style={[styles.scoresTrack, animatedStyle]}>
         <View
           style={styles.scoresHalf}
@@ -217,7 +226,7 @@ function ScoresMarquee({
   );
 }
 
-export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) {
+export function HomeHeroBanner({ nextMatch, recentScores, predictPath, fill = false }: Props) {
   const theme = useTheme();
   const t = useTranslations();
   const { isDark } = theme;
@@ -261,6 +270,7 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
     <View
       style={[
         styles.card,
+        fill ? styles.cardFill : null,
         {
           backgroundColor: theme.backgroundElement,
           borderColor: theme.border,
@@ -369,6 +379,7 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
         textColor={theme.text}
         surfaceColor={theme.backgroundElement}
         emptyLabel={t('No recent matches to display.')}
+        expand={fill}
       />
     </View>
   );
@@ -384,6 +395,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 8 },
+  },
+  cardFill: {
+    flex: 1,
+    minHeight: 420,
   },
   headline: {
     fontSize: 22,
@@ -474,6 +489,11 @@ const styles = StyleSheet.create({
     height: SCORE_VIEWPORT_H,
     overflow: 'hidden',
     justifyContent: 'center',
+  },
+  scoresViewportExpand: {
+    flex: 1,
+    height: undefined,
+    minHeight: SCORE_VIEWPORT_H,
   },
   scoresTrack: {
     gap: 8,
