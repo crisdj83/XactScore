@@ -277,7 +277,7 @@ export default function HeroBanner({
             href={predictHref} 
             className={cn(
               buttonVariants({ variant: 'default', size: 'sm' }),
-              'rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:shadow-[0_0_28px_rgba(18,255,128,0.35)] sm:h-auto sm:min-h-11 sm:px-6 sm:text-xs'
+              'rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-none dark:from-transparent dark:to-transparent dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:bg-xactscore-accent/90 dark:hover:shadow-[0_0_28px_rgba(18,255,128,0.35)] sm:h-auto sm:min-h-11 sm:px-6 sm:text-xs'
             )}
           >
             {t('Make Predictions')}

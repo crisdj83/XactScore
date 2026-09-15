@@ -20,7 +20,7 @@ const buttonVariants = cva(
           "border border-red-500/30 bg-red-500/15 text-red-700 backdrop-blur-md hover:bg-red-500/25 dark:text-red-300",
         link: "text-indigo-600 underline-offset-4 hover:underline dark:text-xactscore-accent",
         glass:
-          "border border-slate-200 bg-slate-100 text-slate-700 backdrop-blur-md hover:bg-slate-200 dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent dark:hover:bg-xactscore-accent/20",
+          "border border-slate-200 bg-slate-100 text-slate-700 backdrop-blur-md hover:bg-slate-200 dark:border-white/25 dark:bg-white/5 dark:text-white dark:hover:border-xactscore-accent dark:hover:bg-xactscore-accent/15 dark:hover:text-xactscore-accent",
       },
       size: {
         default: "min-h-11 h-11 px-5",

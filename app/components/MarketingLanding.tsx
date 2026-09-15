@@ -129,12 +129,12 @@ export default function MarketingLanding({
               {t('Predict Premier League scores with friends. No transfers, no squads — just the score, your league, and the table.')}
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center">
-              <Link href={loginPath()} className={cn(buttonVariants(), 'w-full rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:shadow-[0_0_28px_rgba(18,255,128,0.35)] sm:w-auto')}>
+              <Link href={loginPath()} className={cn(buttonVariants(), 'w-full rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-none dark:from-transparent dark:to-transparent dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:bg-xactscore-accent/90 dark:hover:shadow-[0_0_28px_rgba(18,255,128,0.35)] sm:w-auto')}>
                 {t('Sign In')}
               </Link>
               <Link
                 href={loginPath({ mode: 'signup' })}
-                className={cn(buttonVariants({ variant: 'glass' }), 'w-full rounded-full uppercase tracking-wider sm:w-auto')}
+                className={cn(buttonVariants({ variant: 'glass' }), 'w-full rounded-full uppercase tracking-wider dark:border-xactscore-accent dark:bg-transparent dark:text-white dark:hover:bg-xactscore-accent dark:hover:text-black sm:w-auto')}
               >
                 {t('Sign Up')}
               </Link>

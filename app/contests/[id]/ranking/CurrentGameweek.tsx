@@ -505,7 +505,7 @@ export default function CurrentGameweek({
                   <span
                     className={`inline-flex shrink-0 items-center gap-0.5 rounded-full border px-2 py-1 text-xs font-semibold sm:justify-self-start sm:gap-1 sm:px-2 sm:py-1 ${
                       player.outcome === 'exact'
-                        ? 'border-amber-500/20 bg-amber-500/10 text-amber-600 dark:border-transparent dark:bg-xactscore-accent/15 dark:text-xactscore-accent dark:font-black'
+                        ? 'border-amber-500/20 bg-amber-500/10 text-amber-600 dark:border-transparent dark:bg-xactscore-accent dark:text-black dark:font-black'
                         : player.outcome === 'zero'
                           ? 'border-red-500/20 bg-red-500/10 text-red-600 dark:border-transparent dark:bg-red-400/15 dark:text-red-300 dark:font-black'
                           : 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:border-transparent dark:bg-emerald-400/15 dark:text-emerald-300 dark:font-black'

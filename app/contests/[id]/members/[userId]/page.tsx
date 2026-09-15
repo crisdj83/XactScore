@@ -269,7 +269,7 @@ export default async function ContestMemberProfilePage(props: {
         ? 'border-rose-200 bg-rose-50 text-rose-900 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-100'
         : vibe.tone === 'empty'
           ? 'border-slate-200 bg-slate-50 text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200'
-          : 'border-amber-200 bg-amber-50 text-amber-950 dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent'
+          : 'border-amber-200 bg-amber-50 text-amber-950 dark:border-xactscore-accent dark:bg-xactscore-accent dark:text-black'
 
   return (
     <div className="space-y-5 p-0 sm:space-y-6">

@@ -10,9 +10,9 @@ const badgeVariants = cva(
       variant: {
         default: "border border-xactscore-border bg-xactscore-surface text-xactscore-text",
         accent:
-          "border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent",
+          "border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-xactscore-accent dark:bg-xactscore-accent dark:text-black",
         success:
-          "border-0 bg-emerald-100 text-emerald-700 dark:border dark:border-xactscore-accent/30 dark:bg-xactscore-accent/15 dark:text-xactscore-accent",
+          "border-0 bg-emerald-100 text-emerald-700 dark:border dark:border-xactscore-accent dark:bg-xactscore-accent dark:text-black",
         danger:
           "border-0 bg-rose-100 text-rose-700 dark:border dark:border-red-500/30 dark:bg-red-500/15 dark:text-red-300",
         muted: "border border-xactscore-border bg-xactscore-surface text-xactscore-muted",

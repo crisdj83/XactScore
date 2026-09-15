@@ -597,9 +597,9 @@ function LeaderboardRow({
       style={[
         styles.lbRow,
         {
-          borderBottomColor: theme.border,
+          borderBottomColor: isMe ? theme.accent : theme.border,
           backgroundColor: isMe
-            ? `${theme.accent}14`
+            ? theme.accent
             : index % 2 === 1
               ? theme.isDark
                 ? 'rgba(255,255,255,0.02)'
@@ -607,31 +607,31 @@ function LeaderboardRow({
               : 'transparent',
         },
       ]}>
-      <Text style={[styles.lbRank, { color: theme.textSecondary }]}>{row.rank}.</Text>
+      <Text style={[styles.lbRank, { color: isMe ? '#000000' : theme.textSecondary }]}>{row.rank}.</Text>
       {row.avatarUrl ? (
         <UserAvatar uri={row.avatarUrl} size={20} />
       ) : (
-        <View style={[styles.lbAvatarFallback, { borderColor: theme.border }]}>
-          <Text style={{ color: theme.textSecondary, fontSize: 9, fontWeight: '800' }}>
+        <View style={[styles.lbAvatarFallback, { borderColor: isMe ? '#00000055' : theme.border }]}>
+          <Text style={{ color: isMe ? '#000000' : theme.textSecondary, fontSize: 9, fontWeight: '800' }}>
             {row.displayName.slice(0, 1).toUpperCase()}
           </Text>
         </View>
       )}
-      <Text numberOfLines={1} style={[styles.lbName, { color: theme.text }]}>
+      <Text numberOfLines={1} style={[styles.lbName, { color: isMe ? '#000000' : theme.text }]}>
         {row.displayName}
       </Text>
       <RankMovement current={movementRank} previous={previousRank} />
       <View style={styles.lbChips}>
-        <Chip icon="locate" color={theme.accent} value={row.exact} label={t('Exact Score')} />
-        <Chip icon="pulse" color="#38bdf8" value={row.close} label={t('Close Prediction')} />
+        <Chip icon="locate" color={isMe ? '#000000' : theme.accent} value={row.exact} label={t('Exact Score')} />
+        <Chip icon="pulse" color={isMe ? '#000000' : '#38bdf8'} value={row.close} label={t('Close Prediction')} />
         <Chip
           icon="checkmark-circle"
-          color="#34d399"
+          color={isMe ? '#000000' : '#34d399'}
           value={row.result}
           label={t('Correct Result')}
         />
       </View>
-      <Text style={[styles.lbPts, { color: theme.accent }]}>
+      <Text style={[styles.lbPts, { color: isMe ? '#000000' : theme.accent }]}>
         {row.totalPoints} {t('pts')}
       </Text>
     </View>
@@ -652,7 +652,7 @@ function Chip({
   return (
     <View style={styles.chipStat} accessibilityLabel={`${label}: ${value}`}>
       <Ionicons name={icon} size={11} color={color} />
-      <Text style={styles.chipStatVal}>{value}</Text>
+      <Text style={[styles.chipStatVal, { color }]}>{value}</Text>
     </View>
   );
 }

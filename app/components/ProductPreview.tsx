@@ -60,13 +60,13 @@ export default function ProductPreview({ locale }: { locale: Locale }) {
                 key={row.place}
                 className={`flex items-center justify-between rounded-xl px-3 py-2.5 ${
                   row.you
-                    ? 'bg-indigo-100 text-indigo-700 dark:bg-xactscore-accent/10 dark:text-xactscore-accent dark:shadow-[0_0_24px_rgba(18,255,128,0.12)]'
+                    ? 'bg-indigo-100 text-indigo-700 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_24px_rgba(18,255,128,0.25)]'
                     : 'bg-white text-slate-900 dark:bg-transparent dark:text-white'
                 }`}
               >
                 <span className="font-bold">
                   <span
-                    className={`mr-2 tabular-nums ${row.you ? 'dark:text-xactscore-accent' : 'text-zinc-500 dark:text-xactscore-muted'}`}
+                    className={`mr-2 tabular-nums ${row.you ? 'text-indigo-500 dark:text-black/70' : 'text-zinc-500 dark:text-xactscore-muted'}`}
                   >
                     {row.place}
                   </span>
