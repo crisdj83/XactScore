@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <section className="space-y-3 text-sm leading-6 text-slate-700 dark:text-zinc-300">
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Who we are</h2>
         <p>
-          XactScore (“we”) provides a free Premier League score-prediction product at xactscore.app and
+          XactScore (“we”) provides a Premier League score-prediction product at xactscore.app and
           related mobile apps. Contact:{' '}
           <a className="font-semibold text-xactscore-accent" href="mailto:support@xactscore.app">
             support@xactscore.app

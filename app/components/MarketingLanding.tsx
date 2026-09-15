@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils'
 import { siteUrl, loginPath } from '../../lib/urls'
 import LandingJoinForm from './LandingJoinForm'
 import ProductPreview from './ProductPreview'
-import CompareSection from './CompareSection'
 import type { NextMatchData, ScoreData } from './HeroBanner'
 
 const reasons = [
@@ -25,7 +24,7 @@ const reasons = [
   {
     icon: Target,
     title: 'One sport. Exact scores.',
-    body: 'No 12-sport maze. Just Premier League scores, a private table, and custom points.',
+    body: 'Premier League scores, a private table, and custom points — nothing extra in the way.',
   },
   {
     icon: Bell,
@@ -69,10 +68,6 @@ const faqs = [
     q: 'Do I need an app store?',
     a: 'No. Open xactscore.app in Safari or Chrome and add it to your Home Screen. It runs like an app.',
   },
-  {
-    q: 'Is this like Superbru or PronoContest?',
-    a: 'Same idea — predict Premier League scores with friends — focused on one sport and a private table, not a sports megamenu.',
-  },
 ] as const
 
 export default function MarketingLanding({
@@ -101,7 +96,6 @@ export default function MarketingLanding({
                 url: origin,
                 applicationCategory: 'GameApplication',
                 operatingSystem: 'Web',
-                offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
                 description: t('Predict Premier League scores with friends. No transfers, no squads — just the score, your league, and the table.'),
               },
               {
@@ -206,7 +200,7 @@ export default function MarketingLanding({
 
       <section className="space-y-4">
         <h2 className="text-xl font-semibold uppercase tracking-tight text-zinc-900 dark:font-black dark:text-zinc-100 sm:text-2xl">
-          {t('Why groups switch')}
+          {t('Built for private groups')}
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {reasons.map(({ icon: Icon, title, body }) => (
@@ -220,8 +214,6 @@ export default function MarketingLanding({
           ))}
         </div>
       </section>
-
-      <CompareSection locale={locale} />
 
       <section id="join" className="scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none sm:p-8">
         <div className="mb-4 flex items-center gap-2 text-slate-600 dark:text-xactscore-accent">
@@ -249,9 +241,9 @@ export default function MarketingLanding({
       </section>
 
       <div className="rounded-3xl border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-xactscore-accent/20 dark:bg-gradient-to-br dark:from-black/30 dark:to-black dark:shadow-none sm:px-10">
-        <p className="text-xl font-extrabold uppercase tracking-tight text-zinc-900 dark:font-black dark:text-white sm:text-2xl">{t('Switch from Superbru or PronoContest')}</p>
+        <p className="text-xl font-extrabold uppercase tracking-tight text-zinc-900 dark:font-black dark:text-white sm:text-2xl">{t('Ready to call the scores?')}</p>
         <p className="mx-auto mt-2 max-w-lg text-sm font-medium text-zinc-500 dark:text-white/80">
-          {t('Built for a private Premier League table — not a sports megamenu.')}
+          {t('Built for a private Premier League table with friends.')}
         </p>
         <Link href={loginPath({ mode: 'signup' })} className={cn(buttonVariants(), 'mt-5 uppercase tracking-wider')}>
           {t('Sign Up')}

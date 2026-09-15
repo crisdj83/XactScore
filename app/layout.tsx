@@ -48,8 +48,6 @@ export async function generateMetadata(): Promise<Metadata> {
       "private league",
       "XactScore",
       "office football predictor",
-      "Superbru alternative",
-      "PronoContest alternative",
     ],
     alternates: { canonical: base },
     openGraph: {

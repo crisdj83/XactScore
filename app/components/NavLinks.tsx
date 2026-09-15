@@ -65,11 +65,6 @@ export default function NavLinks({ isAdmin, isLoggedIn, unreadMessageCount }: Na
       <Link href="/help" className={linkClass('/help')}>
         <CircleHelp className="h-4 w-4" /> {t('Help')}
       </Link>
-      {!isLoggedIn && (
-        <Link href="/compare" className={linkClass('/compare')}>
-          {t('Compare')}
-        </Link>
-      )}
       {isAdmin && (
         <Link href="/admin" className={linkClass('/admin')}>
           <ShieldCheck className="h-4 w-4" /> {t('Admin')}

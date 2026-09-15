@@ -16,8 +16,8 @@ export default function TermsPage() {
       <section className="space-y-3 text-sm leading-6 text-slate-700 dark:text-zinc-300">
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Service</h2>
         <p>
-          XactScore is a free, ad-free prediction game. Features may change. We may suspend accounts that
-          abuse the service, harass others, or attempt to disrupt contests.
+          XactScore is a Premier League score-prediction service. Features may change. We may suspend
+          accounts that abuse the service, harass others, or attempt to disrupt contests.
         </p>
 
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Accounts</h2>

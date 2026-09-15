@@ -28,7 +28,6 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Premier League predictions': 'Predicții Premier League',
     'Predict Premier League scores with friends. No transfers, no squads — just the score, your league, and the table.':
       'Prezice scorurile din Premier League cu prietenii. Fără transferuri, fără loturi — doar scorul, liga ta și clasamentul.',
-    'Start for free': 'Începe gratuit',
     'How it works': 'Cum funcționează',
     'Join a league': 'Intră într-o ligă',
     'Create a private league or enter a friend’s invite link. Ready in under a minute.':
@@ -44,7 +43,7 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Have an invite?': 'Ai o invitație?',
     'Paste an invite key': 'Lipește cheia de invitație',
     'Join this league': 'Intră în ligă',
-    'Why groups switch': 'De ce se mută grupurile',
+    'Built for private groups': 'Gândit pentru grupuri private',
     'Private leagues, invite links.': 'Ligi private, linkuri de invitație.',
     'Share one link with your office, family, or friends group. Everyone joins the same table.':
       'Trimite un link biroului, familiei sau grupului de prieteni. Toți intră în același clasament.',
@@ -52,26 +51,14 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'One league for your crew — shared ranking, custom points, and banter in Messages.':
       'O ligă pentru ai tăi — clasament comun, puncte personalizate și banter în Mesaje.',
     'One sport. Exact scores.': 'Un sport. Scoruri exacte.',
-    'No 12-sport maze. Just Premier League scores, a private table, and custom points.':
-      'Fără labirint de 12 sporturi. Doar scoruri Premier League, un clasament privat și puncte personalizate.',
+    'Premier League scores, a private table, and custom points — nothing extra in the way.':
+      'Scoruri Premier League, un clasament privat și puncte personalizate — fără nimic în plus.',
     'Picks that actually get in.': 'Predicții care chiar ajung la timp.',
     'Invite link, 60-minute lock, and a reminder before kickoff if you still have scores to put in.':
       'Link de invitație, blocare cu 60 de minute înainte și un reminder înainte de start dacă încă ai scoruri de pus.',
-    'How XactScore compares': 'Cum se compară XactScore',
-    'Built for a private Premier League table — not a sports megamenu.':
-      'Făcut pentru un clasament privat de Premier League — nu pentru un mega-meniu de sporturi.',
-    Sports: 'Sporturi',
-    Scoring: 'Punctaj',
-    Focus: 'Focus',
-    'Exact score + custom points': 'Scor exact + puncte personalizate',
-    '12+ sports and fantasy modes': 'Peste 12 sporturi și moduri fantasy',
-    'Predictor + fantasy': 'Predictor + fantasy',
-    'Football, rugby, and more': 'Fotbal, rugby și altele',
-    '1X2 or scores, custom rules': '1X2 sau scoruri, reguli personalizate',
-    'Private leagues for friends': 'Ligi private pentru prieteni',
-    'Public pools and fantasy modes': 'Pool-uri publice și moduri fantasy',
-    'Contests across several sports': 'Concursuri pe mai multe sporturi',
-    'Switch from Superbru or PronoContest': 'Treci de la Superbru sau PronoContest',
+    'Built for a private Premier League table with friends.':
+      'Gândit pentru un clasament privat de Premier League cu prietenii.',
+    'Ready to call the scores?': 'Gata să indici scorurile?',
     'Frequently asked questions': 'Întrebări frecvente',
     'What do I need to play?': 'De ce am nevoie ca să joc?',
     'An account, a league invite or your own league, and score picks before the 60-minute lock.':
@@ -85,17 +72,12 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Do I need an app store?': 'Am nevoie de magazin de aplicații?',
     'No. Open xactscore.app in Safari or Chrome and add it to your Home Screen. It runs like an app.':
       'Nu. Deschide xactscore.app în Safari sau Chrome și adaugă-l pe ecranul principal. Rulează ca o aplicație.',
-    'Is this like Superbru or PronoContest?': 'E ca Superbru sau PronoContest?',
-    'Same idea — predict Premier League scores with friends — focused on one sport and a private table, not a sports megamenu.':
-      'Aceeași idee — prezici scoruri Premier League cu prietenii — focus pe un sport și un clasament privat, nu pe un mega-meniu de sporturi.',
     'Next up': 'Urmează',
     'Recent results': 'Rezultate recente',
     'Your pick': 'Predicția ta',
     'League table': 'Clasamentul ligii',
     pts: 'pct',
     vs: 'vs',
-    Compare: 'Compară',
-    'XactScore vs Superbru and PronoContest': 'XactScore vs Superbru și PronoContest',
     'A private Premier League predictor for friends and offices.':
       'Un predictor privat de Premier League pentru prieteni și birouri.',
     'Back to home': 'Înapoi acasă',
@@ -544,7 +526,6 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Premier League predictions': 'Predicciones Premier League',
     'Predict Premier League scores with friends. No transfers, no squads — just the score, your league, and the table.':
       'Predice los marcadores de Premier League con amigos. Sin fichajes ni plantillas: solo el marcador, tu liga y la tabla.',
-    'Start for free': 'Empieza gratis',
     'How it works': 'Cómo funciona',
     'Join a league': 'Únete a una liga',
     'Create a private league or enter a friend’s invite link. Ready in under a minute.':
@@ -560,7 +541,7 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Have an invite?': '¿Tienes una invitación?',
     'Paste an invite key': 'Pega la clave de invitación',
     'Join this league': 'Únete a esta liga',
-    'Why groups switch': 'Por qué se cambian los grupos',
+    'Built for private groups': 'Hecho para grupos privados',
     'Private leagues, invite links.': 'Ligas privadas, enlaces de invitación.',
     'Share one link with your office, family, or friends group. Everyone joins the same table.':
       'Comparte un enlace con tu oficina, familia o grupo de amigos. Todos entran en la misma tabla.',
@@ -568,26 +549,14 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'One league for your crew — shared ranking, custom points, and banter in Messages.':
       'Una liga para los tuyos: clasificación compartida, puntos a medida y charla en Mensajes.',
     'One sport. Exact scores.': 'Un deporte. Marcadores exactos.',
-    'No 12-sport maze. Just Premier League scores, a private table, and custom points.':
-      'Sin un laberinto de 12 deportes. Solo marcadores de Premier League, una tabla privada y puntos a medida.',
+    'Premier League scores, a private table, and custom points — nothing extra in the way.':
+      'Marcadores de Premier League, una tabla privada y puntos a medida, sin nada de más.',
     'Picks that actually get in.': 'Pronósticos que sí llegan a tiempo.',
     'Invite link, 60-minute lock, and a reminder before kickoff if you still have scores to put in.':
       'Enlace de invitación, cierre 60 minutos antes y un recordatorio antes del saque si aún te faltan marcadores.',
-    'How XactScore compares': 'Cómo se compara XactScore',
-    'Built for a private Premier League table — not a sports megamenu.':
-      'Hecho para una tabla privada de Premier League, no para un megamenú de deportes.',
-    Sports: 'Deportes',
-    Scoring: 'Puntuación',
-    Focus: 'Enfoque',
-    'Exact score + custom points': 'Marcador exacto + puntos a medida',
-    '12+ sports and fantasy modes': 'Más de 12 deportes y modos fantasy',
-    'Predictor + fantasy': 'Predictor + fantasy',
-    'Football, rugby, and more': 'Fútbol, rugby y más',
-    '1X2 or scores, custom rules': '1X2 o marcadores, reglas propias',
-    'Private leagues for friends': 'Ligas privadas para amigos',
-    'Public pools and fantasy modes': 'Pools públicos y modos fantasy',
-    'Contests across several sports': 'Concursos en varios deportes',
-    'Switch from Superbru or PronoContest': 'Cámbiate de Superbru o PronoContest',
+    'Built for a private Premier League table with friends.':
+      'Hecho para una tabla privada de Premier League con amigos.',
+    'Ready to call the scores?': '¿Listo para marcar los resultados?',
     'Frequently asked questions': 'Preguntas frecuentes',
     'What do I need to play?': '¿Qué necesito para jugar?',
     'An account, a league invite or your own league, and score picks before the 60-minute lock.':
@@ -601,17 +570,12 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Do I need an app store?': '¿Necesito una tienda de apps?',
     'No. Open xactscore.app in Safari or Chrome and add it to your Home Screen. It runs like an app.':
       'No. Abre xactscore.app en Safari o Chrome y añádelo a la pantalla de inicio. Funciona como una app.',
-    'Is this like Superbru or PronoContest?': '¿Es como Superbru o PronoContest?',
-    'Same idea — predict Premier League scores with friends — focused on one sport and a private table, not a sports megamenu.':
-      'La misma idea: predecir marcadores de Premier League con amigos, centrado en un deporte y una tabla privada, no en un megamenú.',
     'Next up': 'Próximo',
     'Recent results': 'Resultados recientes',
     'Your pick': 'Tu pronóstico',
     'League table': 'Tabla de la liga',
     pts: 'pts',
     vs: 'vs',
-    Compare: 'Comparar',
-    'XactScore vs Superbru and PronoContest': 'XactScore vs Superbru y PronoContest',
     'A private Premier League predictor for friends and offices.':
       'Un predictor privado de Premier League para amigos y oficinas.',
     'Back to home': 'Volver al inicio',
