@@ -43,8 +43,8 @@ export default async function LoginPage(props: {
               className={cn(
                 'inline-flex h-11 min-h-11 select-none items-center justify-center rounded-full text-xs font-black uppercase tracking-wider transition touch-manipulation',
                 !isSignup
-                  ? 'bg-white text-slate-900 shadow-sm dark:bg-amber-500 dark:text-zinc-950'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-orange-100/70 dark:hover:text-orange-50'
+                  ? 'bg-white text-slate-900 shadow-sm dark:bg-xactscore-accent dark:text-black'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-white/60 dark:hover:text-white'
               )}
             >
               {t('Sign In')}
@@ -54,8 +54,8 @@ export default async function LoginPage(props: {
               className={cn(
                 'inline-flex h-11 min-h-11 select-none items-center justify-center rounded-full text-xs font-black uppercase tracking-wider transition touch-manipulation',
                 isSignup
-                  ? 'bg-white text-slate-900 shadow-sm dark:bg-amber-500 dark:text-zinc-950'
-                  : 'text-slate-500 hover:text-slate-800 dark:text-orange-100/70 dark:hover:text-orange-50'
+                  ? 'bg-white text-slate-900 shadow-sm dark:bg-xactscore-accent dark:text-black'
+                  : 'text-slate-500 hover:text-slate-800 dark:text-white/60 dark:hover:text-white'
               )}
             >
               {t('Sign Up')}

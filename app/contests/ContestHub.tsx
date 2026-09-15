@@ -117,7 +117,7 @@ export default function ContestHub({ myContests, messages }: any) {
                       </div>
                       <div className="mt-auto flex items-center justify-between border-t border-zinc-800 pt-4 text-sm">
                         {membership.contests.is_public ? (
-                          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-slate-600 dark:rounded dark:border-transparent dark:bg-zinc-900 dark:text-orange-200">
+                          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-slate-600 dark:rounded dark:border-transparent dark:bg-zinc-900 dark:text-xactscore-accent">
                             <Globe className="h-3 w-3" />
                             {t('Public')}
                           </span>
@@ -129,7 +129,7 @@ export default function ContestHub({ myContests, messages }: any) {
                             </span>
                           </span>
                         )}
-                        <span className="flex items-center text-xs font-bold uppercase tracking-wider text-orange-300 group-hover:text-orange-200">
+                        <span className="flex items-center text-xs font-bold uppercase tracking-wider text-xactscore-accent group-hover:text-xactscore-accent">
                           {t('Dashboard')} <ChevronRight className="ml-0.5 h-4 w-4" />
                         </span>
                       </div>
@@ -238,7 +238,7 @@ export default function ContestHub({ myContests, messages }: any) {
                         className={cn(
                           'min-h-12 cursor-pointer select-none rounded-xl border px-3 py-3 text-left transition touch-manipulation',
                           seasonLength === option.value
-                            ? 'border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-orange-400/50 dark:bg-orange-500/15'
+                            ? 'border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-xactscore-accent/50 dark:bg-xactscore-accent/15'
                             : 'border-slate-200 bg-white hover:border-slate-300 dark:border-zinc-800 dark:bg-zinc-950/60 dark:hover:border-zinc-600'
                         )}
                       >
@@ -263,7 +263,7 @@ export default function ContestHub({ myContests, messages }: any) {
                     className={cn(
                       'min-h-12 select-none rounded-xl border px-3 py-3 text-left transition touch-manipulation',
                       visibility === 'public'
-                        ? 'border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-orange-400/50 dark:bg-orange-500/15'
+                        ? 'border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-xactscore-accent/50 dark:bg-xactscore-accent/15'
                         : 'border-slate-200 bg-white hover:border-slate-300 dark:border-zinc-800 dark:bg-zinc-950/60 dark:hover:border-zinc-600'
                     )}
                   >
@@ -279,7 +279,7 @@ export default function ContestHub({ myContests, messages }: any) {
                     className={cn(
                       'min-h-12 select-none rounded-xl border px-3 py-3 text-left transition touch-manipulation',
                       visibility === 'private'
-                        ? 'border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-orange-400/50 dark:bg-orange-500/15'
+                        ? 'border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-xactscore-accent/50 dark:bg-xactscore-accent/15'
                         : 'border-slate-200 bg-white hover:border-slate-300 dark:border-zinc-800 dark:bg-zinc-950/60 dark:hover:border-zinc-600'
                     )}
                   >

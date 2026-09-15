@@ -86,7 +86,7 @@ export default function BottomNav({ isAdmin, isLoggedIn, unreadMessageCount }: B
               aria-label={label}
               className={cn(
                 iosTabItem,
-                active ? 'ios-tab-item-active text-indigo-600 dark:text-orange-200' : 'text-xactscore-muted hover:text-xactscore-text'
+                active ? 'ios-tab-item-active text-indigo-600 dark:text-xactscore-accent' : 'text-xactscore-muted hover:text-xactscore-text'
               )}
             >
               <span className="relative shrink-0">

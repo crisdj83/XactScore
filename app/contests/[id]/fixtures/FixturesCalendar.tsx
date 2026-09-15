@@ -88,14 +88,14 @@ export default function FixturesCalendar({
       />
       <div className="-mt-3 mb-1 flex justify-center">
         {isCurrentGameweekSelected ? (
-          <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:border-xactscore-accent/40 dark:bg-xactscore-accent/20 dark:text-[10px] dark:font-black dark:tracking-widest dark:text-orange-300">
+          <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:border-xactscore-accent/40 dark:bg-xactscore-accent/20 dark:text-[10px] dark:font-black dark:tracking-widest dark:text-xactscore-accent">
             {t('Current Gameweek')}
           </span>
         ) : (
           <button
             type="button"
             onClick={() => setSelectedMatchday(currentMatchday)}
-            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-500 transition-colors hover:bg-slate-50 active:scale-95 dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-[10px] dark:font-bold dark:normal-case dark:tracking-normal dark:text-orange-300 dark:hover:bg-orange-500/20"
+            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-500 transition-colors hover:bg-slate-50 active:scale-95 dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-[10px] dark:font-bold dark:normal-case dark:tracking-normal dark:text-xactscore-accent dark:hover:bg-xactscore-accent/20"
           >
             <Sparkles className="h-3 w-3" />
             <span>

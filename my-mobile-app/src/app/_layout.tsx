@@ -47,7 +47,12 @@ function RootNavigator() {
     <>
       <StatusBar style={theme.isDark ? 'light' : 'dark'} />
       <AppChrome>
-        <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_right',
+            contentStyle: { backgroundColor: theme.background },
+          }}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="contest/[id]" />
           <Stack.Screen name="help" />

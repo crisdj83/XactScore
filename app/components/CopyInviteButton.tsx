@@ -36,8 +36,8 @@ export default function CopyInviteButton({
       className={cn(
         'inline-flex select-none items-center justify-center gap-1.5 rounded-full transition touch-manipulation active:scale-95',
         compact
-          ? 'h-11 w-11 shrink-0 border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-white/15 dark:bg-white/10 dark:text-orange-100 dark:hover:bg-white/20'
-          : 'min-h-11 border border-white/15 bg-white/10 px-3 text-xs font-bold uppercase tracking-wider text-orange-100 hover:bg-white/20',
+          ? 'h-11 w-11 shrink-0 border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-white/15 dark:bg-white/10 dark:text-xactscore-muted dark:hover:bg-white/20'
+          : 'min-h-11 border border-white/15 bg-white/10 px-3 text-xs font-bold uppercase tracking-wider text-xactscore-muted hover:bg-white/20',
         className
       )}
     >

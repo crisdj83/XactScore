@@ -58,7 +58,8 @@ export default function PrivacyPage() {
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Your choices</h2>
         <p>
           You may update profile fields, sign out, request export of your data by contacting support, or
-          delete your account. You may report abusive messages from the Messages screen.
+          delete your account. You may report abusive content and block users from the Messages screen;
+          blocked users’ messages are hidden from your feed immediately.
         </p>
 
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Children</h2>

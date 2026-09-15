@@ -117,10 +117,10 @@ export default function MarketingLanding({
         }}
       />
 
-      <section className="hero-score-card relative overflow-hidden rounded-3xl bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-gradient-to-br dark:from-orange-600 dark:via-zinc-900 dark:to-zinc-950 dark:shadow-2xl sm:px-10 sm:py-12">
+      <section className="hero-score-card relative overflow-hidden rounded-3xl bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-gradient-to-br dark:from-black dark:via-[#0a0a0a] dark:to-black dark:shadow-2xl sm:px-10 sm:py-12">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-100/80 bg-[#F1F4F9] px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:border-white/15 dark:bg-white/10 dark:text-orange-100">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-100/80 bg-[#F1F4F9] px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:border-white/15 dark:bg-white/10 dark:text-xactscore-muted">
               <Trophy className="h-3.5 w-3.5 text-slate-500 dark:text-xactscore-accent" />
               {t('Premier League predictions')}
             </div>
@@ -130,12 +130,12 @@ export default function MarketingLanding({
               </span>{' '}
               <span className="block text-slate-900 sm:inline dark:text-xactscore-accent">{t('Own the table.')}</span>
             </h1>
-            <p className="mt-4 max-w-lg text-sm font-medium leading-6 text-zinc-500 dark:text-orange-50/90 sm:text-base">
+            <p className="mt-4 max-w-lg text-sm font-medium leading-6 text-zinc-500 dark:text-white/90 sm:text-base">
               {t('Private Premier League leagues for friends, offices, and family.')}{' '}
               {t('Predict Premier League scores with friends. No transfers, no squads — just the score, your league, and the table.')}
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center">
-              <Link href={loginPath()} className={cn(buttonVariants(), 'w-full rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-gradient-to-r dark:from-amber-500 dark:to-orange-600 dark:shadow-[0_10px_25px_rgba(245,158,11,0.35)] dark:hover:shadow-[0_10px_25px_rgba(245,158,11,0.35)] sm:w-auto')}>
+              <Link href={loginPath()} className={cn(buttonVariants(), 'w-full rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:shadow-[0_0_28px_rgba(18,255,128,0.35)] sm:w-auto')}>
                 {t('Sign In')}
               </Link>
               <Link
@@ -146,7 +146,7 @@ export default function MarketingLanding({
               </Link>
             </div>
             <p className="mt-3 text-sm font-medium text-zinc-500">
-              <Link href="#join" className="underline-offset-4 hover:underline dark:text-orange-100">
+              <Link href="#join" className="underline-offset-4 hover:underline dark:text-xactscore-muted">
                 {t('Have an invite?')}
               </Link>
             </p>
@@ -159,7 +159,7 @@ export default function MarketingLanding({
         <section className="grid gap-3 sm:grid-cols-2">
           {nextMatch ? (
             <article className="rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-500 dark:text-orange-300">{t('Next up')}</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-500 dark:text-xactscore-accent">{t('Next up')}</p>
               <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm dark:rounded-none dark:border-0 dark:bg-transparent dark:p-0 dark:shadow-none">
                 <span className="flex min-w-0 items-center gap-2 text-sm font-bold text-slate-900 dark:font-bold dark:text-zinc-100">
                   {nextMatch.homeCrest ? (
@@ -179,7 +179,7 @@ export default function MarketingLanding({
           ) : null}
           {recentScores[0] ? (
             <article className="rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-500 dark:text-orange-300">{t('Recent results')}</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-500 dark:text-xactscore-accent">{t('Recent results')}</p>
               <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm dark:rounded-none dark:border-0 dark:bg-transparent dark:p-0 dark:shadow-none">
                 <span className="truncate text-sm font-bold text-slate-900 dark:font-bold dark:text-zinc-100">{recentScores[0].homeTeam}</span>
                 <span className="tabular-nums text-sm font-bold text-slate-900 dark:text-xactscore-accent">
@@ -248,9 +248,9 @@ export default function MarketingLanding({
         ))}
       </section>
 
-      <div className="rounded-3xl border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-orange-400/20 dark:bg-gradient-to-br dark:from-orange-600/30 dark:to-zinc-950 dark:shadow-none sm:px-10">
+      <div className="rounded-3xl border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-xactscore-accent/20 dark:bg-gradient-to-br dark:from-black/30 dark:to-black dark:shadow-none sm:px-10">
         <p className="text-xl font-extrabold uppercase tracking-tight text-zinc-900 dark:font-black dark:text-white sm:text-2xl">{t('Switch from Superbru or PronoContest')}</p>
-        <p className="mx-auto mt-2 max-w-lg text-sm font-medium text-zinc-500 dark:text-orange-50/80">
+        <p className="mx-auto mt-2 max-w-lg text-sm font-medium text-zinc-500 dark:text-white/80">
           {t('Built for a private Premier League table — not a sports megamenu.')}
         </p>
         <Link href={loginPath({ mode: 'signup' })} className={cn(buttonVariants(), 'mt-5 uppercase tracking-wider')}>

@@ -81,7 +81,7 @@ export function BrandSplash({ message }: { message?: string }) {
       </View>
 
       <View style={styles.footer}>
-        <ActivityIndicator color="#ff8a2b" />
+        <ActivityIndicator color="#12ff80" />
         {message ? <Text style={styles.message}>{message}</Text> : null}
       </View>
     </View>
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     width: 220,
     height: 220,
     borderRadius: 110,
-    backgroundColor: 'rgba(255,122,24,0.22)',
-    shadowColor: '#ff7a18',
+    backgroundColor: 'rgba(18,255,128,0.18)',
+    shadowColor: '#12ff80',
     shadowOpacity: 0.9,
     shadowRadius: 48,
     shadowOffset: { width: 0, height: 0 },

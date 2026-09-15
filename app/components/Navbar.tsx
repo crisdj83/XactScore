@@ -75,7 +75,7 @@ export default async function Navbar() {
                   type="submit"
                   title={t('Sign Out')}
                   aria-label={t('Sign Out')}
-                  className="inline-flex h-11 w-11 shrink-0 select-none items-center justify-center rounded-full border border-xactscore-border bg-xactscore-surface text-xactscore-text shadow-sm outline-none transition-all duration-300 touch-manipulation hover:border-slate-200 hover:bg-slate-100 active:scale-90 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-orange-200 dark:hover:border-amber-500/40 dark:hover:bg-amber-500/20"
+                  className="inline-flex h-11 w-11 shrink-0 select-none items-center justify-center rounded-full border border-xactscore-border bg-xactscore-surface text-xactscore-text shadow-sm outline-none transition-all duration-300 touch-manipulation hover:border-slate-200 hover:bg-slate-100 active:scale-90 dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent dark:hover:border-xactscore-accent/40 dark:hover:bg-xactscore-accent/20"
                 >
                   <LogOut className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
                 </button>
@@ -84,7 +84,7 @@ export default async function Navbar() {
               <span className="inline-flex shrink-0 items-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 dark:border-white/15 dark:bg-white/5">
                 <Link
                   href={loginPath()}
-                  className="inline-flex h-11 min-h-11 select-none items-center px-3 text-xs font-black uppercase tracking-wider text-slate-700 touch-manipulation dark:text-orange-100"
+                  className="inline-flex h-11 min-h-11 select-none items-center px-3 text-xs font-black uppercase tracking-wider text-slate-700 touch-manipulation dark:text-xactscore-muted"
                 >
                   {t('Sign In')}
                 </Link>

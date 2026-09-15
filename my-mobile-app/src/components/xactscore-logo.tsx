@@ -10,7 +10,7 @@ type Props = {
 
 /**
  * Matches website `app/components/XactScoreLogo.tsx`:
- * dark rounded tile + orange pulse mark + corner circle-dot.
+ * black tile + neon green pulse mark + corner circle-dot.
  */
 export function XactScoreLogo({ compact = true, showWordmark = false }: Props) {
   const theme = useTheme();
@@ -18,6 +18,7 @@ export function XactScoreLogo({ compact = true, showWordmark = false }: Props) {
   const iconSize = compact ? 20 : 32;
   const dot = compact ? 10 : 14;
   const radius = compact ? 16 : 20;
+  const accent = theme.accent;
 
   return (
     <View style={[styles.row, { gap: compact ? 8 : 12 }]}>
@@ -28,10 +29,10 @@ export function XactScoreLogo({ compact = true, showWordmark = false }: Props) {
             width: size,
             height: size,
             borderRadius: radius,
-            shadowColor: '#431407',
+            shadowColor: accent,
           },
         ]}>
-        <Ionicons name="pulse" size={iconSize} color="#ff7a18" />
+        <Ionicons name="pulse" size={iconSize} color={accent} />
         <View
           style={[
             styles.dot,
@@ -42,6 +43,8 @@ export function XactScoreLogo({ compact = true, showWordmark = false }: Props) {
               top: compact ? 4 : 6,
               right: compact ? 4 : 6,
               borderWidth: compact ? 2 : 2.5,
+              borderColor: accent,
+              backgroundColor: accent,
             },
           ]}
         />
@@ -55,7 +58,8 @@ export function XactScoreLogo({ compact = true, showWordmark = false }: Props) {
               fontSize: compact ? 23 : 36,
             },
           ]}>
-          XactScore
+          <Text style={{ color: theme.text }}>Xact</Text>
+          <Text style={{ color: accent }}>Score</Text>
         </Text>
       ) : null}
     </View>
@@ -68,19 +72,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mark: {
-    backgroundColor: '#0d0d0d',
+    backgroundColor: '#000000',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.45,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 0 },
     elevation: 4,
   },
   /** Lucide CircleDot: ring + filled center */
   dot: {
     position: 'absolute',
-    borderColor: '#ff7a18',
-    backgroundColor: '#ff7a18',
   },
   wordmark: {
     fontWeight: '900',

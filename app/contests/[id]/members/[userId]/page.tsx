@@ -127,7 +127,7 @@ function ranksAfterFinishedMatches(
 }
 
 function OutcomeIcon({ outcome }: { outcome: PredictionOutcomeKind }) {
-  if (outcome === 'exact') return <Crosshair className="h-4 w-4 text-amber-500" aria-hidden />
+  if (outcome === 'exact') return <Crosshair className="h-4 w-4 text-xactscore-accent" aria-hidden />
   if (outcome === 'close') return <Activity className="h-4 w-4 text-sky-500" aria-hidden />
   if (outcome === 'result') return <CheckCircle2 className="h-4 w-4 text-emerald-500" aria-hidden />
   return <X className="h-4 w-4 text-red-500" aria-hidden />
@@ -269,7 +269,7 @@ export default async function ContestMemberProfilePage(props: {
         ? 'border-rose-200 bg-rose-50 text-rose-900 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-100'
         : vibe.tone === 'empty'
           ? 'border-slate-200 bg-slate-50 text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200'
-          : 'border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100'
+          : 'border-amber-200 bg-amber-50 text-amber-950 dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent'
 
   return (
     <div className="space-y-5 p-0 sm:space-y-6">
@@ -297,7 +297,7 @@ export default async function ContestMemberProfilePage(props: {
               unoptimized={isUnoptimizedAvatar(profile.avatar_url)}
             />
           ) : (
-            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-2xl font-black text-orange-500 sm:h-[4.5rem] sm:w-[4.5rem]">
+            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-xactscore-accent/20 text-2xl font-black text-xactscore-accent sm:h-[4.5rem] sm:w-[4.5rem]">
               {displayName.slice(0, 1).toUpperCase()}
             </span>
           )}
@@ -393,7 +393,7 @@ export default async function ContestMemberProfilePage(props: {
                     className={cn(
                       'inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-bold',
                       outcome === 'exact' &&
-                        'border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-300',
+                        'border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-xactscore-accent',
                       outcome === 'close' &&
                         'border-sky-500/20 bg-sky-500/10 text-sky-700 dark:text-sky-300',
                       outcome === 'result' &&

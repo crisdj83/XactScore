@@ -46,7 +46,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
                 className={cn(
                   "shrink-0 truncate",
                   isLast
-                    ? "text-zinc-900 dark:bg-gradient-to-r dark:from-amber-400 dark:to-orange-600 dark:bg-clip-text dark:text-transparent"
+                    ? "text-zinc-900 dark:bg-gradient-to-r dark:bg-xactscore-accent dark:bg-clip-text dark:text-transparent"
                     : "text-zinc-500"
                 )}
               >

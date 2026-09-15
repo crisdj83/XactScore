@@ -95,7 +95,7 @@ export default function InstallHelpPage() {
       <div className="flex flex-col gap-4">
         <Link
           href="/help"
-          className="inline-flex w-fit items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-zinc-400 transition hover:text-orange-200"
+          className="inline-flex w-fit items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-zinc-400 transition hover:text-xactscore-accent"
         >
           <ArrowLeft className="h-4 w-4" />
           {t('Back to Help')}
@@ -117,7 +117,7 @@ export default function InstallHelpPage() {
         </p>
       </div>
 
-      <p className="rounded-2xl border border-orange-500/25 bg-orange-500/10 px-4 py-3 text-sm leading-6 text-orange-100">
+      <p className="rounded-2xl border border-xactscore-accent/25 bg-xactscore-accent/10 px-4 py-3 text-sm leading-6 text-xactscore-muted">
         {t('XactScore is not listed on the App Store or Google Play. The buttons use those familiar logos so you can pick iPhone or Android and follow the matching steps.')}
       </p>
 

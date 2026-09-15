@@ -176,7 +176,7 @@ export default function ContestsScreen() {
         }>
         <View style={styles.header}>
           <View style={{ flex: 1 }}>
-            <Text style={[styles.title, { color: theme.text }]}>{t('Contest Hub')}</Text>
+            <Text style={[styles.title, { color: theme.text }]}>{t('Leagues')}</Text>
           </View>
           <View style={[styles.trophyBadge, { backgroundColor: theme.accent }]}>
             <Ionicons name="trophy" size={22} color={onAccentText} />
@@ -319,7 +319,7 @@ export default function ContestsScreen() {
                           style={[
                             styles.metaPill,
                             {
-                              backgroundColor: theme.isDark ? '#18181b' : '#ffffff',
+                              backgroundColor: theme.backgroundElement,
                               borderColor: theme.border,
                             },
                           ]}>
@@ -427,7 +427,7 @@ export default function ContestsScreen() {
                 style={[
                   styles.primaryBtn,
                   {
-                    backgroundColor: theme.isDark ? '#27272a' : theme.accent,
+                    backgroundColor: theme.isDark ? theme.backgroundSelected : theme.accent,
                     opacity: busy || joinKey.trim().length < 3 ? 0.5 : 1,
                   },
                 ]}>

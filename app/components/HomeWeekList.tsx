@@ -39,7 +39,7 @@ export default function HomeWeekList({
     <section className="space-y-3">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-orange-200">{t('Your week')}</h2>
+          <h2 className="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-xactscore-accent">{t('Your week')}</h2>
           <p className="mt-0.5 text-sm text-zinc-400">
             {totalOpen > 0
               ? t('Put your scores in before they lock.')

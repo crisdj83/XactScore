@@ -1,13 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { type Href, router } from 'expo-router';
+import Animated, {
+  Easing,
+  cancelAnimation,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { ScoreHeroArt } from '@/components/home/score-hero-art';
 import type { HomeNextMatch, HomeScore } from '@/lib/home-api';
 import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
+
+const SCORE_VIEWPORT_H = 196;
+const MARQUEE_MS = 28000;
 
 type Props = {
   nextMatch: HomeNextMatch | null;
@@ -61,6 +73,146 @@ function CountdownUnit({
   );
 }
 
+function ScoreRow({
+  match,
+  isDark,
+  textColor,
+}: {
+  match: HomeScore;
+  isDark: boolean;
+  textColor: string;
+}) {
+  return (
+    <View
+      style={[
+        styles.scoreRow,
+        {
+          backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : '#ffffff',
+          borderColor: isDark ? 'rgba(255,255,255,0.10)' : '#e2e8f0',
+        },
+      ]}>
+      <Text style={[styles.status, { color: isDark ? '#fdba74' : '#64748b' }]}>{match.status}</Text>
+      {match.homeCrest ? (
+        <Image source={{ uri: match.homeCrest }} style={styles.smallCrest} contentFit="contain" />
+      ) : (
+        <View style={styles.smallCrest} />
+      )}
+      <Text numberOfLines={1} style={[styles.scoreTeam, { color: textColor }]}>
+        {compactClubName(match.homeTeam)}
+      </Text>
+      <Text style={[styles.scoreline, { color: textColor }]}>
+        {match.homeScore ?? '-'}–{match.awayScore ?? '-'}
+      </Text>
+      <Text numberOfLines={1} style={[styles.scoreTeam, styles.scoreTeamRight, { color: textColor }]}>
+        {compactClubName(match.awayTeam)}
+      </Text>
+      {match.awayCrest ? (
+        <Image source={{ uri: match.awayCrest }} style={styles.smallCrest} contentFit="contain" />
+      ) : (
+        <View style={styles.smallCrest} />
+      )}
+    </View>
+  );
+}
+
+/** Website-style vertical marquee for recent PL scores. */
+function ScoresMarquee({
+  scores,
+  isDark,
+  textColor,
+  surfaceColor,
+  emptyLabel,
+}: {
+  scores: HomeScore[];
+  isDark: boolean;
+  textColor: string;
+  surfaceColor: string;
+  emptyLabel: string;
+}) {
+  const translateY = useSharedValue(0);
+  const [halfHeight, setHalfHeight] = useState(0);
+  const loop = useMemo(() => [...scores, ...scores], [scores]);
+
+  useEffect(() => {
+    cancelAnimation(translateY);
+    translateY.value = 0;
+    if (halfHeight <= 0 || scores.length < 2) return;
+    translateY.value = withRepeat(
+      withTiming(-halfHeight, { duration: MARQUEE_MS, easing: Easing.linear }),
+      -1,
+      false,
+    );
+    return () => cancelAnimation(translateY);
+  }, [halfHeight, scores.length, translateY]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  if (!scores.length) {
+    return (
+      <View style={styles.scoresViewport}>
+        <Text style={{ color: isDark ? '#a1a1aa' : '#64748b', fontSize: 14 }}>{emptyLabel}</Text>
+      </View>
+    );
+  }
+
+  // Light: soft crossfade like the website. Dark: no overlay fades — the card’s
+  // orange wash made solid zinc gradients look muddy.
+  const fadeTop = [surfaceColor, `${surfaceColor}99`, `${surfaceColor}00`] as const;
+  const fadeBottom = [`${surfaceColor}00`, `${surfaceColor}99`, surfaceColor] as const;
+
+  return (
+    <View style={styles.scoresViewport} pointerEvents="none">
+      <Animated.View style={[styles.scoresTrack, animatedStyle]}>
+        <View
+          style={styles.scoresHalf}
+          onLayout={(e) => {
+            const h = e.nativeEvent.layout.height;
+            // Include gap between the two halves so the loop seams cleanly.
+            const next = h + 8;
+            if (next > 0 && Math.abs(next - halfHeight) > 1) setHalfHeight(next);
+          }}>
+          {scores.map((match) => (
+            <ScoreRow
+              key={`a-${String(match.id)}`}
+              match={match}
+              isDark={isDark}
+              textColor={textColor}
+            />
+          ))}
+        </View>
+        <View style={styles.scoresHalf}>
+          {loop.slice(scores.length).map((match, idx) => (
+            <ScoreRow
+              key={`b-${String(match.id)}-${idx}`}
+              match={match}
+              isDark={isDark}
+              textColor={textColor}
+            />
+          ))}
+        </View>
+      </Animated.View>
+      {!isDark ? (
+        <>
+          <LinearGradient
+            colors={[...fadeTop]}
+            locations={[0, 0.55, 1]}
+            style={styles.fadeTop}
+            pointerEvents="none"
+          />
+          <LinearGradient
+            colors={[...fadeBottom]}
+            locations={[0, 0.45, 1]}
+            style={styles.fadeBottom}
+            pointerEvents="none"
+          />
+        </>
+      ) : null}
+    </View>
+  );
+}
+
 export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) {
   const theme = useTheme();
   const t = useTranslations();
@@ -98,7 +250,8 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
     return () => clearInterval(timer);
   }, [nextMatch?.date]);
 
-  const scores = useMemo(() => recentScores.slice(0, 5), [recentScores]);
+  // Keep enough rows for a smooth loop (website uses the full recent list).
+  const scores = useMemo(() => recentScores.slice(0, 12), [recentScores]);
 
   return (
     <View
@@ -183,50 +336,13 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
         </Text>
       </Pressable>
 
-      <View style={styles.scoresWrap}>
-        {scores.length ? (
-          scores.map((match) => (
-            <View
-              key={String(match.id)}
-              style={[
-                styles.scoreRow,
-                {
-                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : '#ffffff',
-                  borderColor: isDark ? 'rgba(255,255,255,0.10)' : '#e2e8f0',
-                },
-              ]}>
-              <Text style={[styles.status, { color: isDark ? '#fdba74' : '#64748b' }]}>
-                {match.status}
-              </Text>
-              {match.homeCrest ? (
-                <Image source={{ uri: match.homeCrest }} style={styles.smallCrest} contentFit="contain" />
-              ) : (
-                <View style={styles.smallCrest} />
-              )}
-              <Text numberOfLines={1} style={[styles.scoreTeam, { color: theme.text }]}>
-                {compactClubName(match.homeTeam)}
-              </Text>
-              <Text style={[styles.scoreline, { color: theme.text }]}>
-                {match.homeScore ?? '-'}–{match.awayScore ?? '-'}
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={[styles.scoreTeam, styles.scoreTeamRight, { color: theme.text }]}>
-                {compactClubName(match.awayTeam)}
-              </Text>
-              {match.awayCrest ? (
-                <Image source={{ uri: match.awayCrest }} style={styles.smallCrest} contentFit="contain" />
-              ) : (
-                <View style={styles.smallCrest} />
-              )}
-            </View>
-          ))
-        ) : (
-          <Text style={{ color: theme.textSecondary, fontSize: 14 }}>
-            {t('No recent matches to display.')}
-          </Text>
-        )}
-      </View>
+      <ScoresMarquee
+        scores={scores}
+        isDark={isDark}
+        textColor={theme.text}
+        surfaceColor={theme.backgroundElement}
+        emptyLabel={t('No recent matches to display.')}
+      />
     </View>
   );
 }
@@ -334,7 +450,32 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     textTransform: 'uppercase',
   },
-  scoresWrap: { marginTop: 16, gap: 8 },
+  scoresViewport: {
+    marginTop: 16,
+    height: SCORE_VIEWPORT_H,
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+  scoresTrack: {
+    gap: 8,
+  },
+  scoresHalf: {
+    gap: 8,
+  },
+  fadeTop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 28,
+  },
+  fadeBottom: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 36,
+  },
   scoreRow: {
     minHeight: 44,
     borderRadius: 16,

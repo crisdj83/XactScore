@@ -105,11 +105,11 @@ export default function HeroBanner({
 
   const unit = (label: string, value: string, accent = false) => (
     <div className="flex flex-col items-center">
-      <span className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-orange-200">{label}</span>
+      <span className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-xactscore-accent">{label}</span>
       <div
         className={`flex min-w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white p-3 font-mono text-sm font-bold text-slate-900 sm:min-w-12 sm:text-base ${
           accent
-            ? 'dark:border-orange-400 dark:bg-black/20 dark:text-orange-400 dark:shadow-none'
+            ? 'dark:border-xactscore-accent dark:bg-xactscore-accent/10 dark:text-xactscore-accent dark:shadow-none'
             : 'dark:border-white/80 dark:bg-black/20 dark:text-white dark:shadow-none'
         }`}
       >
@@ -119,7 +119,7 @@ export default function HeroBanner({
   )
 
   return (
-    <div className="hero-score-card relative flex w-full flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-white/10 dark:bg-gradient-to-bl dark:from-orange-600 dark:via-zinc-900 dark:to-zinc-950 dark:p-0 dark:shadow-2xl dark:shadow-black/40 sm:p-6 lg:flex-row">
+    <div className="hero-score-card relative flex w-full flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-white/10 dark:bg-gradient-to-bl dark:from-black dark:via-[#0a0a0a] dark:to-black dark:p-0 dark:shadow-2xl dark:shadow-black/40 sm:p-6 lg:flex-row">
       
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes scroll-y {
@@ -213,10 +213,10 @@ export default function HeroBanner({
             </span>{' '}
             <span className="block text-slate-900 sm:inline dark:text-xactscore-accent">{t('Own the table.')}</span>
           </p>
-          <p className="mb-2 max-w-md text-sm font-medium leading-snug text-slate-600 dark:text-orange-100 sm:mb-4 sm:leading-6">
+          <p className="mb-2 max-w-md text-sm font-medium leading-snug text-slate-600 dark:text-xactscore-muted sm:mb-4 sm:leading-6">
             {t('Call every Premier League score. Compete in your league. Climb the table.')}
           </p>
-          <p className="text-xs font-extrabold uppercase tracking-widest text-zinc-500 dark:text-orange-200">
+          <p className="text-xs font-extrabold uppercase tracking-widest text-zinc-500 dark:text-xactscore-accent">
             {t('Upcoming Match')}
           </p>
           {nextMatch ? (
@@ -249,7 +249,7 @@ export default function HeroBanner({
                 </span>
               </div>
               {nextMatch.venue ? (
-                <p className="mt-1 flex min-w-0 items-center gap-1 text-xs font-medium text-zinc-500 dark:font-semibold dark:text-orange-200/90">
+                <p className="mt-1 flex min-w-0 items-center gap-1 text-xs font-medium text-zinc-500 dark:font-semibold dark:text-xactscore-accent/90">
                   <MapPin className="h-3 w-3 shrink-0" aria-hidden />
                   <span className="truncate">{nextMatch.venue}</span>
                 </p>
@@ -277,7 +277,7 @@ export default function HeroBanner({
             href={predictHref} 
             className={cn(
               buttonVariants({ variant: 'default', size: 'sm' }),
-              'rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-gradient-to-r dark:from-amber-500 dark:to-orange-600 dark:shadow-[0_10px_25px_rgba(245,158,11,0.35)] dark:hover:shadow-[0_10px_25px_rgba(245,158,11,0.35)] sm:h-auto sm:min-h-11 sm:px-6 sm:text-xs'
+              'rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-3.5 font-bold uppercase tracking-wide text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/40 active:scale-95 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:shadow-[0_0_28px_rgba(18,255,128,0.35)] sm:h-auto sm:min-h-11 sm:px-6 sm:text-xs'
             )}
           >
             {t('Make Predictions')}
@@ -297,7 +297,7 @@ export default function HeroBanner({
                 key={`${match.id}-${idx}`}
                 className="hero-match-row mb-2.5 flex min-h-[44px] items-center gap-1.5 rounded-2xl border border-slate-200 bg-white px-2.5 py-2 shadow-sm dark:mb-0 dark:rounded-lg dark:border-white/10 dark:bg-white/[0.06] dark:shadow-lg dark:shadow-black/20 sm:min-h-[52px] sm:justify-between sm:gap-2 sm:px-3.5 sm:py-3"
               >
-                <span className="hero-match-status w-7 shrink-0 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:font-bold dark:text-orange-300 sm:w-8 sm:text-xs">
+                <span className="hero-match-status w-7 shrink-0 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:font-bold dark:text-xactscore-accent sm:w-8 sm:text-xs">
                   {match.status}
                 </span>
                 {(match.homeCrest || getTeamLogo(match.homeTeam)) ? (

@@ -129,7 +129,7 @@ export default async function MatchPredictionsPage({ params }: PageProps) {
               <span className="font-bold text-zinc-100">{player.name}</span>
               <span
                 className={`flex items-center gap-3 font-mono text-lg font-black ${
-                  canReveal ? 'text-orange-100' : 'text-zinc-500'
+                  canReveal ? 'text-xactscore-muted' : 'text-zinc-500'
                 }`}
               >
                 {canReveal &&

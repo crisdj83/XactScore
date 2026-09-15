@@ -37,7 +37,13 @@ function ContestShell() {
         </View>
       ) : (
         <View style={styles.body}>
-          <Stack screenOptions={{ headerShown: false }} />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: theme.background },
+              animation: 'fade',
+            }}
+          />
         </View>
       )}
     </View>

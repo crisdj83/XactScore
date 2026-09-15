@@ -18,6 +18,7 @@ import { useTranslations } from '@/contexts/locale';
 import { useTheme } from '@/hooks/use-theme';
 import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
 import type { ContestMatch, ContestMember, ContestRankingRow } from '@/lib/contest-api';
+import { fetchBlockedUserIds } from '@/lib/account-api';
 import {
   PREDICTION_REVEAL_MS,
   calculatePoints,
@@ -177,6 +178,22 @@ export default function ContestRankingScreen() {
 
   const [focusedMatchId, setFocusedMatchId] = useState<string | null>(null);
   const [selectedMatchday, setSelectedMatchday] = useState<number | null>(null);
+  const [blockedIds, setBlockedIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    void fetchBlockedUserIds()
+      .then((ids) => setBlockedIds(new Set(ids)))
+      .catch(() => setBlockedIds(new Set()));
+  }, [data?.contest.id]);
+
+  const visibleMembers = useMemo(() => {
+    if (!data) return [] as ContestMember[];
+    return data.members.map((member) =>
+      blockedIds.has(member.userId)
+        ? { ...member, displayName: t('Blocked user'), avatarUrl: null, quote: null }
+        : member,
+    );
+  }, [blockedIds, data, t]);
 
   useEffect(() => {
     if (!data || !initialId) return;
@@ -221,12 +238,12 @@ export default function ContestRankingScreen() {
     if (!data || !focusedMatch) return [] as PickRow[];
     return buildPicksForMatch(
       focusedMatch,
-      data.members,
+      visibleMembers,
       data.predictions,
       data.contest.scoring,
       canReveal
     );
-  }, [data, focusedMatch, canReveal]);
+  }, [data, focusedMatch, canReveal, visibleMembers]);
 
   const movement = useMemo(() => {
     if (!data) return { previous: new Map<string, number>(), current: new Map<string, number>() };
@@ -239,19 +256,19 @@ export default function ContestRankingScreen() {
       )
       .sort((a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime());
     const previous = ranksFromFinished(
-      data.members,
+      visibleMembers,
       finished.slice(0, -1),
       data.predictions,
       data.contest.scoring
     );
     const current = ranksFromFinished(
-      data.members,
+      visibleMembers,
       finished,
       data.predictions,
       data.contest.scoring
     );
     return { previous, current };
-  }, [data]);
+  }, [data, visibleMembers]);
 
   if (!data) {
     return (
@@ -268,6 +285,7 @@ export default function ContestRankingScreen() {
 
   return (
     <ScrollView
+      style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={[styles.content, { paddingBottom: bottomPad }]}
       nestedScrollEnabled
       keyboardShouldPersistTaps="handled"
@@ -407,18 +425,27 @@ export default function ContestRankingScreen() {
             {t('No players found in this contest.')}
           </Text>
         ) : (
-          data.ranking.map((row, index) => (
-            <LeaderboardRow
-              key={row.userId}
-              row={row}
-              index={index}
-              isMe={row.userId === data.userId}
-              previousRank={movement.previous.get(row.userId) ?? null}
-              movementRank={movement.current.get(row.userId) ?? row.rank}
-              theme={theme}
-              t={t}
-            />
-          ))
+          data.ranking.map((row, index) => {
+            const redacted = blockedIds.has(row.userId)
+              ? {
+                  ...row,
+                  displayName: t('Blocked user'),
+                  avatarUrl: null as string | null,
+                }
+              : row;
+            return (
+              <LeaderboardRow
+                key={row.userId}
+                row={redacted}
+                index={index}
+                isMe={row.userId === data.userId}
+                previousRank={movement.previous.get(row.userId) ?? null}
+                movementRank={movement.current.get(row.userId) ?? row.rank}
+                theme={theme}
+                t={t}
+              />
+            );
+          })
         )}
       </View>
     </ScrollView>
@@ -436,11 +463,18 @@ function TeamCol({
 }) {
   return (
     <View style={styles.teamCol}>
-      <View style={styles.crestLgWrap}>
+      <View
+        style={[
+          styles.crestLgWrap,
+          {
+            backgroundColor: theme.isDark ? 'rgba(255,255,255,0.08)' : '#ffffff',
+            borderColor: theme.isDark ? 'rgba(255,255,255,0.12)' : 'rgba(15,23,42,0.06)',
+          },
+        ]}>
         {crest ? (
           <Image source={{ uri: crest }} style={styles.crestLg} />
         ) : (
-          <Text style={{ fontSize: 10, fontWeight: '800', color: '#64748b' }}>
+          <Text style={{ fontSize: 10, fontWeight: '800', color: theme.textSecondary }}>
             {name.slice(0, 3).toUpperCase()}
           </Text>
         )}
@@ -663,7 +697,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 999,
-    backgroundColor: '#ffffff',
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',

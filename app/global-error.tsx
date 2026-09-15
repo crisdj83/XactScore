@@ -78,7 +78,7 @@ export default function GlobalError({
                 window.location.reload()
               })
             }}
-            className="rounded-lg bg-[#ff7a18] px-4 py-2 text-sm font-medium text-[#0f0f10] hover:opacity-90"
+            className="rounded-lg bg-[#12ff80] px-4 py-2 text-sm font-medium text-[#0f0f10] hover:opacity-90"
           >
             Try again
           </button>

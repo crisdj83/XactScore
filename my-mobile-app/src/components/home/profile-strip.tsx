@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { UserAvatar } from '@/components/user-avatar';
@@ -14,7 +14,6 @@ type Props = {
   favoriteCrest: string | null;
   isGlobalAdmin: boolean;
   bestRank: number | null;
-  onEditPress: () => void;
 };
 
 export function HomeProfileStrip({
@@ -25,7 +24,6 @@ export function HomeProfileStrip({
   favoriteCrest,
   isGlobalAdmin,
   bestRank,
-  onEditPress,
 }: Props) {
   const theme = useTheme();
   const t = useTranslations();
@@ -44,7 +42,18 @@ export function HomeProfileStrip({
       {isDark ? <View pointerEvents="none" style={styles.darkGlow} /> : null}
 
       {avatarUrl ? (
-        <UserAvatar uri={avatarUrl} size={40} preferExpoImage style={styles.avatar} />
+        <UserAvatar
+          uri={avatarUrl}
+          size={40}
+          preferExpoImage
+          style={[
+            styles.avatar,
+            {
+              borderColor: isDark ? 'rgba(255,255,255,0.12)' : '#e2e8f0',
+              backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : '#ffffff',
+            },
+          ]}
+        />
       ) : (
         <View style={[styles.avatarFallback, { backgroundColor: theme.accent }]}>
           <Text style={[styles.avatarLetter, { color: isDark ? '#050506' : '#ffffff' }]}>
@@ -79,21 +88,6 @@ export function HomeProfileStrip({
           </Text>
         </View>
       </View>
-
-      <Pressable
-        onPress={onEditPress}
-        style={({ pressed }) => [
-          styles.editBtn,
-          {
-            backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : '#f1f5f9',
-            borderColor: isDark ? 'rgba(255,255,255,0.25)' : '#e2e8f0',
-            opacity: pressed ? 0.85 : 1,
-          },
-        ]}>
-        <Text style={[styles.editText, { color: isDark ? '#ffedd5' : '#334155' }]}>
-          {t('Edit')}
-        </Text>
-      </Pressable>
     </View>
   );
 }
@@ -126,8 +120,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    backgroundColor: '#ffffff',
   },
   avatarFallback: {
     width: 40,
@@ -146,11 +138,4 @@ const styles = StyleSheet.create({
   detailMuted: { fontSize: 13, fontWeight: '500' },
   rank: { fontSize: 13, fontWeight: '600', fontVariant: ['tabular-nums'] },
   divider: { width: 1, height: 12, marginHorizontal: 2 },
-  editBtn: {
-    borderRadius: 999,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  editText: { fontSize: 12, fontWeight: '700' },
 });

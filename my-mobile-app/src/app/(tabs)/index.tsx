@@ -7,19 +7,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import { type Href, router, useFocusEffect } from 'expo-router';
+import { useFocusEffect } from 'expo-router';
 
 import { HomeHeroBanner } from '@/components/home/hero-banner';
 import { HomeProfileStrip } from '@/components/home/profile-strip';
-import { HomeWeekList } from '@/components/home/home-week-list';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useBottomTabPadding } from '@/hooks/use-bottom-tab-padding';
-import {
-  fetchHomeDashboard,
-  type HomeDashboard,
-  type HomeLeague,
-} from '@/lib/home-api';
+import { fetchHomeDashboard, type HomeDashboard } from '@/lib/home-api';
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -37,14 +32,16 @@ export default function HomeScreen() {
       const dashboard = await fetchHomeDashboard();
       setData(dashboard);
       if (dashboard.source === 'supabase') {
-        setNotice('Showing your leagues from your account. Fixture highlights may be limited right now.');
+        setNotice(
+          'Showing your leagues from your account. Fixture highlights may be limited right now.',
+        );
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to load home';
       setError(
         message.includes('<!DOCTYPE') || message.includes('<html')
           ? 'Could not load Home. Pull to refresh.'
-          : message
+          : message,
       );
       setData(null);
     } finally {
@@ -57,16 +54,8 @@ export default function HomeScreen() {
     useCallback(() => {
       setLoading(true);
       void load();
-    }, [load])
+    }, [load]),
   );
-
-  const onLeaguePress = (league: HomeLeague) => {
-    const path =
-      league.openPicks > 0
-        ? `/contests/${league.contestId}/predictions`
-        : `/contests/${league.contestId}/ranking`;
-    router.push(path as Href);
-  };
 
   return (
     <View style={[styles.root, { backgroundColor: theme.background }]}>
@@ -117,18 +106,6 @@ export default function HomeScreen() {
 
         {data ? (
           <>
-            <HomeWeekList
-              leagues={data.leagues}
-              onJoinPress={() => router.push('/contests' as Href)}
-              onLeaguePress={onLeaguePress}
-            />
-
-            <HomeHeroBanner
-              nextMatch={data.nextMatch}
-              recentScores={data.recentScores}
-              predictPath={data.predictPath}
-            />
-
             <HomeProfileStrip
               username={data.profile.username}
               email={data.profile.email}
@@ -137,7 +114,12 @@ export default function HomeScreen() {
               favoriteCrest={data.profile.favoriteCrest}
               isGlobalAdmin={data.profile.isGlobalAdmin}
               bestRank={data.bestRank}
-              onEditPress={() => router.push('/profile' as Href)}
+            />
+
+            <HomeHeroBanner
+              nextMatch={data.nextMatch}
+              recentScores={data.recentScores}
+              predictPath={data.predictPath}
             />
           </>
         ) : null}

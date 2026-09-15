@@ -44,7 +44,7 @@
   }
 
   .content-panel {
-    @apply rounded-[28px] border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-white/10 dark:bg-zinc-900 dark:shadow-lg;
+    @apply rounded-[28px] border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-white/10 dark:bg-[#111111] dark:shadow-[0_24px_60px_rgb(0,0,0,0.55)];
   }
 
   .glass-panel {
@@ -131,7 +131,7 @@
   }
 
   .text-gradient-accent {
-    @apply text-slate-900 font-bold dark:bg-gradient-to-r dark:from-amber-300 dark:via-orange-400 dark:to-orange-600 dark:bg-clip-text dark:text-transparent;
+    @apply text-slate-900 font-bold dark:text-xactscore-accent;
   }
 
   .focus-frost {
@@ -203,48 +203,48 @@
   }
 
   .dark {
-    --xactscore-bg: #050506;
-    --xactscore-card: #ffffff0d;
-    --xactscore-surface: #ffffff0d;
-    --xactscore-border: #ffffff1a;
-    --xactscore-text: #f7f7f8;
-    --xactscore-muted: #9a9aa3;
-    --xactscore-accent: #ff8a2b;
-    --xactscore-orange: #ff7a18;
-    --xactscore-green: #34d399;
+    --xactscore-bg: #000000;
+    --xactscore-card: #111111e6;
+    --xactscore-surface: #111111cc;
+    --xactscore-border: #ffffff14;
+    --xactscore-text: #ffffff;
+    --xactscore-muted: #94a3b8;
+    --xactscore-accent: #12ff80;
+    --xactscore-orange: #12ff80;
+    --xactscore-green: #12ff80;
 
-    --background: #050506;
-    --foreground: #f7f7f8;
-    --card: #ffffff0d;
-    --card-foreground: #f7f7f8;
-    --popover: #131316;
-    --popover-foreground: #f7f7f8;
-    --primary: #ff8a2b;
-    --primary-foreground: #0f0f10;
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #111111e6;
+    --card-foreground: #ffffff;
+    --popover: #0a0a0a;
+    --popover-foreground: #ffffff;
+    --primary: #12ff80;
+    --primary-foreground: #000000;
     --secondary: #ffffff14;
-    --secondary-foreground: #f7f7f8;
+    --secondary-foreground: #ffffff;
     --muted: #ffffff0d;
-    --muted-foreground: #9a9aa3;
-    --accent: #ff8a2b;
-    --accent-foreground: #0f0f10;
+    --muted-foreground: #94a3b8;
+    --accent: #12ff80;
+    --accent-foreground: #000000;
     --destructive: #ff5a5f;
-    --border: #ffffff1a;
+    --border: #ffffff14;
     --input: #ffffff1a;
-    --ring: #ff8a2b;
+    --ring: #12ff80;
 
-    --glass-bg: rgb(255 255 255 / 0.05);
-    --glass-bg-strong: rgb(255 255 255 / 0.09);
+    --glass-bg: rgb(17 17 17 / 0.88);
+    --glass-bg-strong: rgb(17 17 17 / 0.96);
     --glass-inset-bg: rgb(255 255 255 / 0.03);
-    --glass-border: rgb(255 255 255 / 0.1);
-    --glass-border-strong: rgb(255 255 255 / 0.15);
-    --glass-shadow: 0 24px 60px rgb(0 0 0 / 0.4);
-    --glass-shadow-strong: 0 28px 70px rgb(0 0 0 / 0.5);
-    --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.07);
+    --glass-border: rgb(255 255 255 / 0.08);
+    --glass-border-strong: rgb(18 255 128 / 0.22);
+    --glass-shadow: 0 24px 60px rgb(0 0 0 / 0.55);
+    --glass-shadow-strong: 0 28px 70px rgb(0 0 0 / 0.65);
+    --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.06);
     --xactscore-focus-shadow:
-      0 0 0 1px rgb(255 149 61 / 0.45),
-      0 10px 32px rgb(0 0 0 / 0.5),
-      inset 0 1px 0 rgb(255 255 255 / 0.08),
-      0 0 30px rgb(255 138 43 / 0.18);
+      0 0 0 1px rgb(18 255 128 / 0.45),
+      0 10px 32px rgb(0 0 0 / 0.55),
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 0 28px rgb(18 255 128 / 0.18);
   }
 
   * {
@@ -257,7 +257,7 @@
   }
 
   html {
-    @apply font-sans antialiased bg-slate-200 dark:bg-zinc-900;
+    @apply font-sans antialiased bg-slate-200 dark:bg-black;
     font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -450,7 +450,7 @@
   }
 
   body {
-    @apply flex min-h-[100dvh] flex-col overscroll-none bg-slate-200 text-xactscore-text transition-colors duration-300 dark:bg-zinc-900;
+    @apply flex min-h-[100dvh] flex-col overscroll-none bg-slate-200 text-xactscore-text transition-colors duration-300 dark:bg-black;
     overscroll-behavior: none;
     background-attachment: fixed;
     background-color: #e2e8f0;

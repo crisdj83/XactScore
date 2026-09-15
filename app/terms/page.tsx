@@ -30,7 +30,8 @@ export default function TermsPage() {
         <p>
           Messages, avatars, mottos, and usernames must not include illegal, hateful, sexual involving
           minors, or harassing content. We may remove content and restrict accounts. Contest admins and
-          global admins may moderate within their scope. You can report content from the app.
+          global admins may moderate within their scope. You can report content and block users from the
+          app; blocked users’ posts are hidden from your feed.
         </p>
 
         <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100">Predictions</h2>

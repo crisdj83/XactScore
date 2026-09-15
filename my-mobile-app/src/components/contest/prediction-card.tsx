@@ -273,11 +273,25 @@ function Crest({
   theme: ReturnType<typeof useTheme>;
 }) {
   return crest ? (
-    <View style={styles.crestWrap}>
+    <View
+      style={[
+        styles.crestWrap,
+        {
+          backgroundColor: theme.isDark ? 'rgba(255,255,255,0.08)' : '#ffffff',
+          borderColor: theme.isDark ? 'rgba(255,255,255,0.12)' : 'rgba(15,23,42,0.06)',
+        },
+      ]}>
       <Image source={{ uri: crest }} style={styles.crest} />
     </View>
   ) : (
-    <View style={[styles.crestFallback, { backgroundColor: '#ffffff' }]}>
+    <View
+      style={[
+        styles.crestFallback,
+        {
+          backgroundColor: theme.isDark ? 'rgba(255,255,255,0.08)' : '#ffffff',
+          borderColor: theme.isDark ? 'rgba(255,255,255,0.12)' : 'rgba(15,23,42,0.06)',
+        },
+      ]}>
       <Text style={{ color: theme.textSecondary, fontWeight: '800', fontSize: 9 }}>
         {name.slice(0, 3).toUpperCase()}
       </Text>
@@ -395,7 +409,7 @@ const styles = StyleSheet.create({
     width: CREST,
     height: CREST,
     borderRadius: 999,
-    backgroundColor: '#ffffff',
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -410,6 +424,7 @@ const styles = StyleSheet.create({
     width: CREST,
     height: CREST,
     borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',

@@ -5,22 +5,22 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-bold transition-all duration-300 outline-none ring-0 touch-manipulation [-webkit-tap-highlight-color:transparent] focus:ring-0 focus-visible:ring-0 focus-visible:border-indigo-400/50 dark:focus-visible:border-orange-400/50 active:scale-95 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-bold transition-all duration-300 outline-none ring-0 touch-manipulation [-webkit-tap-highlight-color:transparent] focus:ring-0 focus-visible:ring-0 focus-visible:border-indigo-400/50 dark:focus-visible:border-xactscore-accent/60 active:scale-95 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-indigo-600 text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-amber-500 dark:to-orange-600 dark:shadow-[0_10px_25px_rgba(245,158,11,0.35)] dark:hover:bg-transparent dark:hover:brightness-110",
+          "bg-indigo-600 text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-700 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:bg-xactscore-accent/90",
         secondary:
-          "border border-xactscore-border bg-xactscore-surface text-xactscore-text backdrop-blur-md hover:bg-slate-100 dark:hover:bg-amber-500/10",
+          "border border-xactscore-border bg-xactscore-surface text-xactscore-text backdrop-blur-md hover:bg-slate-100 dark:hover:bg-xactscore-accent/10",
         outline:
-          "border border-xactscore-border bg-transparent text-xactscore-text backdrop-blur-md hover:bg-slate-100 dark:hover:bg-amber-500/10",
-        ghost: "text-xactscore-muted hover:bg-slate-100 hover:text-xactscore-text dark:hover:bg-amber-500/10",
+          "border border-xactscore-border bg-transparent text-xactscore-text backdrop-blur-md hover:bg-slate-100 dark:border-white/20 dark:hover:bg-white/5",
+        ghost: "text-xactscore-muted hover:bg-slate-100 hover:text-xactscore-text dark:hover:bg-xactscore-accent/10 dark:hover:text-xactscore-accent",
         destructive:
           "border border-red-500/30 bg-red-500/15 text-red-700 backdrop-blur-md hover:bg-red-500/25 dark:text-red-300",
         link: "text-indigo-600 underline-offset-4 hover:underline dark:text-xactscore-accent",
         glass:
-          "border border-slate-200 bg-slate-100 text-slate-700 backdrop-blur-md hover:bg-slate-200 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-orange-200 dark:hover:bg-amber-500/20",
+          "border border-slate-200 bg-slate-100 text-slate-700 backdrop-blur-md hover:bg-slate-200 dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent dark:hover:bg-xactscore-accent/20",
       },
       size: {
         default: "min-h-11 h-11 px-5",

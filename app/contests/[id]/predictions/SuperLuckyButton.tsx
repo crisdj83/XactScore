@@ -60,11 +60,11 @@ export default function SuperLuckyButton({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))] left-1/2 z-50 flex min-h-12 -translate-x-1/2 transform select-none items-center gap-2 rounded-full bg-indigo-600 px-6 py-3 font-bold text-white shadow-[0_8px_30px_rgba(79,70,229,0.4)] transition-all duration-200 touch-manipulation hover:bg-indigo-700 active:scale-95 dark:bg-gradient-to-r dark:from-amber-500 dark:to-orange-600 dark:shadow-[0_8px_30px_rgba(245,158,11,0.4)] dark:hover:bg-transparent dark:hover:brightness-110 lg:bottom-8"
+        className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))] left-1/2 z-50 flex min-h-12 -translate-x-1/2 transform select-none items-center gap-2 rounded-full bg-indigo-600 px-6 py-3 font-bold text-white shadow-[0_8px_30px_rgba(79,70,229,0.4)] transition-all duration-200 touch-manipulation hover:bg-indigo-700 active:scale-95 dark:bg-xactscore-accent dark:text-black dark:shadow-[0_0_28px_rgba(18,255,128,0.28)] dark:hover:brightness-110 lg:bottom-8"
         aria-label={t("I'm lucky")}
       >
-        <Dices className={cn('h-5 w-5 text-white', rolling && 'animate-spin')} />
-        <span className="text-sm font-bold uppercase tracking-wide">
+        <Dices className={cn('h-5 w-5 text-white dark:text-black', rolling && 'animate-spin')} />
+        <span className="text-sm font-bold uppercase tracking-wide dark:text-black">
           {t("I'm lucky")}
         </span>
       </button>
@@ -72,7 +72,7 @@ export default function SuperLuckyButton({
         open={open}
         onOpenChange={setOpen}
         title={t('ATTENTION!')}
-        titleClassName="text-center text-xl font-black uppercase tracking-[0.2em] text-amber-300"
+        titleClassName="text-center text-xl font-black uppercase tracking-[0.2em] text-xactscore-accent"
         description={t(
           "You're handing the whole gameweek to fate. Unlocked matches get a fresh roll and your current picks for those games get benched. No refunds, only glory."
         )}

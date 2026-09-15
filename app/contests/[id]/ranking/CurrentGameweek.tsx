@@ -340,7 +340,7 @@ export default function CurrentGameweek({
   )
 
   return (
-    <section className="content-panel mb-5 p-3 dark:border-orange-500/40 sm:p-5 md:p-6">
+    <section className="content-panel mb-5 p-3 dark:border-xactscore-accent/40 sm:p-5 md:p-6">
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:truncate dark:text-sm dark:font-black dark:tracking-wider dark:text-zinc-100 sm:dark:text-base">
           GW {selectedMatchday} · {t('Predictions')}
@@ -491,7 +491,7 @@ export default function CurrentGameweek({
                         unoptimized={isUnoptimizedAvatar(player.avatar)}
                       />
                     ) : (
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-semibold text-orange-300 dark:font-black sm:h-7 sm:w-7">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-xactscore-accent/20 text-xs font-semibold text-xactscore-accent dark:font-black sm:h-7 sm:w-7">
                         <UserRound className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       </span>
                     )}
@@ -505,7 +505,7 @@ export default function CurrentGameweek({
                   <span
                     className={`inline-flex shrink-0 items-center gap-0.5 rounded-full border px-2 py-1 text-xs font-semibold sm:justify-self-start sm:gap-1 sm:px-2 sm:py-1 ${
                       player.outcome === 'exact'
-                        ? 'border-amber-500/20 bg-amber-500/10 text-amber-600 dark:border-transparent dark:bg-amber-400/15 dark:text-amber-300 dark:font-black'
+                        ? 'border-amber-500/20 bg-amber-500/10 text-amber-600 dark:border-transparent dark:bg-xactscore-accent/15 dark:text-xactscore-accent dark:font-black'
                         : player.outcome === 'zero'
                           ? 'border-red-500/20 bg-red-500/10 text-red-600 dark:border-transparent dark:bg-red-400/15 dark:text-red-300 dark:font-black'
                           : 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:border-transparent dark:bg-emerald-400/15 dark:text-emerald-300 dark:font-black'

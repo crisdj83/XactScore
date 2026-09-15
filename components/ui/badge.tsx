@@ -9,9 +9,12 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "border border-xactscore-border bg-xactscore-surface text-xactscore-text",
-        accent: "border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-orange-300",
-        success: "border-0 bg-emerald-100 text-emerald-700 dark:border dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300",
-        danger: "border-0 bg-rose-100 text-rose-700 dark:border dark:border-red-500/30 dark:bg-red-500/15 dark:text-red-300",
+        accent:
+          "border-0 bg-indigo-100 text-indigo-700 dark:border dark:border-xactscore-accent/30 dark:bg-xactscore-accent/10 dark:text-xactscore-accent",
+        success:
+          "border-0 bg-emerald-100 text-emerald-700 dark:border dark:border-xactscore-accent/30 dark:bg-xactscore-accent/15 dark:text-xactscore-accent",
+        danger:
+          "border-0 bg-rose-100 text-rose-700 dark:border dark:border-red-500/30 dark:bg-red-500/15 dark:text-red-300",
         muted: "border border-xactscore-border bg-xactscore-surface text-xactscore-muted",
       },
     },
@@ -37,7 +40,7 @@ function ScoreBadge({
   return (
     <span
       className={cn(
-        "inline-flex min-w-[2.5rem] items-center justify-center rounded-2xl border border-slate-200 bg-white px-2.5 py-1 text-sm font-semibold text-slate-900 shadow-sm dark:border-0 dark:bg-gradient-to-b dark:from-amber-400 dark:to-orange-600 dark:font-black dark:text-white dark:shadow-md dark:shadow-orange-500/25",
+        "inline-flex min-w-[2.5rem] items-center justify-center rounded-2xl border border-slate-200 bg-white px-2.5 py-1 text-sm font-semibold text-slate-900 shadow-sm dark:border-0 dark:bg-xactscore-accent dark:font-black dark:text-black dark:shadow-[0_0_20px_rgba(18,255,128,0.25)]",
         className
       )}
       {...props}

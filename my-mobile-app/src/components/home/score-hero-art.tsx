@@ -45,7 +45,7 @@ export function ScoreHeroArt() {
           {
             backgroundColor: card,
             borderColor: isDark ? 'rgba(255,138,43,0.35)' : muted,
-            shadowColor: isDark ? '#ff8a2b' : '#0f172a',
+            shadowColor: isDark ? '#12ff80' : '#0f172a',
           },
         ]}>
         <View style={styles.pillRow}>

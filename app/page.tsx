@@ -176,7 +176,7 @@ export default async function Home(props: { searchParams: Promise<{ success?: st
   return (
     <div className="space-y-3 pb-4 sm:space-y-6 sm:pb-8">
       {searchParams?.success && (
-        <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800 dark:border-orange-500/50 dark:bg-orange-500/15 dark:text-orange-200">
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800 dark:border-xactscore-accent/50 dark:bg-xactscore-accent/15 dark:text-xactscore-accent">
           {t(searchParams.success)}
         </div>
       )}
@@ -185,7 +185,7 @@ export default async function Home(props: { searchParams: Promise<{ success?: st
 
       <HeroBanner nextMatch={nextMatch} recentScores={recentScores} predictHref={predictHref} />
 
-      <div className="flex items-center gap-2.5 rounded-[28px] border border-slate-200 bg-white px-3 py-2.5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-zinc-800 dark:bg-gradient-to-br dark:from-orange-600 dark:via-zinc-900 dark:to-zinc-950 dark:shadow-lg dark:shadow-black/30 sm:gap-4 sm:px-5 sm:py-4">
+      <div className="flex items-center gap-2.5 rounded-[28px] border border-slate-200 bg-white px-3 py-2.5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-zinc-800 dark:bg-gradient-to-br dark:from-black dark:via-[#0a0a0a] dark:to-black dark:shadow-lg dark:shadow-black/30 sm:gap-4 sm:px-5 sm:py-4">
         {profile?.avatar_url ? (
           <Image
             src={profile.avatar_url}
@@ -238,7 +238,7 @@ export default async function Home(props: { searchParams: Promise<{ success?: st
         </div>
         <Link
           href="/profile"
-          className="shrink-0 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700 backdrop-blur-sm transition hover:border-slate-300 hover:bg-slate-200 sm:px-3 sm:py-1.5 dark:border-white/25 dark:bg-white/10 dark:text-orange-100 dark:hover:border-white/40 dark:hover:bg-white/20"
+          className="shrink-0 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-700 backdrop-blur-sm transition hover:border-slate-300 hover:bg-slate-200 sm:px-3 sm:py-1.5 dark:border-white/25 dark:bg-white/10 dark:text-xactscore-muted dark:hover:border-white/40 dark:hover:bg-white/20"
         >
           {t('Edit')}
         </Link>

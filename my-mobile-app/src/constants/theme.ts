@@ -1,6 +1,7 @@
 /**
  * XactScore brand tokens — mirrored from website `app/globals.css`
  * light (:root) and dark (.dark) CSS variables.
+ * Dark theme: near-black + neon green (#12FF80).
  */
 
 import '@/global.css';
@@ -13,17 +14,16 @@ export const Colors = {
     background: '#e2e8f0',
     /** --xactscore-card / white panels */
     backgroundElement: '#ffffff',
-    /** selected / soft indigo wash */
-    backgroundSelected: '#e0e7ff',
+    /** selected / soft green wash */
+    backgroundSelected: '#d1fae5',
     /** --xactscore-text */
     text: '#0f172a',
     /** --xactscore-muted */
     textSecondary: '#64748b',
-    /** --xactscore-accent indigo */
-    accent: '#4f46e5',
-    accentMuted: '#c7d2fe',
-    /** --xactscore-orange */
-    orange: '#f97316',
+    /** light mode keeps a solid green primary */
+    accent: '#059669',
+    accentMuted: '#a7f3d0',
+    orange: '#059669',
     border: '#e2e8f0',
     borderStrong: '#cbd5e1',
     danger: '#e11d48',
@@ -32,25 +32,24 @@ export const Colors = {
     statusBar: '#e2e8f0',
   },
   dark: {
-    /** page chrome (html.dark uses zinc-900 for shell) */
-    background: '#18181b',
-    /** content panel / zinc card surface */
-    backgroundElement: '#18181b',
-    backgroundSelected: '#27272a',
+    /** page chrome — pure black */
+    background: '#000000',
+    /** elevated card surface */
+    backgroundElement: '#111111',
+    backgroundSelected: '#1a1a1a',
     /** --xactscore-text */
-    text: '#f7f7f8',
+    text: '#ffffff',
     /** --xactscore-muted */
-    textSecondary: '#9a9aa3',
-    /** --xactscore-accent orange */
-    accent: '#ff8a2b',
-    accentMuted: 'rgba(255,138,43,0.18)',
-    /** --xactscore-orange */
-    orange: '#ff7a18',
-    border: 'rgba(255,255,255,0.10)',
-    borderStrong: 'rgba(255,255,255,0.15)',
+    textSecondary: '#94a3b8',
+    /** neon green accent */
+    accent: '#12ff80',
+    accentMuted: 'rgba(18,255,128,0.16)',
+    orange: '#12ff80',
+    border: 'rgba(255,255,255,0.08)',
+    borderStrong: 'rgba(18,255,128,0.28)',
     danger: '#ff5a5f',
-    success: '#34d399',
-    statusBar: '#18181b',
+    success: '#12ff80',
+    statusBar: '#000000',
   },
 } as const;
 

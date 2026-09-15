@@ -54,10 +54,10 @@ export default function SiteFooter() {
           </svg>
         </a>
       </div>
-      <p className="max-w-xl text-xs font-medium tracking-wide text-zinc-500 dark:text-orange-100/70">
+      <p className="max-w-xl text-xs font-medium tracking-wide text-zinc-500 dark:text-white/60">
         Built with 10% skill, 90% Googling, and love from Sfariac Cristian.
       </p>
-      <p className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-orange-300/70">
+      <p className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-xactscore-accent/70">
         <span aria-hidden="true">©</span>
         <span>XactScore</span>
       </p>

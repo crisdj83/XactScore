@@ -299,18 +299,20 @@ export default function ContestPredictionsScreen() {
             style={({ pressed }) => [
               styles.luckyFab,
               {
-                backgroundColor: theme.isDark ? '#f59e0b' : theme.accent,
+                backgroundColor: theme.accent,
                 opacity: busyLucky ? 0.7 : pressed ? 0.92 : 1,
                 transform: [{ scale: pressed ? 0.97 : 1 }],
-                shadowColor: theme.isDark ? '#f59e0b' : theme.accent,
+                shadowColor: theme.accent,
               },
             ]}>
             {busyLucky ? (
-              <ActivityIndicator color="#ffffff" />
+              <ActivityIndicator color={theme.isDark ? '#000000' : '#ffffff'} />
             ) : (
               <>
-                <Ionicons name="dice-outline" size={20} color="#ffffff" />
-                <Text style={styles.luckyText}>{t("I'm lucky")}</Text>
+                <Ionicons name="dice-outline" size={20} color={theme.isDark ? '#000000' : '#ffffff'} />
+                <Text style={[styles.luckyText, { color: theme.isDark ? '#000000' : '#ffffff' }]}>
+                  {t("I'm lucky")}
+                </Text>
               </>
             )}
           </Pressable>

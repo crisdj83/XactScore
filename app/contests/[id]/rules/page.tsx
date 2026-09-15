@@ -88,7 +88,7 @@ export default async function RulesPage(props: { params: Promise<{ id: string }>
                 <Badge variant="accent" className="absolute right-0 top-0 rounded-none rounded-bl-xl">
                   +{pointsClose} PTS
                 </Badge>
-                <Activity className="mb-3 h-7 w-7 text-orange-400" />
+                <Activity className="mb-3 h-7 w-7 text-sky-400" />
                 <h4 className="mb-1.5 font-extrabold uppercase tracking-tight text-zinc-100">
                   {t('Close Prediction')}
                 </h4>

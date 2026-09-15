@@ -14,7 +14,7 @@ export default function ContestIcon({ contestId, size = 'md' }: { contestId: str
   const radius = size === 'xs' ? 'rounded-md' : 'rounded-xl'
 
   return (
-    <span className={`inline-flex ${dimensions} shrink-0 items-center justify-center ${radius} border border-orange-300/40 bg-gradient-to-br from-orange-400 to-orange-700 text-white shadow-lg`}>
+    <span className={`inline-flex ${dimensions} shrink-0 items-center justify-center ${radius} border border-emerald-300/40 bg-gradient-to-br from-emerald-400 to-emerald-700 text-white shadow-lg dark:border-xactscore-accent/40 dark:from-xactscore-accent dark:to-emerald-700 dark:text-black`}>
       <Icon className={iconSize} aria-hidden="true" />
     </span>
   )

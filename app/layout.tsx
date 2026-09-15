@@ -88,15 +88,15 @@ export default function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${inter.className} min-h-[100dvh] overscroll-none bg-slate-200 dark:bg-zinc-900`}
+      className={`${inter.variable} ${inter.className} min-h-[100dvh] overscroll-none bg-slate-200 dark:bg-black`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-[100dvh] flex-col overscroll-none bg-slate-200 text-xactscore-text transition-colors duration-300 dark:bg-zinc-900">
+      <body className="flex min-h-[100dvh] flex-col overscroll-none bg-slate-200 text-xactscore-text transition-colors duration-300 dark:bg-black">
         <Script id="device-class" strategy="beforeInteractive">
           {`(function(){var ua=navigator.userAgent||"";var ios=/iP(hone|ad|od)/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);document.documentElement.classList.toggle("android",/Android/i.test(ua));document.documentElement.classList.toggle("ios",ios)})()`}
         </Script>
         <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var stored=localStorage.getItem("xactscore-theme");var theme=stored||"dark";if(theme==="system"){theme=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}var dark=theme==="dark";if(dark){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}var color=dark?"#18181b":"#E2E8F0";document.documentElement.style.backgroundColor=color;var metas=document.querySelectorAll('meta[name="theme-color"]');if(!metas.length){var m=document.createElement("meta");m.setAttribute("name","theme-color");m.setAttribute("content",color);document.head.appendChild(m)}else{metas.forEach(function(meta){meta.removeAttribute("media");meta.setAttribute("content",color)})}}catch(e){document.documentElement.classList.add("dark")}})();`}
+          {`(function(){try{var stored=localStorage.getItem("xactscore-theme");var theme=stored||"dark";if(theme==="system"){theme=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}var dark=theme==="dark";if(dark){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}var color=dark?"#000000":"#E2E8F0";document.documentElement.style.backgroundColor=color;var metas=document.querySelectorAll('meta[name="theme-color"]');if(!metas.length){var m=document.createElement("meta");m.setAttribute("name","theme-color");m.setAttribute("content",color);document.head.appendChild(m)}else{metas.forEach(function(meta){meta.removeAttribute("media");meta.setAttribute("content",color)})}}catch(e){document.documentElement.classList.add("dark")}})();`}
         </Script>
         <ThemeProvider>
           <LocaleProvider initialLocale={locale}>

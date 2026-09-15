@@ -26,7 +26,7 @@ export default function ComparePage() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-12 pt-2">
       <div>
-        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-orange-300">{t('Compare')}</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-xactscore-accent">{t('Compare')}</p>
         <h1 className="mt-2 max-w-2xl text-3xl font-black uppercase leading-none tracking-tight text-zinc-100 sm:text-4xl">
           {t('XactScore vs Superbru and PronoContest')}
         </h1>

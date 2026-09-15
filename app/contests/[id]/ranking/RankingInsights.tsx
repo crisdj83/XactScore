@@ -102,7 +102,7 @@ export default function RankingInsights({
       {false && <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <div className="mb-1 flex items-center gap-2 text-orange-600">
+            <div className="mb-1 flex items-center gap-2 text-xactscore-accent">
               <TrendingUp className="h-5 w-5" />
               <span className="text-xs font-black uppercase tracking-widest">{labels.evolution}</span>
             </div>
@@ -151,7 +151,7 @@ export default function RankingInsights({
                 ))}
                 {series.map(({ player, points }) => {
                   if (selectedPlayer !== 'all' && player.id !== selectedPlayer) return null
-                  const colour = player.id === selectedPlayer ? '#ff7a18' : '#fb923c'
+                  const colour = player.id === selectedPlayer ? '#12ff80' : '#34d399'
                   const line = points.map((point, index) => `${xFor(index)},${yFor(point.rank)}`).join(' ')
                   return (
                     <g key={player.id}>
@@ -185,7 +185,7 @@ export default function RankingInsights({
                       <tr key={row.matchday} className="text-gray-700">
                         <td className="px-4 py-3 font-bold">{labels.matchday} {row.matchday}</td>
                         <td className="px-4 py-3 font-semibold">{player?.username || '—'}</td>
-                        <td className="px-4 py-3 text-center font-black text-orange-600">{selected?.points ?? 0}</td>
+                        <td className="px-4 py-3 text-center font-black text-xactscore-accent">{selected?.points ?? 0}</td>
                         <td className="px-4 py-3 text-center font-black text-gray-900">{selected ? selected.rank : '—'}</td>
                       </tr>
                     )
@@ -199,7 +199,7 @@ export default function RankingInsights({
 
       {false && <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-6">
         <div className="mb-5">
-          <div className="mb-1 flex items-center gap-2 text-orange-600">
+          <div className="mb-1 flex items-center gap-2 text-xactscore-accent">
             <BarChart3 className="h-5 w-5" />
             <span className="text-xs font-black uppercase tracking-widest">{labels.predictionTrends}</span>
           </div>
@@ -217,7 +217,7 @@ export default function RankingInsights({
                     {trend.homeTeam.crest && <Image src={trend.homeTeam.crest} alt="" width={28} height={28} className="h-7 w-7 object-contain" />}
                     {trend.homeTeam.rank && <span className="rounded bg-gray-200 px-1.5 py-0.5 text-[10px] font-black text-gray-600">#{trend.homeTeam.rank}</span>}
                     <span className="truncate font-bold text-gray-900">{trend.homeTeam.shortName || trend.homeTeam.name}</span>
-                    <span className="text-xs font-black text-orange-600">vs</span>
+                    <span className="text-xs font-black text-xactscore-accent">vs</span>
                     <span className="truncate font-bold text-gray-900">{trend.awayTeam.shortName || trend.awayTeam.name}</span>
                     {trend.awayTeam.rank && <span className="rounded bg-gray-200 px-1.5 py-0.5 text-[10px] font-black text-gray-600">#{trend.awayTeam.rank}</span>}
                     {trend.awayTeam.crest && <Image src={trend.awayTeam.crest} alt="" width={28} height={28} className="h-7 w-7 object-contain" />}
@@ -244,7 +244,7 @@ export default function RankingInsights({
                         <div className="rounded-lg bg-emerald-50 p-3"><span className="block text-[10px] font-black uppercase text-emerald-700">{trend.homeTeam.shortName || trend.homeTeam.name}</span><strong className="mt-1 block text-lg text-emerald-700">{formatPercent(trend.homeWinPct)}</strong></div>
                         <div className="rounded-lg bg-amber-50 p-3"><span className="block text-[10px] font-black uppercase text-amber-700">{labels.draw}</span><strong className="mt-1 block text-lg text-amber-700">{formatPercent(trend.drawPct)}</strong></div>
                         <div className="rounded-lg bg-blue-50 p-3"><span className="block text-[10px] font-black uppercase text-blue-700">{trend.awayTeam.shortName || trend.awayTeam.name}</span><strong className="mt-1 block text-lg text-blue-700">{formatPercent(trend.awayWinPct)}</strong></div>
-                        <div className="rounded-lg bg-orange-50 p-3"><span className="block text-[10px] font-black uppercase text-orange-700">{labels.popularScore}</span><strong className="mt-1 block font-mono text-lg text-orange-700">{trend.popularScore || '—'}</strong></div>
+                        <div className="rounded-lg bg-xactscore-accent/10 p-3"><span className="block text-[10px] font-black uppercase text-xactscore-accent">{labels.popularScore}</span><strong className="mt-1 block font-mono text-lg text-xactscore-accent">{trend.popularScore || '—'}</strong></div>
                       </div>
                       <div className="mt-4 flex items-center justify-between border-b border-gray-100 pb-2 text-xs font-black uppercase tracking-wider text-gray-500">
                         <span className="flex items-center gap-2"><Users className="h-4 w-4" /> {labels.otherPredictions}</span>
@@ -269,7 +269,7 @@ export default function RankingInsights({
               </details>
             ))}
             {trends.length > 12 && (
-              <button type="button" onClick={() => setShowAllTrends(value => !value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-xs font-black uppercase tracking-wider text-gray-700 transition-colors hover:border-orange-500 hover:text-orange-600">
+              <button type="button" onClick={() => setShowAllTrends(value => !value)} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-xs font-black uppercase tracking-wider text-gray-700 transition-colors hover:border-xactscore-accent hover:text-xactscore-accent">
                 {showAllTrends ? labels.showLess : `${labels.showAll} (${trends.length})`}
               </button>
             )}

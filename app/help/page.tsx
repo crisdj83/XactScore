@@ -66,7 +66,7 @@ export default function HelpPage() {
               {section.title === 'Install the app' ? (
                 <Link
                   href="/help/install"
-                  className="inline-flex text-sm font-bold text-indigo-600 hover:text-indigo-700 dark:text-orange-300 dark:hover:text-orange-200"
+                  className="inline-flex text-sm font-bold text-indigo-600 hover:text-indigo-700 dark:text-xactscore-accent dark:hover:text-xactscore-accent"
                 >
                   {t('Open the full install guide')}
                 </Link>
