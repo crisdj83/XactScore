@@ -40,22 +40,26 @@ function CountdownUnit({
   value,
   accent,
   isDark,
+  accentColor,
+  mutedColor,
 }: {
   label: string;
   value: string;
   accent?: boolean;
   isDark: boolean;
+  accentColor: string;
+  mutedColor: string;
 }) {
   return (
     <View style={styles.unit}>
-      <Text style={[styles.unitLabel, { color: isDark ? '#fed7aa' : '#71717a' }]}>{label}</Text>
+      <Text style={[styles.unitLabel, { color: mutedColor }]}>{label}</Text>
       <View
         style={[
           styles.unitBox,
           {
             borderColor: isDark
               ? accent
-                ? '#fb923c'
+                ? accentColor
                 : 'rgba(255,255,255,0.8)'
               : '#e2e8f0',
             backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : '#ffffff',
@@ -64,7 +68,7 @@ function CountdownUnit({
         <Text
           style={[
             styles.unitValue,
-            { color: isDark ? (accent ? '#fb923c' : '#ffffff') : '#0f172a' },
+            { color: isDark ? (accent ? accentColor : '#ffffff') : '#0f172a' },
           ]}>
           {value}
         </Text>
@@ -91,7 +95,7 @@ function ScoreRow({
           borderColor: isDark ? 'rgba(255,255,255,0.10)' : '#e2e8f0',
         },
       ]}>
-      <Text style={[styles.status, { color: isDark ? '#fdba74' : '#64748b' }]}>{match.status}</Text>
+      <Text style={[styles.status, { color: isDark ? '#12ff80' : '#64748b' }]}>{match.status}</Text>
       {match.homeCrest ? (
         <Image source={{ uri: match.homeCrest }} style={styles.smallCrest} contentFit="contain" />
       ) : (
@@ -157,8 +161,8 @@ function ScoresMarquee({
     );
   }
 
-  // Light: soft crossfade like the website. Dark: no overlay fades — the card’s
-  // orange wash made solid zinc gradients look muddy.
+  // Light: soft crossfade like the website. Dark: no overlay fades — keep the
+  // card surface clean under the neon accent.
   const fadeTop = [surfaceColor, `${surfaceColor}99`, `${surfaceColor}00`] as const;
   const fadeBottom = [`${surfaceColor}00`, `${surfaceColor}99`, surfaceColor] as const;
 
@@ -268,13 +272,13 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
         {t('Call the scores.')}{'\n'}
         <Text style={{ color: isDark ? theme.accent : theme.text }}>{t('Own the table.')}</Text>
       </Text>
-      <Text style={[styles.subcopy, { color: isDark ? '#ffedd5' : '#475569' }]}>
-        {t('Call every Premier League score. Compete in your league. Climb the table.')}
+      <Text style={[styles.subcopy, { color: theme.textSecondary }]}>
+        {t('Call every Premier League score. Climb the table with your league.')}
       </Text>
 
       {!nextMatch ? <ScoreHeroArt /> : null}
 
-      <Text style={[styles.upcomingLabel, { color: isDark ? '#fed7aa' : '#71717a' }]}>
+      <Text style={[styles.upcomingLabel, { color: isDark ? theme.accent : '#71717a' }]}>
         {t('Upcoming Match')}
       </Text>
 
@@ -299,8 +303,8 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
           </View>
           {nextMatch.venue ? (
             <View style={styles.venueRow}>
-              <Ionicons name="location-sharp" size={12} color={isDark ? '#fdba74' : '#64748b'} />
-              <Text numberOfLines={1} style={[styles.venue, { color: isDark ? '#fdba74' : '#64748b' }]}>
+              <Ionicons name="location-sharp" size={12} color={theme.textSecondary} />
+              <Text numberOfLines={1} style={[styles.venue, { color: theme.textSecondary }]}>
                 {nextMatch.venue}
               </Text>
             </View>
@@ -313,13 +317,38 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
       )}
 
       <View style={styles.countdownRow}>
-        <CountdownUnit label={t('Days')} value={timeLeft.days} isDark={isDark} />
+        <CountdownUnit
+          label={t('Days')}
+          value={timeLeft.days}
+          isDark={isDark}
+          accentColor={theme.accent}
+          mutedColor={isDark ? theme.accent : '#71717a'}
+        />
         <Text style={[styles.colon, { color: theme.text }]}>:</Text>
-        <CountdownUnit label={t('Hours')} value={timeLeft.hours} isDark={isDark} />
+        <CountdownUnit
+          label={t('Hours')}
+          value={timeLeft.hours}
+          isDark={isDark}
+          accentColor={theme.accent}
+          mutedColor={isDark ? theme.accent : '#71717a'}
+        />
         <Text style={[styles.colon, { color: theme.text }]}>:</Text>
-        <CountdownUnit label={t('Mins')} value={timeLeft.minutes} isDark={isDark} />
+        <CountdownUnit
+          label={t('Mins')}
+          value={timeLeft.minutes}
+          isDark={isDark}
+          accentColor={theme.accent}
+          mutedColor={isDark ? theme.accent : '#71717a'}
+        />
         <Text style={[styles.colon, { color: theme.text }]}>:</Text>
-        <CountdownUnit label={t('Secs')} value={timeLeft.seconds} accent isDark={isDark} />
+        <CountdownUnit
+          label={t('Secs')}
+          value={timeLeft.seconds}
+          accent
+          isDark={isDark}
+          accentColor={theme.accent}
+          mutedColor={isDark ? theme.accent : '#71717a'}
+        />
       </View>
 
       <Pressable
@@ -364,7 +393,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: 'rgba(234,88,12,0.18)',
+    backgroundColor: 'rgba(18,255,128,0.08)',
   },
   headline: {
     fontSize: 22,

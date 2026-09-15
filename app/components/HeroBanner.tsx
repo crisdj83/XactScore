@@ -214,7 +214,7 @@ export default function HeroBanner({
             <span className="block text-slate-900 sm:inline dark:text-xactscore-accent">{t('Own the table.')}</span>
           </p>
           <p className="mb-2 max-w-md text-sm font-medium leading-snug text-slate-600 dark:text-xactscore-muted sm:mb-4 sm:leading-6">
-            {t('Call every Premier League score. Compete in your league. Climb the table.')}
+            {t('Call every Premier League score. Climb the table with your league.')}
           </p>
           <p className="text-xs font-extrabold uppercase tracking-widest text-zinc-500 dark:text-xactscore-accent">
             {t('Upcoming Match')}

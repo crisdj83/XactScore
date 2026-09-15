@@ -303,7 +303,7 @@ export default function ContestRankingScreen() {
           styles.panel,
           {
             backgroundColor: theme.backgroundElement,
-            borderColor: theme.isDark ? 'rgba(255,138,43,0.35)' : theme.border,
+            borderColor: theme.isDark ? theme.borderStrong : theme.border,
           },
         ]}>
         <View style={styles.gwHeader}>
@@ -497,7 +497,7 @@ function PickListRow({
 }) {
   const pill =
     player.outcome === 'exact'
-      ? { bg: 'rgba(251,191,36,0.18)', color: '#f59e0b', icon: 'locate' as const }
+      ? { bg: 'rgba(18,255,128,0.18)', color: theme.accent, icon: 'locate' as const }
       : player.outcome === 'zero'
         ? { bg: 'rgba(248,113,113,0.18)', color: '#f87171', icon: 'close' as const }
         : { bg: 'rgba(52,211,153,0.18)', color: '#34d399', icon: 'checkmark' as const };

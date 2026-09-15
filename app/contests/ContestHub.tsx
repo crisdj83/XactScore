@@ -206,7 +206,7 @@ export default function ContestHub({ myContests, messages }: any) {
                   {t('Create a New Contest')}
                 </h2>
                 <p className="mt-1 text-sm text-zinc-400">
-                  {t('Create your own prediction league and invite your friends to compete.')}
+                  {t('Create your own prediction league and invite your friends.')}
                 </p>
               </div>
               <form action={createContest} className="space-y-4">

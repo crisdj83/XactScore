@@ -148,8 +148,8 @@ export default function ContestsScreen() {
 
   const topSpacer = Spacing.three;
   const panelBg = theme.backgroundElement;
-  const selectedBg = theme.isDark ? 'rgba(255,138,43,0.15)' : '#e0e7ff';
-  const selectedBorder = theme.isDark ? 'rgba(251,146,60,0.5)' : 'transparent';
+  const selectedBg = theme.isDark ? theme.accentMuted : '#e0e7ff';
+  const selectedBorder = theme.isDark ? theme.borderStrong : 'transparent';
   const idleBorder = theme.border;
 
   const tabs: { id: Tab; icon: keyof typeof Ionicons.glyphMap; label: string; short: string }[] = [
@@ -458,7 +458,7 @@ export default function ContestsScreen() {
                 {t('Create a New Contest')}
               </Text>
               <Text style={[styles.formSub, { color: theme.textSecondary }]}>
-                {t('Create your own prediction league and invite your friends to compete.')}
+                {t('Create your own prediction league and invite your friends.')}
               </Text>
 
               <Text style={[styles.label, { color: theme.text }]}>{t('Contest Name *')}</Text>

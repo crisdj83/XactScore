@@ -28,7 +28,7 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
           styles.emptyCard,
           {
             backgroundColor: isDark ? theme.accentMuted : theme.backgroundElement,
-            borderColor: isDark ? 'rgba(255,138,43,0.40)' : theme.border,
+            borderColor: isDark ? theme.borderStrong : theme.border,
             opacity: pressed ? 0.88 : 1,
           },
         ]}>
@@ -48,7 +48,7 @@ export function HomeWeekList({ leagues, onJoinPress, onLeaguePress }: Props) {
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.sectionTitle, { color: isDark ? '#fed7aa' : theme.text }]}>
+          <Text style={[styles.sectionTitle, { color: isDark ? theme.accent : theme.text }]}>
             {t('Your week')}
           </Text>
           <Text style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>

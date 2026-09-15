@@ -14,9 +14,9 @@ export function ScoreHeroArt() {
   const card = isDark ? '#1c1c22' : '#ffffff';
   const score = isDark ? theme.accent : '#0f172a';
   const home = isDark ? '#6366f1' : '#64748b';
-  const away = isDark ? theme.accent : '#f97316';
+  const away = theme.accent;
   const muted = isDark ? 'rgba(255,255,255,0.12)' : '#e2e8f0';
-  const wave = isDark ? 'rgba(255,138,43,0.12)' : 'rgba(99,102,241,0.10)';
+  const wave = isDark ? 'rgba(18,255,128,0.12)' : 'rgba(5,150,105,0.10)';
 
   return (
     <View style={[styles.canvas, { backgroundColor: canvas }]}>
@@ -26,7 +26,7 @@ export function ScoreHeroArt() {
         {Array.from({ length: 6 }).map((_, i) => (
           <View
             key={`tl-${i}`}
-            style={[styles.dot, { backgroundColor: isDark ? 'rgba(255,138,43,0.35)' : '#94a3b8' }]}
+            style={[styles.dot, { backgroundColor: isDark ? 'rgba(18,255,128,0.35)' : '#94a3b8' }]}
           />
         ))}
       </View>
@@ -44,7 +44,7 @@ export function ScoreHeroArt() {
           styles.card,
           {
             backgroundColor: card,
-            borderColor: isDark ? 'rgba(255,138,43,0.35)' : muted,
+            borderColor: isDark ? theme.borderStrong : muted,
             shadowColor: isDark ? '#12ff80' : '#0f172a',
           },
         ]}>

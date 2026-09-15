@@ -29,7 +29,7 @@ export function ThemeToggle({ size = 44 }: Props) {
       <Ionicons
         name={theme.isDark ? 'moon' : 'sunny'}
         size={18}
-        color={theme.isDark ? '#fed7aa' : '#d97706'}
+        color={theme.accent}
       />
     </Pressable>
   );

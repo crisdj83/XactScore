@@ -148,12 +148,12 @@ export function LoginScreen() {
             <Text style={[styles.headline, { color: theme.text }]}>
               {t('Call the scores.')}
               {'\n'}
-              <Text style={{ color: theme.isDark ? theme.accent : '#ea580c' }}>
+              <Text style={{ color: theme.accent }}>
                 {t('Own the table.')}
               </Text>
             </Text>
             <Text style={[styles.tagline, { color: theme.textSecondary }]}>
-              {t('Call every Premier League score. Compete in your league. Climb the table.')}
+              {t('Call every Premier League score. Climb the table with your league.')}
             </Text>
           </Animated.View>
 

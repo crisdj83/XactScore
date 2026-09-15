@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: 'rgba(234,88,12,0.22)',
+    backgroundColor: 'rgba(18,255,128,0.10)',
   },
   avatar: {
     width: 40,

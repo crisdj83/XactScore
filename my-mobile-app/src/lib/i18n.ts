@@ -33,8 +33,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'View table': 'Vezi clasamentul',
     'Call the scores.': 'Alege scorurile.',
     'Own the table.': 'Stăpânește clasamentul.',
-    'Call every Premier League score. Compete in your league. Climb the table.':
-      'Alege fiecare scor din Premier League. Concurează în ligă. Urcă în clasament.',
+    'Call every Premier League score. Climb the table with your league.':
+      'Alege fiecare scor din Premier League. Urcă în clasament cu liga ta.',
     'Upcoming Match': 'Meciul următor',
     'Season Ended / No Fixtures': 'Sezon terminat / Fără meciuri',
     Days: 'Zile',
@@ -128,7 +128,7 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Contest Key *': 'Cheie contest *',
     'Join Private': 'Intră privat',
     'Create a New Contest': 'Creează un contest nou',
-    'Create your own prediction league and invite your friends to compete.':
+    'Create your own prediction league and invite your friends.':
       'Creează-ți propria ligă și invită-ți prietenii.',
     'Contest Name *': 'Nume contest *',
     'Season Length': 'Durata sezonului',
@@ -410,8 +410,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'View table': 'Ver tabla',
     'Call the scores.': 'Acierta los marcadores.',
     'Own the table.': 'Domina la tabla.',
-    'Call every Premier League score. Compete in your league. Climb the table.':
-      'Predice cada marcador de la Premier League. Compite en tu liga. Sube en la tabla.',
+    'Call every Premier League score. Climb the table with your league.':
+      'Predice cada marcador de la Premier League. Sube en la tabla con tu liga.',
     'Upcoming Match': 'Próximo partido',
     'Season Ended / No Fixtures': 'Temporada terminada / Sin partidos',
     Days: 'Días',
@@ -505,8 +505,8 @@ const translations: Record<Exclude<Locale, 'en'>, Dictionary> = {
     'Contest Key *': 'Clave de liga *',
     'Join Private': 'Unirse a privada',
     'Create a New Contest': 'Crear una liga nueva',
-    'Create your own prediction league and invite your friends to compete.':
-      'Crea tu propia liga e invita a tus amigos a competir.',
+    'Create your own prediction league and invite your friends.':
+      'Crea tu propia liga e invita a tus amigos.',
     'Contest Name *': 'Nombre de la liga *',
     'Season Length': 'Duración de temporada',
     'Choose full season, first half, or second half of the Premier League.':

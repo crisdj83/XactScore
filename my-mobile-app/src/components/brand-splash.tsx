@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { XactScoreLogo } from '@/components/xactscore-logo';
 
 /**
- * Branded splash aligned with app chrome: dark zinc field, soft orange glow,
+ * Branded splash aligned with app chrome: dark field, soft neon-green glow,
  * pulse mark + wordmark. Used while auth bootstraps after the native splash.
  */
 export function BrandSplash({ message }: { message?: string }) {

@@ -44,7 +44,7 @@ export function LanguageSwitcher() {
           <Text
             style={[
               styles.optionLabel,
-              { color: theme.isDark ? '#fed7aa' : theme.accent },
+              { color: theme.accent },
             ]}>
             {locale.toUpperCase()}
           </Text>
@@ -85,7 +85,7 @@ export function LanguageSwitcher() {
                       styles.menuOption,
                       active && {
                         backgroundColor: theme.isDark
-                          ? 'rgba(255,138,43,0.18)'
+                          ? theme.accentMuted
                           : theme.backgroundSelected,
                       },
                       pressed && { opacity: 0.88 },
