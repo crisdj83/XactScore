@@ -36,11 +36,9 @@ export function HomeProfileStrip({
         styles.card,
         {
           backgroundColor: theme.backgroundElement,
-          borderColor: isDark ? '#27272a' : theme.border,
+          borderColor: theme.border,
         },
       ]}>
-      {isDark ? <View pointerEvents="none" style={styles.darkGlow} /> : null}
-
       {avatarUrl ? (
         <UserAvatar
           uri={avatarUrl}
@@ -106,14 +104,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 8 },
-  },
-  darkGlow: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    backgroundColor: 'rgba(18,255,128,0.10)',
   },
   avatar: {
     width: 40,

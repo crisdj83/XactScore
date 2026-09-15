@@ -305,7 +305,7 @@ export default function ContestsScreen() {
                           style={[
                             styles.metaPill,
                             {
-                              backgroundColor: theme.isDark ? '#18181b' : '#f1f5f9',
+                              backgroundColor: theme.isDark ? theme.backgroundSelected : '#f1f5f9',
                               borderColor: theme.border,
                             },
                           ]}>

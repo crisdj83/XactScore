@@ -7,8 +7,8 @@ export default function ProductPreview({ locale }: { locale: Locale }) {
   return (
     <div className="relative mx-auto w-full max-w-sm">
       <div className="pointer-events-none absolute -inset-8 rounded-[2rem] bg-slate-300/30 blur-3xl dark:bg-xactscore-accent/15" aria-hidden />
-      <div className="content-panel relative space-y-3 p-3 dark:border-white/10 dark:!bg-[#111111]/90 dark:shadow-2xl dark:shadow-black/60">
-        <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-white/10 dark:bg-black/40 dark:shadow-none">
+      <div className="content-panel relative space-y-3 p-3 dark:border-xactscore-accent/15 dark:!bg-[#0e1612]/90 dark:shadow-2xl dark:shadow-black/60">
+        <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-xactscore-accent/12 dark:bg-black/25 dark:shadow-none">
           <div className="flex items-center justify-between gap-3">
             <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-500 dark:text-xactscore-muted">
               {t('Your pick')}
@@ -41,7 +41,7 @@ export default function ProductPreview({ locale }: { locale: Locale }) {
           </p>
         </article>
 
-        <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-white/10 dark:bg-black/40 dark:shadow-none">
+        <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:border-xactscore-accent/12 dark:bg-black/25 dark:shadow-none">
           <div className="flex items-center justify-between gap-3">
             <p className="text-[10px] font-black uppercase tracking-[0.22em] text-zinc-500 dark:text-xactscore-muted">
               {t('League table')}

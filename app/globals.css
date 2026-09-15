@@ -44,7 +44,7 @@
   }
 
   .content-panel {
-    @apply rounded-[28px] border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-white/10 dark:bg-[#111111] dark:shadow-[0_24px_60px_rgb(0,0,0,0.55)];
+    @apply rounded-[28px] border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-xactscore-accent/15 dark:bg-[#0e1612] dark:shadow-[0_24px_60px_rgb(0,0,0,0.55)];
   }
 
   .glass-panel {
@@ -203,21 +203,21 @@
   }
 
   .dark {
-    --xactscore-bg: #000000;
-    --xactscore-card: #111111e6;
-    --xactscore-surface: #111111cc;
-    --xactscore-border: #ffffff14;
+    --xactscore-bg: #050a07;
+    --xactscore-card: #0e1612e6;
+    --xactscore-surface: #0e1612cc;
+    --xactscore-border: #12ff8024;
     --xactscore-text: #ffffff;
     --xactscore-muted: #94a3b8;
     --xactscore-accent: #12ff80;
     --xactscore-orange: #12ff80;
     --xactscore-green: #12ff80;
 
-    --background: #000000;
+    --background: #050a07;
     --foreground: #ffffff;
-    --card: #111111e6;
+    --card: #0e1612e6;
     --card-foreground: #ffffff;
-    --popover: #0a0a0a;
+    --popover: #0a100c;
     --popover-foreground: #ffffff;
     --primary: #12ff80;
     --primary-foreground: #000000;
@@ -228,15 +228,15 @@
     --accent: #12ff80;
     --accent-foreground: #000000;
     --destructive: #ff5a5f;
-    --border: #ffffff14;
+    --border: #12ff8024;
     --input: #ffffff1a;
     --ring: #12ff80;
 
-    --glass-bg: rgb(17 17 17 / 0.88);
-    --glass-bg-strong: rgb(17 17 17 / 0.96);
+    --glass-bg: rgb(14 22 18 / 0.88);
+    --glass-bg-strong: rgb(14 22 18 / 0.96);
     --glass-inset-bg: rgb(255 255 255 / 0.03);
-    --glass-border: rgb(255 255 255 / 0.08);
-    --glass-border-strong: rgb(18 255 128 / 0.22);
+    --glass-border: rgb(18 255 128 / 0.14);
+    --glass-border-strong: rgb(18 255 128 / 0.28);
     --glass-shadow: 0 24px 60px rgb(0 0 0 / 0.55);
     --glass-shadow-strong: 0 28px 70px rgb(0 0 0 / 0.65);
     --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.06);
@@ -257,7 +257,7 @@
   }
 
   html {
-    @apply font-sans antialiased bg-slate-200 dark:bg-black;
+    @apply font-sans antialiased bg-slate-200 dark:bg-[#050a07];
     font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -450,7 +450,7 @@
   }
 
   body {
-    @apply flex min-h-[100dvh] flex-col overscroll-none bg-slate-200 text-xactscore-text transition-colors duration-300 dark:bg-black;
+    @apply flex min-h-[100dvh] flex-col overscroll-none bg-slate-200 text-xactscore-text transition-colors duration-300 dark:bg-[#050a07];
     overscroll-behavior: none;
     background-attachment: fixed;
     background-color: #e2e8f0;
@@ -458,11 +458,11 @@
   }
 
   html.dark body {
-    background-color: #18181b;
+    background-color: #050a07;
     background-image:
-      radial-gradient(ellipse 120% 80% at 15% -10%, rgb(255 138 43 / 0.16), transparent 60%),
-      radial-gradient(ellipse 100% 60% at 100% 0%, rgb(255 90 60 / 0.1), transparent 55%),
-      radial-gradient(ellipse 90% 70% at 50% 120%, rgb(255 138 43 / 0.08), transparent 60%);
+      radial-gradient(ellipse 120% 80% at 15% -10%, rgb(18 255 128 / 0.10), transparent 60%),
+      radial-gradient(ellipse 100% 60% at 100% 0%, rgb(18 255 128 / 0.06), transparent 55%),
+      radial-gradient(ellipse 90% 70% at 50% 120%, rgb(18 255 128 / 0.05), transparent 60%);
   }
 
   input:focus,
@@ -945,8 +945,8 @@
   }
 
   html.dark .fixture-calendar-game:hover {
-    background-color: rgb(255 138 43 / 0.1);
-    border-color: rgb(255 138 43 / 0.35);
+    background-color: rgb(18 255 128 / 0.1);
+    border-color: rgb(18 255 128 / 0.35);
   }
 
   .ios-tab-bar {
@@ -966,8 +966,8 @@
   }
 
   html.dark .ios-tab-bar {
-    background-color: rgb(15 23 42 / 0.9);
-    border-top: 1px solid rgb(30 41 59);
+    background-color: rgb(5 10 7 / 0.92);
+    border-top: 1px solid rgb(18 255 128 / 0.14);
     box-shadow: none;
   }
 
@@ -979,9 +979,9 @@
   }
 
   html.dark .ios-tab-item-active {
-    background: linear-gradient(180deg, rgb(255 138 43 / 0.22), rgb(255 138 43 / 0.08));
+    background: linear-gradient(180deg, rgb(18 255 128 / 0.22), rgb(18 255 128 / 0.08));
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.12),
-      0 0 18px rgb(255 138 43 / 0.25);
+      0 0 18px rgb(18 255 128 / 0.25);
   }
 }

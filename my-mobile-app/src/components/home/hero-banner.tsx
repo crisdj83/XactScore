@@ -266,8 +266,6 @@ export function HomeHeroBanner({ nextMatch, recentScores, predictPath }: Props) 
           borderColor: theme.border,
         },
       ]}>
-      {isDark ? <View pointerEvents="none" style={styles.darkGlow} /> : null}
-
       <Text style={[styles.headline, { color: theme.text }]}>
         {t('Call the scores.')}{'\n'}
         <Text style={{ color: isDark ? theme.accent : theme.text }}>{t('Own the table.')}</Text>
@@ -386,14 +384,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 8 },
-  },
-  darkGlow: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    backgroundColor: 'rgba(18,255,128,0.08)',
   },
   headline: {
     fontSize: 22,

@@ -32,11 +32,11 @@ export const Colors = {
     statusBar: '#e2e8f0',
   },
   dark: {
-    /** page chrome — pure black */
-    background: '#000000',
-    /** elevated card surface */
-    backgroundElement: '#111111',
-    backgroundSelected: '#1a1a1a',
+    /** page chrome — near-black with a soft green cast for seamless screens */
+    background: '#050a07',
+    /** elevated card surface — dark forest green (matches home hero cards) */
+    backgroundElement: '#0e1612',
+    backgroundSelected: '#14201a',
     /** --xactscore-text */
     text: '#ffffff',
     /** --xactscore-muted */
@@ -45,11 +45,11 @@ export const Colors = {
     accent: '#12ff80',
     accentMuted: 'rgba(18,255,128,0.16)',
     orange: '#12ff80',
-    border: 'rgba(255,255,255,0.08)',
-    borderStrong: 'rgba(18,255,128,0.28)',
+    border: 'rgba(18,255,128,0.14)',
+    borderStrong: 'rgba(18,255,128,0.32)',
     danger: '#ff5a5f',
     success: '#12ff80',
-    statusBar: '#000000',
+    statusBar: '#050a07',
   },
 } as const;
 

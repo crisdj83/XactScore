@@ -91,7 +91,7 @@ export function BrandSplash({ message }: { message?: string }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#0d0d0d',
+    backgroundColor: '#050a07',
   },
   center: {
     flex: 1,

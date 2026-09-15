@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mark: {
-    backgroundColor: '#000000',
+    backgroundColor: '#050a07',
     alignItems: 'center',
     justifyContent: 'center',
     shadowOpacity: 0.45,

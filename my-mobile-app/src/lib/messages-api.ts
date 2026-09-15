@@ -1,3 +1,4 @@
+import { fetchBlockedUserIds } from '@/lib/account-api';
 import { supabase } from '@/lib/supabase';
 
 function firstRelation<T>(value: T | T[] | null | undefined): T | null {
@@ -149,13 +150,120 @@ export async function fetchMessages(): Promise<MessagesPayload> {
     .upsert({ user_id: user.id, last_read_at: new Date().toISOString() })
     .then(() => undefined);
 
+  const blocked = new Set(await fetchBlockedUserIds());
+
   return {
     contests,
     isGlobalAdmin,
-    messages: threads.map((message) => ({
-      ...message,
-      replies: repliesByMessage.get(message.id) || [],
-    })),
+    // Guideline 1.2: blocked users' posts/replies disappear from the feed immediately.
+    messages: threads
+      .filter((message) => !blocked.has(message.authorId))
+      .map((message) => ({
+        ...message,
+        replies: (repliesByMessage.get(message.id) || []).filter(
+          (reply) => !blocked.has(reply.authorId),
+        ),
+      })),
+  };
+}
+
+/** Load one thread (message + replies), applying block filters. */
+export async function fetchMessageThread(messageId: string): Promise<{
+  message: MessageThread;
+  contests: MessageContest[];
+  isGlobalAdmin: boolean;
+} | null> {
+  const user = await requireUser();
+  if (!messageId) return null;
+
+  const [{ data: memberships, error: memberError }, { data: profile }] = await Promise.all([
+    supabase
+      .from('contest_members')
+      .select('contest_id, role, contests(name)')
+      .eq('user_id', user.id),
+    supabase.from('users').select('is_global_admin').eq('id', user.id).maybeSingle(),
+  ]);
+  if (memberError) throw new Error(memberError.message);
+
+  const contests: MessageContest[] = (memberships || []).map((row) => {
+    const contest = firstRelation(
+      row.contests as { name?: string | null } | { name?: string | null }[] | null,
+    );
+    return {
+      id: row.contest_id as string,
+      name: contest?.name || 'Contest',
+      role: row.role as string,
+    };
+  });
+  const contestIds = new Set(contests.map((c) => c.id));
+  const isGlobalAdmin = profile?.is_global_admin === true;
+
+  const { data: row, error: messageError } = await supabase
+    .from('messages')
+    .select(
+      'id, contest_id, author_id, title, body, created_at, users(username, email), contests(name)',
+    )
+    .eq('id', messageId)
+    .maybeSingle();
+  if (messageError) throw new Error(messageError.message);
+  if (!row) return null;
+  if (!contestIds.has(row.contest_id as string) && !isGlobalAdmin) {
+    throw new Error('You can only view messages in contests you belong to.');
+  }
+
+  const author = firstRelation(
+    row.users as
+      | { username?: string | null; email?: string | null }
+      | { username?: string | null; email?: string | null }[]
+      | null,
+  );
+  const contest = firstRelation(
+    row.contests as { name?: string | null } | { name?: string | null }[] | null,
+  );
+
+  const { data: replyData, error: replyError } = await supabase
+    .from('message_replies')
+    .select('id, message_id, author_id, body, created_at, users(username, email)')
+    .eq('message_id', messageId)
+    .order('created_at', { ascending: true });
+  if (replyError) throw new Error(replyError.message);
+
+  const blocked = new Set(await fetchBlockedUserIds());
+  if (blocked.has(row.author_id as string)) return null;
+
+  const replies: MessageReply[] = (replyData || [])
+    .filter((r) => !blocked.has(r.author_id as string))
+    .map((r) => {
+      const replyAuthor = firstRelation(
+        r.users as
+          | { username?: string | null; email?: string | null }
+          | { username?: string | null; email?: string | null }[]
+          | null,
+      );
+      return {
+        id: r.id as string,
+        messageId: r.message_id as string,
+        authorId: r.author_id as string,
+        body: r.body as string,
+        createdAt: r.created_at as string,
+        authorName: replyAuthor?.username || replyAuthor?.email || 'Member',
+      };
+    });
+
+  return {
+    contests,
+    isGlobalAdmin,
+    message: {
+      id: row.id as string,
+      contestId: row.contest_id as string,
+      authorId: row.author_id as string,
+      title: row.title as string,
+      body: row.body as string,
+      createdAt: row.created_at as string,
+      authorName: author?.username || author?.email || 'Member',
+      contestName: contest?.name || 'League',
+      replies,
+    },
   };
 }
 
