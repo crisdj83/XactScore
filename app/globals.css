@@ -44,7 +44,13 @@
   }
 
   .content-panel {
-    @apply rounded-[28px] border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:rounded-xl dark:border-xactscore-accent/15 dark:bg-[#0e1612] dark:shadow-[0_24px_60px_rgb(0,0,0,0.55)];
+    @apply rounded-[28px] border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)];
+  }
+
+  html.dark .content-panel {
+    @apply rounded-xl shadow-[0_24px_60px_rgb(0,0,0,0.55)];
+    border-color: rgb(18 255 128 / 0.15);
+    background-color: #0e1612;
   }
 
   .glass-panel {
